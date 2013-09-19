@@ -1,4 +1,12 @@
-facebook-visualisation
+Facebook Visualisation
 ======================
 
-Visualising facebookfeeds with D3.js and Three.js
+Visualising Facebookfeeds with D3.js and Three.js
+
+Dependencies
+----------------------
+- Meteor
+- D3
+- jQuery
+- Facebook Graph Api
+- jLouvain
