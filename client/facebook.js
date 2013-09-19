@@ -37,11 +37,13 @@ facebook.retrieve = function(list, prepare, start){
 		} else {
 			document.title = 'Facebook visualizer';
 			
-			//start preparation
+			//start preparation [array]
 			$.each(prepare, function(k, handler){
-				console.log(k);
-				handler();
+				if( $.isFunction(handler) ) handler();
 			});
+
+			//[single function]
+			if( $.isFunction(prepare) ) handler();
 
 			//start visualisation
 			start();
@@ -59,7 +61,7 @@ facebook.getFriends = function(){
 		console.log(response);
 
 		//make id's array keys
-		facebook.friends = response.data.reduce(function(acc, x) {
+		data.friends = response.data.reduce(function(acc, x) {
             acc[x.id] = x.name;
             return acc;
         }, {});
@@ -83,7 +85,7 @@ facebook.getFriendRelations = function(){
 		'uid1 IN (SELECT uid2 FROM friend WHERE uid1=me()) AND ' + 
 		'uid2 IN (SELECT uid2 FROM friend WHERE uid1=me())'), function(response) {
 
-    	facebook.friendRelations = response.data;
+    	data.friendRelations = response.data;
 
     	//delete task
     	facebook.busy--;
@@ -93,18 +95,18 @@ facebook.getFriendRelations = function(){
 facebook.getLikes = function(){
 
 	//check if friendlist is in
-	if(!facebook.friends) {
+	if(!data.friends) {
 		window.setTimeout(facebook.getLikes, 500);
 		return false;
 	}
 
-	facebook.likes = {};
+	data.likes = {};
 
 	//get all the likes
-	$.each(facebook.friends, function(key, value){
+	$.each(data.friends, function(key, value){
 		
 		//start process
-		facebook.likes[key] = [];
+		data.likes[key] = [];
 		var url = '/'+key+'?fields=likes';
 
 		function retrieve(url, first){
@@ -120,11 +122,11 @@ facebook.getLikes = function(){
 
 				//only if likes
 				if(response.likes){
-					facebook.likes[key] = facebook.likes[key].concat(response.likes.data);
+					data.likes[key] = data.likes[key].concat(response.likes.data);
 				}
 				//paging doesn't sent like object... stupid
 				if(!first && response.data){
-					facebook.likes[key] = facebook.likes[key].concat(response.data);
+					data.likes[key] = data.likes[key].concat(response.data);
 				}
 					
 				//add paging

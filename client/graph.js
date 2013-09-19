@@ -8,18 +8,18 @@ var lerp = function(a, b, t) {
 graph.compareFriends = function(){
 
     // Extract the list of friend IDs.
-    var fids = Object.keys(facebook.friends);
+    var fids = Object.keys(data.friends);
 
     // Add some nodes to the graph.
     graph.data.nodes = fids.map(function(id) {
         return {
             id: id,
-            name: facebook.friends[id]
+            name: data.friends[id]
         };
     });
 
     //make the edges
-    graph.data.edges = facebook.friendRelations.map(function(rel) {
+    graph.data.edges = data.friendRelations.map(function(rel) {
         return {
             source: fids.indexOf(rel.uid1),
             target: fids.indexOf(rel.uid2)
@@ -74,8 +74,8 @@ graph.makeForce = function(){
 };
 
 graph.compareLikes = function(uid1, uid2, start, multiplyer){
-    var likes1 = facebook.likes[uid1];
-    var likes2 = facebook.likes[uid2];
+    var likes1 = data.likes[uid1];
+    var likes2 = data.likes[uid2];
     var likeable = 0;
 
     $.each(likes1, function(key, value){

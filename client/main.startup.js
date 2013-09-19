@@ -7,7 +7,7 @@ Meteor.startup(function(){
 	var get = [
 		facebook.getFriends,
 		facebook.getFriendRelations,
-		//facebook.getLikes
+		facebook.getLikes
 	];
 
 	//prepare data for visualisation
@@ -15,11 +15,15 @@ Meteor.startup(function(){
 		graph.compareFriends,
 		//graph.compareLikes,
 		graph.makeForce,
-		graph.makeCommunities
+		graph.makeCommunities,
+		cache.saveCache
 	];
 
 	//start visualisation
 	start = DDD.init;
+
+	//check if cached to prevent facebook call
+	get = cache.check(get);
 
 	//connect to facebook
 	facebook.retrieve(get, prepare, start);
