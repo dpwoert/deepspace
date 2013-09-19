@@ -26,7 +26,6 @@ DDD.init = function(){
     //DDD.addNode(50, 50, 50);
 
     //start
-    // DDD.renderer = new THREE.CanvasRenderer();
     DDD.renderer = new THREE.WebGLRenderer();
     DDD.renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -42,7 +41,6 @@ DDD.init = function(){
     });
 
     //add links
-    //http://mrdoob.github.io/three.js/examples/canvas_lines.html
     $.each(graph.force.links(), function(key, link){
     	DDD.addLink(link);
     });
@@ -65,12 +63,10 @@ DDD.setCameraControls = function(){
 };
 
 DDD.setMaterial = function(){
-    //get community values
-    facebook.getCommunity();
 
     //get max
     var max = 0;
-    $.each(facebook.community, function(k,v){
+    $.each(graph.community, function(k,v){
         if(v > max){
             max = v;
         }
@@ -122,12 +118,8 @@ DDD.animate = function() {
 
 DDD.addNode = function(x, y, z, index){
 
-    var material = DDD.material.node[facebook.community[index]];
+    var material = DDD.material.node[graph.community[index]];
     var mesh = new THREE.Mesh( DDD.geom.node, material );
-
-	// mesh.geometry.dynamic = true;
-	// mesh.geometry.verticesNeedUpdate = true;
-	// mesh.geometry.normalsNeedUpdate = true;
 
 	mesh.position.x = x;
 	mesh.position.y = y;

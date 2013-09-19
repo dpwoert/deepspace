@@ -22,7 +22,7 @@ facebook.connect = function(){
     }, {scope: 'friends_likes,user_likes,read_friendlists,email,read_stream'});
 };
 
-facebook.retrieve = function(list, handler){
+facebook.retrieve = function(list, prepare, start){
 
 	facebook.loginSucces = function(first){
 		//get data from facebook and callback when ready
@@ -36,7 +36,15 @@ facebook.retrieve = function(list, handler){
 			window.setTimeout(function(){ facebook.loginSucces(false) }, 50);
 		} else {
 			document.title = 'Facebook visualizer';
-			handler();
+			
+			//start preparation
+			$.each(prepare, function(k, handler){
+				console.log(k);
+				handler();
+			});
+
+			//start visualisation
+			start();
 		}
 	}
 
@@ -135,43 +143,3 @@ facebook.getLikes = function(){
 	});
 
 };
-
-facebook.compareLikes = function(uid1, uid2, start, multiplyer){
-	var likes1 = facebook.likes[uid1];
-	var likes2 = facebook.likes[uid2];
-	var likeable = 0;
-
-	$.each(likes1, function(key, value){
-		$.each(likes2, function(key2, value2){
-			if(value.id == value2.id){
-				likeable ++;
-			}
-		});
-	});
-
-	var result = start - (likeable * multiplyer);
-	if(result < 20) result=20;
-	console.log(likeable + ' | ' + result + ' | ' + uid1 + ' likes ' + uid2);
-
-	return result;
-}
-
-facebook.getCommunity = function(){
-
-	//https://github.com/upphiminn/jLouvain/blob/master/jLouvain.js
-
-	var node_data = [];
-	var edge_data = [];
-	
-	$.each(graph.force.nodes(), function(k, v){
-		node_data.push(v.index);
-	});
-
-	$.each(graph.force.links(), function(k, v){
-		edge_data.push( {source: v.source.index, target: v.target.index, weight: 10.0}) ;
-	});
-
-
-	var community = jLouvain().nodes(node_data).edges(edge_data).partition_init();
-	facebook.community = community();
-}
