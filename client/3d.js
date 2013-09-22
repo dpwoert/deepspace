@@ -84,7 +84,7 @@ DDD.setMaterial = function(){
 
     //add
     for(var i = 0 ; i < max ; i++){
-        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], wireframe: false } ) );
+        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], shading: THREE.FlatShading, } ) );
     }
 }
 
