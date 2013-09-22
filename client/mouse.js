@@ -22,8 +22,6 @@ mouse.move = function(event){
 
     if ( intersects.length > 0 ) {
 
-        //intersects[0].object.callback();
-        console.log(intersects);
         mouse.who.text(intersects[0].object.name).show();
 
     }
