@@ -22,7 +22,7 @@ DDD.init = function(){
     DDD.setMaterial();
     //DDD.geom.node = new THREE.SphereGeometry(25, 20, 20);
     DDD.geom.node = new THREE.IcosahedronGeometry(25, 1);
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xDDDDDD, opacity: 0.1, linewidth: 0.5 } )
+    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, opacity: 0.1, linewidth: 0.5 } )
 
     //DDD.addNode(50, 50, 50);
 
