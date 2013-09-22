@@ -35,9 +35,8 @@ DDD.init = function(){
 
     //add nodes
     $.each(graph.force.nodes(), function(key, node){
-    	var z = Math.random()*1000;
-    	DDD.addNode(node.x, node.y, z, node.index);
-    	node.z = z;
+    	DDD.addNode(node);
+    	//node.z = z;
     });
 
     //add links
@@ -48,6 +47,9 @@ DDD.init = function(){
     DDD.setCameraControls();
 
     DDD.animate();
+
+    //mouse
+    mouse.init();
 };
 
 DDD.setCameraControls = function(){
@@ -116,14 +118,17 @@ DDD.animate = function() {
 
 };
 
-DDD.addNode = function(x, y, z, index){
+DDD.addNode = function(node){
 
-    var material = DDD.material.node[graph.community[index]];
+    var material = DDD.material.node[graph.community[node.index]];
     var mesh = new THREE.Mesh( DDD.geom.node, material );
 
-	mesh.position.x = x;
-	mesh.position.y = y;
-	mesh.position.z = z;
+	mesh.position.x = node.x;
+	mesh.position.y = node.y;
+    var z = Math.random()*1000;
+	mesh.position.z = node.z = z;
+
+    mesh.name = node.name;
 
     DDD.mesh.push(mesh);
     DDD.scene.add(mesh);
