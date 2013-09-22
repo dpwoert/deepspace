@@ -20,7 +20,7 @@ DDD.init = function(){
 
     //mesh settings
     DDD.setMaterial();
-    DDD.geom.node = new THREE.SphereGeometry(25, 10, 10);
+    DDD.geom.node = new THREE.SphereGeometry(25, 20, 20);
     DDD.material.line = new THREE.LineBasicMaterial( { color: 0xDDDDDD, opacity: 0.1, linewidth: 0.5 } )
 
     //DDD.addNode(50, 50, 50);
@@ -43,6 +43,9 @@ DDD.init = function(){
     $.each(graph.force.links(), function(key, link){
     	DDD.addLink(link);
     });
+
+    //light
+    light.init();
 
     DDD.setCameraControls();
 
@@ -80,7 +83,7 @@ DDD.setMaterial = function(){
 
     //add
     for(var i = 0 ; i < max ; i++){
-        DDD.material.node.push(new THREE.MeshBasicMaterial( { color: colors[i], wireframe: false } ) );
+        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], wireframe: false } ) );
     }
 }
 
