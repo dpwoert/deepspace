@@ -17,6 +17,7 @@ Meteor.startup(function(){
 		graph.compareLikes,
 		graph.makeForce,
 		graph.makeCommunities,
+		timeline.make3D,
 		cache.saveCache
 	];
 

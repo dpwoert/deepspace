@@ -6,7 +6,7 @@ timeline.keepTicking = false;
 
 //start month ago
 timeline.current = new Date();
-timeline.current = Math.round(facebook.from.setMonth(facebook.from.getMonth() - 1)/1000);
+timeline.current = Math.round(timeline.current.setMonth(timeline.current.getMonth() - 1)/1000);
 
 timeline.add = function(properties){
 
@@ -64,11 +64,19 @@ timeline.tick = function(){
 timeline.make3D = function(){
 
 	//add to timeline
-    $.each(data.posts, function(key, value){
-        timeline.add({
-            to: 0,
-            from: 0
-        });
+    $.each(data.posts, function(){
+    	$.each(this, function(){
+
+	    	//get dates
+	    	_from = Date.parse(this.created_time);
+	    	_to = _from + (1000*60*60*60); // an hour
+
+	        timeline.add({
+	            to: _to,
+	            from: _from
+	        });
+
+	    });
     });
-    
+
 };
