@@ -120,6 +120,12 @@ facebook.getLikes = function(){
 
 				facebook.busy --;
 
+				//error?
+				if(response.error){
+					console.warn(response.error);
+					return false;
+				}
+
 				//only if likes
 				if(response.likes){
 					data.likes[key] = data.likes[key].concat(response.likes.data);
@@ -130,7 +136,7 @@ facebook.getLikes = function(){
 				}
 					
 				//add paging
-				if(first && response.likes.paging.next){
+				if(first && response.likes && response.likes.paging && response.likes.paging.next){
 					retrieve(response.likes.paging.next, false);
 				}
 				else if(!first && response.paging.next){

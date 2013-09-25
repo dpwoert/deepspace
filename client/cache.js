@@ -26,4 +26,5 @@ cache.getData = function(){
 
 cache.clear = function(){
 	localStorage.clear();
+	return true;
 }
