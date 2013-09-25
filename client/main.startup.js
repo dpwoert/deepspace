@@ -13,7 +13,7 @@ Meteor.startup(function(){
 	//prepare data for visualisation
 	var prepare = [
 		graph.compareFriends,
-		//graph.compareLikes,
+		graph.compareLikes,
 		graph.makeForce,
 		graph.makeCommunities,
 		cache.saveCache

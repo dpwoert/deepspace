@@ -1,5 +1,6 @@
 window.DDD = {
     multiplyer: 5,
+    maxZ: 2000,
 	camera : null,
 	scene : null,
 	renderer : null,
@@ -22,7 +23,7 @@ DDD.init = function(){
     DDD.setMaterial();
     //DDD.geom.node = new THREE.SphereGeometry(25, 20, 20);
     DDD.geom.node = new THREE.IcosahedronGeometry(25, 1);
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, opacity: 0.1, linewidth: 0.5 } )
+    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, fog: true, linewidth: 0.5 } )
 
     //DDD.addNode(50, 50, 50);
 
@@ -129,7 +130,7 @@ DDD.addNode = function(node){
 
 	mesh.position.x = node.x;
 	mesh.position.y = node.y;
-    var z = Math.random()*1000;
+    var z = Math.random()*DDD.maxZ;
 	mesh.position.z = node.z = z;
 
     mesh.name = node.name;

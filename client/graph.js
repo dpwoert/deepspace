@@ -64,7 +64,7 @@ graph.makeForce = function(){
     // Create a force layout to display nodes.
     graph.force = d3.layout.force()
         .charge(-300)
-        .linkDistance(200)
+        .linkDistance(graph.returnLikes)
         //.size(10,10)
         .nodes(graph.data.nodes)
         .links(graph.data.edges);
@@ -73,24 +73,38 @@ graph.makeForce = function(){
 
 };
 
-graph.compareLikes = function(uid1, uid2, start, multiplyer){
-    var likes1 = data.likes[uid1];
-    var likes2 = data.likes[uid2];
-    var likeable = 0;
+graph.compareLikes = function(){
 
-    $.each(likes1, function(key, value){
-        $.each(likes2, function(key2, value2){
-            if(value.id == value2.id){
-                likeable ++;
-            }
+    $.each(graph.data.edges, function(k, v){
+
+        //get data
+        var s_id = graph.data.nodes[v.source].id;
+        var t_id = graph.data.nodes[v.target].id;
+        var source = data.likes[parseInt(s_id)];
+        var target = data.likes[parseInt(t_id)];
+
+        var compare = 0;
+
+        //compare lists
+        $.each(source, function(key, value){
+            $.each(target, function(key2, value2){
+                if(value.id == value2.id){
+                    //found
+                    compare++;
+                    return false;
+                }
+            });
         });
-    });
 
-    var result = start - (likeable * multiplyer);
-    if(result < 20) result=20;
-    console.log(likeable + ' | ' + result + ' | ' + uid1 + ' likes ' + uid2);
+        v.likes = compare;
+    })
+};
 
-    return result;
+graph.returnLikes = function(d, i){
+    //return 200;
+    var toReturn = 200 - (10*d.likes);
+    if(toReturn < 20) toReturn = 20;
+    return toReturn;
 };
 
 graph.makeCommunities = function(){
@@ -112,4 +126,4 @@ graph.makeCommunities = function(){
     var community = jLouvain().nodes(node_data).edges(edge_data).partition_init();
     graph.community = community();
 
-}
+};
