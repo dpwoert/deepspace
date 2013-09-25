@@ -1,8 +1,14 @@
 window.facebook = {};
+
+//settings
 facebook.appId = 289032171239738;
 facebook.busy = 0;
 
-//1479552728?fields=interested_in,likes,last_name [get likes]
+//dates
+facebook.from = new Date();
+facebook.from = Math.round(facebook.from.setMonth(facebook.from.getMonth() - 1)/1000);
+//facebook.from = Math.round(facebook.from.getTime() / 1000);
+facebook.until = Math.round(new Date().getTime()/1000);
 
 facebook.connect = function(){
 	FB.init({
@@ -107,7 +113,7 @@ facebook.getLikes = function(){
 		
 		//start process
 		data.likes[key] = [];
-		var url = '/'+key+'?fields=likes';
+		var url = '/'+key+'?fields=likes.limit(100)';
 
 		function retrieve(url, first){
 
@@ -151,3 +157,63 @@ facebook.getLikes = function(){
 	});
 
 };
+
+facebook.getPosts = function(){
+
+	//check if friendlist is in
+	if(!data.friends) {
+		window.setTimeout(facebook.getPosts, 500);
+		return false;
+	}
+
+	data.posts = {};
+
+	//get all the posts
+	$.each(data.friends, function(key, value){
+		
+		//start process
+		data.posts[key] = [];
+		var url = '/'+key+'?fields=posts.fields(id,name,caption,description,type,created_time).since('+facebook.from+').until('+facebook.until+')';
+
+		function retrieve(url, first){
+
+			facebook.busy ++;
+
+			FB.api(url, function(response) {
+
+				console.log(url);
+				console.log(response);
+
+				facebook.busy --;
+
+				//error?
+				if(response.error){
+					console.warn(response.error);
+					return false;
+				}
+
+				//only if likes
+				if(response.posts){
+					data.posts[key] = data.posts[key].concat(response.posts.data);
+				}
+				//paging doesn't sent like object... stupid
+				if(!first && response.data){
+					data.posts[key] = data.posts[key].concat(response.data);
+				}
+					
+				//add paging
+				if(first && response.posts && response.posts.paging && response.posts.paging.next){
+					//retrieve(response.posts.paging.next, false);
+				}
+				else if(!first && response.paging.next){
+					//retrieve(response.paging.next, false);
+				}
+
+			});
+		}
+
+		retrieve(url, true);
+
+	});
+
+}

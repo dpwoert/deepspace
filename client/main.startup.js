@@ -7,7 +7,8 @@ Meteor.startup(function(){
 	var get = [
 		facebook.getFriends,
 		facebook.getFriendRelations,
-		facebook.getLikes
+		facebook.getLikes,
+		facebook.getPosts
 	];
 
 	//prepare data for visualisation
