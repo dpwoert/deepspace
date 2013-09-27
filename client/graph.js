@@ -127,3 +127,21 @@ graph.makeCommunities = function(){
     graph.community = community();
 
 };
+
+graph.getConnections = function(id){
+    var nodes = [];
+
+    $.each(graph.force.links(), function(key, val){
+
+        if(val.source.id == id){
+            nodes.push({id:key, negative:false});
+        }
+
+        // if(val.target.id == id){
+        //     nodes.push({id:key, negative:true});
+        // }
+
+    });
+
+    return nodes;
+};

@@ -18,7 +18,7 @@ mouse.move = function(event){
 
     var ray = new THREE.Raycaster( DDD.camera.position, vector.sub( DDD.camera.position ).normalize() );
 
-    var intersects = ray.intersectObjects( DDD.mesh );    
+    var intersects = ray.intersectObjects( DDD.nodes );    
 
     if ( intersects.length > 0 ) {
 

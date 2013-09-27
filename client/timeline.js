@@ -1,12 +1,11 @@
 window.timeline = {};
 timeline.items = [];
-timeline.delta = 10;
+timeline.delta = 1000*60;
 timeline.play = true;
-timeline.keepTicking = false;
 
 //start month ago
 timeline.current = new Date();
-timeline.current = Math.round(timeline.current.setMonth(timeline.current.getMonth() - 1)/1000);
+timeline.current = timeline.current.setMonth(timeline.current.getMonth() - 1);
 
 timeline.add = function(properties){
 
@@ -32,30 +31,36 @@ timeline.tick = function(){
 		timeline.current+=timeline.delta;
 	}
 
-	//check if need to animate
-	if(timeline.current == timeline.last && !timeline.keepTicking){
-		return false;
-	}
+	//[loop]
 
 	$.each(timeline.items, function(key, value){
 		//visible
 		if(timeline.current > value.from && timeline.current < value.to){
 
+			//visible so tick
+			if(value.visible){
+				//status
+				var completed = value.to - value.from;
+				var progress = timeline.current - value.from;
+				completed = (progress / completed);
+
+				value.tick(value, completed);
+			}
+
 			//wasn't visible 
 			if($.isFunction(value.change) && !value.visible){
 				value.visible = true;
-				value.change(true);
+				value.change(true, value);
 			}
-
-			tick();
 
 		} 
 		//hidden
 		else {
 			//was visible, now isn't
 			if(value.visible){
+				value.tick(value, 1);
 				value.visible = false;
-				value.change(false);
+				value.change(false, value);
 			}
 		}
 	})
@@ -64,17 +69,69 @@ timeline.tick = function(){
 timeline.make3D = function(){
 
 	//add to timeline
-    $.each(data.posts, function(){
-    	$.each(this, function(){
+    $.each(data.posts, function(id, user){
+    	$.each(user, function(key, _this){
 
 	    	//get dates
-	    	_from = Date.parse(this.created_time);
-	    	_to = _from + (1000*60*60*60); // an hour
+	    	_from = Date.parse(_this.created_time);
+	    	_to = _from + (1000*60*60); 
 
 	        timeline.add({
 	            to: _to,
-	            from: _from
+	            from: _from,
+	            elements: null,
+	            change: _change,
+	            tick: _tick
 	        });
+
+	        //change
+	        function _change(visible, obj){
+
+	        	if(visible){
+	        		//create items
+	        		obj.elements = []
+	        		$.each(graph.getConnections(id), function(cID, connection){
+	        			var el = DDD.addMessage(connection.id, connection.negative);
+	        			obj.elements.push(el);
+	        			DDD.scene.add(el);
+	        		});
+	        	}
+	        	else {
+	        		//delete items
+	        		$.each(obj.elements, function(){
+	        			DDD.scene.remove(this);
+	        		});
+	        		obj.elements = null;
+	        	}
+	        }
+
+	        //tick
+	        function _tick(obj, completed){
+
+	        	//check
+	        	if(obj.elements == null) return false;
+
+	        	//animate items
+	        	$.each(obj.elements, function(key, val){
+
+	        		var line = DDD.lines[val.userData.line];
+
+	        		//get progress
+	        		if(val.userData.negative){
+	        			completed = 1-completed;
+	        		}
+
+	        		//path
+	        		var path = new THREE.Spline([line.geometry.vertices[0], line.geometry.vertices[1]]);
+	        		var point = path.getPoint( completed );
+
+
+	        		//animate
+	        		val.position = point;
+
+	        		delete path, point;
+	        	});
+	        }
 
 	    });
     });

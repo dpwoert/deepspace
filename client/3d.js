@@ -1,13 +1,19 @@
 window.DDD = {
+
     multiplyer: 5,
     maxZ: 2000,
+
 	camera : null,
 	scene : null,
 	renderer : null,
-	mesh: [],
+
+	nodes: [],
 	lines: [],
+    messages: [],
+
 	material: {},
 	geom: {}
+
 };
 
 DDD.init = function(){
@@ -21,24 +27,19 @@ DDD.init = function(){
 
     //mesh settings
     DDD.setMaterial();
-    //DDD.geom.node = new THREE.SphereGeometry(25, 20, 20);
     DDD.geom.node = new THREE.IcosahedronGeometry(25, 1);
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, fog: true, linewidth: 0.5 } )
-
-    //DDD.addNode(50, 50, 50);
+    DDD.geom.message = new THREE.IcosahedronGeometry(10, 1);
 
     //start
     DDD.renderer = new THREE.WebGLRenderer();
     DDD.renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( DDD.renderer.domElement );
-
     $('#graph').hide();
 
     //add nodes
     $.each(graph.force.nodes(), function(key, node){
     	DDD.addNode(node);
-    	//node.z = z;
     });
 
     //add links
@@ -49,12 +50,16 @@ DDD.init = function(){
     //light
     light.init();
 
+    //camera
     DDD.setCameraControls();
 
+    //action
     DDD.animate();
 
     //mouse
     mouse.init();
+
+    timeline.make3D();
 };
 
 DDD.setCameraControls = function(){
@@ -71,6 +76,8 @@ DDD.setCameraControls = function(){
 
 DDD.setMaterial = function(){
 
+    //NODES
+
     //get max
     var max = 0;
     $.each(graph.community, function(k,v){
@@ -85,19 +92,29 @@ DDD.setMaterial = function(){
 
     //add
     for(var i = 0 ; i < max ; i++){
-        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], shading: THREE.FlatShading, } ) );
+        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], shading: THREE.FlatShading } ) );
     }
+
+    //LINES
+    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, fog: true, linewidth: 0.5 } );
+
+    //MESSAGES
+    DDD.material.message = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading } );
+
 }
 
 DDD.animate = function() {
+
+    //pause
+    if(DDD.pause) return false
 
     // note: three.js includes requestAnimationFrame shim
     requestAnimationFrame( DDD.animate );
 
     //animate nodes
     $.each(graph.force.nodes(), function(key, node){
-    	DDD.mesh[key].position.x = node.x * DDD.multiplyer;
-    	DDD.mesh[key].position.y = node.y * DDD.multiplyer;
+    	DDD.nodes[key].position.x = node.x * DDD.multiplyer;
+    	DDD.nodes[key].position.y = node.y * DDD.multiplyer;
     });
 
     //animate links
@@ -117,6 +134,9 @@ DDD.animate = function() {
     	DDD.lines[key].geometry.vertices[1].z = link.target.z;
     });
 
+    //timeline
+    timeline.tick();
+
     DDD.controls.update(0.1);
 
     DDD.renderer.render( DDD.scene, DDD.camera );
@@ -134,8 +154,9 @@ DDD.addNode = function(node){
 	mesh.position.z = node.z = z;
 
     mesh.name = node.name;
+    mesh.userData.index = node.index;
 
-    DDD.mesh.push(mesh);
+    DDD.nodes.push(mesh);
     DDD.scene.add(mesh);
 }
 
@@ -162,3 +183,19 @@ DDD.addLink = function(o){
 	DDD.lines.push(line);
 	DDD.scene.add( line );
 };
+
+DDD.addMessage = function(line, negative){
+
+    var mesh = new THREE.Mesh( DDD.geom.message, DDD.material.message );
+
+    var _line = DDD.lines[line];
+
+    mesh.position.x = _line.geometry.vertices.x;
+    mesh.position.y = _line.geometry.vertices.y;
+    mesh.position.z = _line.geometry.vertices.z;
+
+    mesh.userData.line = line;
+    mesh.userData.negative = negative;
+
+    return mesh;
+}
