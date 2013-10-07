@@ -2,7 +2,8 @@ window.mouse = {};
 
 mouse.init = function(){
 	$('canvas').mousemove(mouse.move);
-	mouse.who = $('#who');
+	mouse.$who = $('#who');
+    mouse.lastName = '';
 	DDD.projector = new THREE.Projector();
 };
 
@@ -21,9 +22,9 @@ mouse.move = function(event){
     var intersects = ray.intersectObjects( DDD.nodes );    
 
     if ( intersects.length > 0 ) {
-
-        mouse.who.text(intersects[0].object.name).show();
-
+        mouse.$who.text(intersects[0].object.name).show();
+    } else {
+        mouse.$who.stop().fadeOut();
     }
 };
 

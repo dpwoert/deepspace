@@ -2,6 +2,7 @@ window.DDD = {
 
     multiplyer: 5,
     maxZ: 2000,
+    startZ: 1000,
 
 	camera : null,
 	scene : null,
@@ -20,7 +21,7 @@ DDD.init = function(){
 
 	//camera
 	DDD.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-    DDD.camera.position.z = 1000;
+    DDD.camera.position.z = 3000;
 
     //make scene
     DDD.scene = new THREE.Scene();
@@ -96,7 +97,8 @@ DDD.setMaterial = function(){
     }
 
     //LINES
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xAAAAAA, fog: true, linewidth: 0.5 } );
+    //DDD.material.line = new THREE.LineBasicMaterial( { color: 0x999999, fog: true, linewidth: 0.005 } );
+    DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
 
     //MESSAGES
     DDD.material.message = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading } );
@@ -150,7 +152,7 @@ DDD.addNode = function(node){
 
 	mesh.position.x = node.x;
 	mesh.position.y = node.y;
-    var z = Math.random()*DDD.maxZ;
+    var z = DDD.startZ + (Math.random()*DDD.maxZ);
 	mesh.position.z = node.z = z;
 
     mesh.name = node.name;
@@ -187,12 +189,14 @@ DDD.addLink = function(o){
 DDD.addMessage = function(line, negative){
 
     var mesh = new THREE.Mesh( DDD.geom.message, DDD.material.message );
+    // var mesh = new THREE.PointLight( 0xff0000, 1, 200 );
 
     var _line = DDD.lines[line];
 
     mesh.position.x = _line.geometry.vertices.x;
     mesh.position.y = _line.geometry.vertices.y;
     mesh.position.z = _line.geometry.vertices.z;
+
 
     mesh.userData.line = line;
     mesh.userData.negative = negative;

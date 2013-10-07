@@ -31,8 +31,12 @@ timeline.tick = function(){
 		timeline.current+=timeline.delta;
 	}
 
-	//[loop]
+	//[loop/restart]
 
+	//show data
+	timeline.show();
+
+	//tick
 	$.each(timeline.items, function(key, value){
 		//visible
 		if(timeline.current > value.from && timeline.current < value.to){
@@ -135,5 +139,13 @@ timeline.make3D = function(){
 
 	    });
     });
+
+};
+
+timeline.show = function(){
+
+	var d = new Date(timeline.current);
+	$('#date').text(d.getHours() + ":"+ d.getMinutes() + " | " + d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear());
+	//$('#date').text(d.toISOString());
 
 };
