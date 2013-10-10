@@ -85,7 +85,8 @@ timeline.make3D = function(){
 	            from: _from,
 	            elements: null,
 	            change: _change,
-	            tick: _tick
+	            tick: _tick,
+	            type: _this.type
 	        });
 
 	        //change
@@ -95,7 +96,7 @@ timeline.make3D = function(){
 	        		//create items
 	        		obj.elements = []
 	        		$.each(graph.getConnections(id), function(cID, connection){
-	        			var el = DDD.addMessage(connection.id, connection.negative);
+	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type) );
 	        			obj.elements.push(el);
 	        			DDD.scene.add(el);
 	        		});
@@ -148,3 +149,29 @@ timeline.show = function(){
 	//$('#date').text(d.toISOString());
 
 };
+
+timeline.getMaterial = function(type){
+	if(!color.posts[type]){
+		type = 'other';
+	}
+
+	return DDD.material.message[type];
+}
+
+timeline.typeList = function(){
+
+	var list = [];
+
+	//make list
+	$.each(data.posts, function(id, user){
+		$.each(user, function(key, _this){
+			if(list.indexOf(_this.type) == -1){
+				//not in list so add
+				list.push(_this.type);
+			}
+		});
+	});
+
+	return list;
+	//["link", "status", "photo", "swf", "video", "checkin"]
+}

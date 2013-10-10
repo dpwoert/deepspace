@@ -1,0 +1,15 @@
+window.color = {};
+
+//louvain to colors
+color.nodes = [0x1ABC9c, 0xF1C40F, 0xD35400, 0x3498DB,0xe74c3c,0x9B59B6,0x2c3e50,0x8e44ad];
+
+//posts type colors
+color.posts = {
+	status: 0xFFFFFF,
+	link: 0xf2f9bb,
+	photo: 0xbbf9d6,
+	swf: 0xbbdaf9,
+	video: 0xbbdaf9,
+	checkin: 0xf9bbf4,
+	other: 0xFF0000
+};

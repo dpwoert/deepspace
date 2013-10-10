@@ -93,11 +93,10 @@ DDD.setMaterial = function(){
 
     //prepare
     DDD.material.node = [];
-    colors = [0x1ABC9c, 0xF1C40F, 0xD35400, 0x3498DB,0xe74c3c,0x9B59B6,0x2c3e50,0x8e44ad];
 
     //add
     for(var i = 0 ; i < max ; i++){
-        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: colors[i], shading: THREE.FlatShading } ) );
+        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: color.nodes[i], shading: THREE.FlatShading } ) );
     }
 
     //LINES
@@ -105,7 +104,10 @@ DDD.setMaterial = function(){
     // DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
 
     //MESSAGES
-    DDD.material.message = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading } );
+    DDD.material.message = {};
+    $.each(color.posts, function(key, val){
+        DDD.material.message[key] = new THREE.MeshLambertMaterial( { color: val, shading: THREE.FlatShading } );
+    });
 
 }
 
@@ -193,9 +195,9 @@ DDD.addLink = function(o){
 	DDD.scene.add( line );
 };
 
-DDD.addMessage = function(line, negative){
+DDD.addMessage = function(line, negative, material){
 
-    var mesh = new THREE.Mesh( DDD.geom.message, DDD.material.message );
+    var mesh = new THREE.Mesh( DDD.geom.message, material );
     // var mesh = new THREE.PointLight( 0xff0000, 1, 200 );
 
     var _line = DDD.lines[line];
