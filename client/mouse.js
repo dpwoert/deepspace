@@ -23,8 +23,20 @@ mouse.move = function(event){
 
     if ( intersects.length > 0 ) {
         mouse.$who.text(intersects[0].object.name).show();
+        //mouse.lightUp(intersects[0].object);
     } else {
         mouse.$who.stop().fadeOut();
     }
 };
+
+mouse.lightUp = function(el){
+    console.log(el.id);
+
+    $.each(graph.getConnections(el.id, true), function(key, val){
+        console.log(val);
+        //DDD.lines[val.id].material.color = new THREE.Color( 0xff0000 );
+        DDD.lines[val.id].material = new THREE.MeshLambertMaterial( { color: 0xFF0000, shading: THREE.FlatShading, transparent: true, opacity: 0.8 } );
+        DDD.lines[val.id].material.needsUpdate = true;
+    });
+}
 

@@ -129,7 +129,6 @@ timeline.make3D = function(){
 	        		var path = new THREE.Spline([line.geometry.vertices[0], line.geometry.vertices[1]]);
 	        		var point = path.getPoint( completed );
 
-
 	        		//animate
 	        		val.position = point;
 

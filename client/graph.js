@@ -128,7 +128,7 @@ graph.makeCommunities = function(){
 
 };
 
-graph.getConnections = function(id){
+graph.getConnections = function(id, index){
     var nodes = [];
 
     $.each(graph.force.links(), function(key, val){
@@ -137,9 +137,9 @@ graph.getConnections = function(id){
             nodes.push({id:key, negative:false});
         }
 
-        // if(val.target.id == id){
-        //     nodes.push({id:key, negative:true});
-        // }
+        if(index && val.source.index == id){
+            nodes.push({id:key, negative:false, 'name': val});
+        }
 
     });
 

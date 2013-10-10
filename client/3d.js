@@ -29,7 +29,7 @@ DDD.init = function(){
     //mesh settings
     DDD.setMaterial();
     DDD.geom.node = new THREE.IcosahedronGeometry(25, 1);
-    DDD.geom.message = new THREE.IcosahedronGeometry(10, 1);
+    DDD.geom.message = new THREE.IcosahedronGeometry(5, 1);
 
     //start
     DDD.renderer = new THREE.WebGLRenderer();
@@ -60,6 +60,10 @@ DDD.init = function(){
     //mouse
     mouse.init();
 
+    //fx
+    FX.init();
+
+    //timeline
     timeline.make3D();
 };
 
@@ -97,8 +101,8 @@ DDD.setMaterial = function(){
     }
 
     //LINES
-    //DDD.material.line = new THREE.LineBasicMaterial( { color: 0x999999, fog: true, linewidth: 0.005 } );
-    DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
+    DDD.material.line = new THREE.LineBasicMaterial( { color: 0x999999, fog: true, linewidth: 0.005, opacity: 0.2, transparent: true } );
+    // DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
 
     //MESSAGES
     DDD.material.message = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading } );
@@ -140,6 +144,9 @@ DDD.animate = function() {
     timeline.tick();
 
     DDD.controls.update(0.1);
+
+    //fx
+    FX.render();
 
     DDD.renderer.render( DDD.scene, DDD.camera );
 

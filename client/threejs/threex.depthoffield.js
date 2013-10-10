@@ -2,7 +2,7 @@
  * vendor.js framework definition
  * @type {Object}
  */
-var THREEx	= THREEx || {};
+THREEx	= THREEx || {};
 
 /**
  * setup a depth of field rendering
@@ -40,11 +40,11 @@ THREEx.DepthOfField	= function(renderer){
 	uniforms['tColor'].value	= renderTargetColor;
 	uniforms['tDepth'].value	= renderTargetDepth;
 	uniforms['aspect'].value	= rendererW / rendererH;
-	uniforms['focus'].value		= 0.80
+	uniforms['focus'].value		= 1
 
 	// exagerated setting 
-	uniforms['aperture'].value	= 0.03
-	uniforms['maxblur'].value	= 0.015
+	uniforms['aperture'].value	= 0.008
+	uniforms['maxblur'].value	= 0.1
 
 	// realist setting - thanks @lmg
 	// uniforms['aperture'].value	= 0.006
