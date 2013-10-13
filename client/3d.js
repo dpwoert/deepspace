@@ -50,6 +50,7 @@ DDD.init = function(){
 
     //light
     light.init();
+    back.init();
 
     //camera
     DDD.setCameraControls();
@@ -100,7 +101,7 @@ DDD.setMaterial = function(){
     }
 
     //LINES
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0x999999, fog: true, linewidth: 0.005, opacity: 0.2, transparent: true } );
+    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xa4b2c1, fog: false, linewidth: 0.005, opacity: 0.2, transparent: true } );
     // DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
 
     //MESSAGES
