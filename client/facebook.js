@@ -1,7 +1,12 @@
 window.facebook = {};
 
 //settings
-facebook.appId = 289032171239738;
+if(__meteor_runtime_config__.ROOT_URL == 'http://deepspace.herokuapp.com/'){
+	facebook.appId = 1424128567810216;
+} else {
+	facebook.appId = 289032171239738;
+}
+
 facebook.busy = 0;
 
 //dates
