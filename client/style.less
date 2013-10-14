@@ -4,10 +4,85 @@
 	margin: 0;
 }
 
-body{
-	background: black;
+body, html{
+	height: 100%;
+	width: 100%;
+	font-size: 12px; //1em
 }
 
+body{
+	background: white;
+
+	.transition(background 5s ease);
+
+	&.main{
+		background: black;
+	}
+}
+
+//intro
+#intro{
+
+	position: relative;
+	height: 100%;
+	width: 100%;
+
+	.content {
+		position: absolute;
+		top: 30%;
+		width: 50%;
+		height: 30%;
+		left: 25%;
+
+		z-index: 9;
+
+		font-family: 'helvetica', 'arial', sans-serif;
+		text-align: center;
+	}
+
+	//logo
+	.logo{
+		background: url('../logo.svg');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+
+		width: 100%;
+		height: 50%;
+	}
+
+	//text
+	p span{
+		background-color: white;
+	}
+
+	//buttons
+	ul{
+		list-style: none;
+		text-align: center;
+		display: inline-block;
+		margin-top: 5px;
+	}	
+
+	li {
+		float: left;
+		border: 2px solid rgba(0, 0, 0, 0.7);
+		background: white;
+		padding: 4px;
+		margin-right: 4px;
+		text-transform: lowercase;
+		cursor: pointer;
+
+		.transition(all 0.5s ease);
+
+		&:hover{
+			background: black;
+			color: white;
+		}
+	}
+}
+
+//main visualisation
 #who, #date{
 	position: absolute;
 	color: white;
@@ -25,6 +100,10 @@ body{
 	font-size: 15px;
 }
 
-circle{
-	-webkit-filter: blur(7px);
+//LESS mixin
+.transition(@args:200ms) {
+    -webkit-transition: @args;
+    -moz-transition: @args;
+    -o-transition: @args;
+    transition: @args;
 }

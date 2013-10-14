@@ -2,6 +2,11 @@ window.data = {};
 
 //start script
 Meteor.startup(function(){
+	intro.init();
+});
+
+
+window.loadMain = function(){
 
 	//get data
 	var get = [
@@ -18,7 +23,8 @@ Meteor.startup(function(){
 		graph.makeForce,
 		graph.makeCommunities,
 		timeline.make3D,
-		cache.saveCache
+		cache.saveCache,
+		intro.hide
 	];
 
 	//start visualisation
@@ -31,4 +37,4 @@ Meteor.startup(function(){
 	facebook.retrieve(get, prepare, start);
 	facebook.connect();
 
-});
+};

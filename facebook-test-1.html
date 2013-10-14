@@ -4,8 +4,22 @@
 </head>
 
 <body>
+	{{> intro}}
 	{{> graph}}
 </body>
+
+<template name="intro">
+	<div id="intro">
+		<div class="content">
+			<div class="logo"></div>
+			<p><span>Dive deep into your facebook account by visualising it in 3D<span></p>
+			<ul>
+				<li class="login">Log in</li>
+				<li class="example">Example data</li>
+			</ul>
+		</div>
+	</div>
+</template>
 
 <template name="graph">
 	<div id="graph"></div>
