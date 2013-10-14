@@ -101,7 +101,7 @@ intro.animate = function(){
 
 	}
 
-	var full = ($(window).height()/2)*intro.status;
+	var full = ($(window).height()*0.75)*intro.status;
 	intro.Y = (0 - $(window).height() / 2) + full;
 
 	intro.camera.position.x += ( intro.X - intro.camera.position.x ) * .05;
