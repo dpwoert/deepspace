@@ -5,6 +5,7 @@ intro.settings = {
 	delta: 100, 
 	qx: 100,
 	qy: 50,
+	outroTime: 5000
 };
 
 intro.init = function(){
@@ -14,11 +15,16 @@ intro.init = function(){
 
 intro.initDOM = function(){
 	intro.$ = $('#intro');
+	intro.loadExample = false;
 
 	//log in
 	intro.$.find('li.login').click(function(){
 		intro.loading();
-		//loadMain();
+	});
+
+	intro.$.find('li.example').click(function(){
+		if($.isPlainObject(EXAMPLE)) intro.loadExample = true;
+		intro.$.find('li.login').click();
 	});
 }
 
@@ -84,20 +90,18 @@ intro.init3D = function(){
 
 intro.animate = function(){
 
-	requestAnimationFrame( intro.animate );
+	if(!intro.removed2) { requestAnimationFrame( intro.animate ); }
+	else { return false }
 
 	//loading
 	if(intro.loadingData){
 
 		//done loading
-		if(intro.status >= 1){
-			//$('canvas').fadeOut(500, intro.remove);
+		if(intro.status >= 1 && intro.done && !intro.removed){
+			intro.remove();
 		} else {
 			intro.status += 0.01;
 		}
-
-		//already done loading
-		if(intro.hidden) intro.status = 1;
 
 	}
 
@@ -128,15 +132,34 @@ intro.animate = function(){
 }
 
 intro.loading = function(){
-	//$('body').addClass('main');
+	if(intro.loadExample){
+		data = EXAMPLE;
+		intro.done = true;
+	} else {
+		intro.handle();
+	}
 	intro.$.find('.content').fadeOut();
 	intro.loadingData = true;
 }
 
-intro.hide = function(){
-	intro.hidden = true;
-}
+intro.progress = function(){
+	if(!facebook.maxBusy || facebook.maxBusy < facebook.busy){
+		facebook.maxBusy = facebook.busy;
+	}
+
+	return facebook.busy / facebook.maxBusy;
+};
 
 intro.remove = function(){
-	intro.$.remove();
+
+	window.setTimeout(intro.hide,intro.settings.outroTime);
+	$('body').addClass('main');
+	intro.removed = true;
+
+	$('canvas').fadeOut(intro.settings.outroTime, function(){
+		intro.$.remove();
+		intro.removed2 = true;
+		delete intro.scene, intro.camera, intro.renderer;
+	});
+
 }

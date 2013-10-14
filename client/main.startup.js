@@ -2,14 +2,9 @@ window.data = {};
 
 //start script
 Meteor.startup(function(){
-	intro.init();
-});
-
-
-window.loadMain = function(){
 
 	//get data
-	var get = [
+	var fnFacebook = [
 		facebook.getFriends,
 		facebook.getFriendRelations,
 		facebook.getLikes,
@@ -24,17 +19,46 @@ window.loadMain = function(){
 		graph.makeCommunities,
 		timeline.make3D,
 		cache.saveCache,
-		intro.hide
 	];
 
 	//start visualisation
 	start = DDD.init;
 
 	//check if cached to prevent facebook call
-	get = cache.check(get);
+	fnFacebook = cache.check(fnFacebook);
 
-	//connect to facebook
-	facebook.retrieve(get, prepare, start);
-	facebook.connect();
+	//intro button
+	intro.handle = function(){
 
-};
+		//make facebook connection
+		facebook.load(fnFacebook, function(){ intro.done = true; });
+
+	};
+
+	intro.hide = function(){
+
+		//launch app
+		launch(prepare, start)
+
+	}
+
+	//start with intro
+	intro.init();
+
+
+});
+
+window.launch = function(prepare, start){
+	
+	//start preparation [array]
+	$.each(prepare, function(k, handler){
+		if( $.isFunction(handler) ) handler();
+	});
+
+	//[single function]
+	if( $.isFunction(prepare) ) handler();
+
+	//start visualisation
+	start();
+
+}

@@ -28,7 +28,9 @@ facebook.connect = function(){
     }, {scope: 'friends_likes,user_likes,read_friendlists,email,read_stream'});
 };
 
-facebook.retrieve = function(list, prepare, start){
+facebook.load = function(list, after){
+
+	facebook.connect();
 
 	facebook.loginSucces = function(first){
 		//get data from facebook and callback when ready
@@ -38,21 +40,9 @@ facebook.retrieve = function(list, prepare, start){
 
 		//check for succes
 		if(facebook.busy > 0){
-			document.title = 'loading: ' + facebook.busy;
 			window.setTimeout(function(){ facebook.loginSucces(false) }, 50);
 		} else {
-			document.title = 'Facebook visualizer';
-			
-			//start preparation [array]
-			$.each(prepare, function(k, handler){
-				if( $.isFunction(handler) ) handler();
-			});
-
-			//[single function]
-			if( $.isFunction(prepare) ) handler();
-
-			//start visualisation
-			start();
+			after();
 		}
 	}
 

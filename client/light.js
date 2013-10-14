@@ -2,17 +2,21 @@ window.light = {};
 
 light.init = function(){
 
-	//ambient
-	// var ambientLight = new THREE.AmbientLight(0x222222);
- //    DDD.scene.add(ambientLight);
+ 	light.intensity = DDD.lightPulses ? 0.5 : 1;
+ 	light.hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, light.intensity);
+ 	DDD.scene.add(light.hemisphere);
 
-	// //directional
-	// var directionalLight = new THREE.DirectionalLight(0xffffff);
- //    directionalLight.position.set(1, 1, 1).normalize();
- //    DDD.scene.add(directionalLight);
+ 	light.fadeIn();
 
- 	var intensity = DDD.lightPulses ? 0.7 : 1;
- 	hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, intensity);
- 	DDD.scene.add(hemisphere);
+};
 
-}
+light.fadeIn = function(){
+
+	$({foo:0}).animate({foo:100}, {
+		duration: 5000,
+	    step: function(val) {
+	        light.hemisphere.intensity = (val/100)*light.intensity;
+	    }
+	})
+
+};

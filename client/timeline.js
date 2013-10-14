@@ -136,8 +136,8 @@ timeline.make3D = function(){
 	        		val[0].position = point;
 	        		val[1].position = point;
 
-	        		var maxLight = 3;
-	        		var bottleNeck = 0.3;
+	        		var maxLight = 2;
+	        		var bottleNeck = 0.4;
 
 	        		val[1].intensity = completed > bottleNeck ? (completed * (1/bottleNeck)) * maxLight : maxLight - (completed * maxLight);
 	        		//val[1].intensity = 3 - (completed * maxLight);

@@ -15,7 +15,8 @@ window.DDD = {
 	material: {},
 	geom: {},
 
-    lightPulses: false
+    lightPulses: false,
+    startAlpha: 0.05
 
 };
 
@@ -68,6 +69,8 @@ DDD.init = function(){
 
     //timeline
     timeline.make3D();
+
+    DDD.enabled = true;
 };
 
 DDD.setCameraControls = function(){
@@ -146,7 +149,9 @@ DDD.animate = function() {
     });
 
     //timeline
-    timeline.tick();
+    if(graph.force.alpha() < DDD.startAlpha){
+        timeline.tick();
+    }
 
     DDD.controls.update(0.1);
 

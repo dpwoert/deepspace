@@ -28,3 +28,8 @@ cache.clear = function(){
 	localStorage.clear();
 	return true;
 }
+
+cache.export = function(){
+	DDD.pause = true;
+	$('body').append('<div id="export">'+JSON.stringify(data)+'</div>');
+}
