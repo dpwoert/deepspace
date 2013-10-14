@@ -11,7 +11,8 @@ light.init = function(){
  //    directionalLight.position.set(1, 1, 1).normalize();
  //    DDD.scene.add(directionalLight);
 
- 	hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, 1);
+ 	var intensity = DDD.lightPulses ? 0.7 : 1;
+ 	hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, intensity);
  	DDD.scene.add(hemisphere);
 
 }

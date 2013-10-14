@@ -98,13 +98,15 @@ timeline.make3D = function(){
 	        		$.each(graph.getConnections(id), function(cID, connection){
 	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type) );
 	        			obj.elements.push(el);
-	        			DDD.scene.add(el);
+	        			DDD.scene.add(el[0]);
+	        			DDD.scene.add(el[1]);
 	        		});
 	        	}
 	        	else {
 	        		//delete items
 	        		$.each(obj.elements, function(){
-	        			DDD.scene.remove(this);
+	        			DDD.scene.remove(this[0]);
+	        			DDD.scene.remove(this[1]);
 	        		});
 	        		obj.elements = null;
 	        	}
@@ -119,10 +121,10 @@ timeline.make3D = function(){
 	        	//animate items
 	        	$.each(obj.elements, function(key, val){
 
-	        		var line = DDD.lines[val.userData.line];
+	        		var line = DDD.lines[val[0].userData.line];
 
 	        		//get progress
-	        		if(val.userData.negative){
+	        		if(val[0].userData.negative){
 	        			completed = 1-completed;
 	        		}
 
@@ -131,7 +133,14 @@ timeline.make3D = function(){
 	        		var point = path.getPoint( completed );
 
 	        		//animate
-	        		val.position = point;
+	        		val[0].position = point;
+	        		val[1].position = point;
+
+	        		var maxLight = 3;
+	        		var bottleNeck = 0.3;
+
+	        		val[1].intensity = completed > bottleNeck ? (completed * (1/bottleNeck)) * maxLight : maxLight - (completed * maxLight);
+	        		//val[1].intensity = 3 - (completed * maxLight);
 
 	        		delete path, point;
 	        	});

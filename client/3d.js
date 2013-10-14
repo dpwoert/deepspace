@@ -13,7 +13,9 @@ window.DDD = {
     messages: [],
 
 	material: {},
-	geom: {}
+	geom: {},
+
+    lightPulses: false
 
 };
 
@@ -149,7 +151,7 @@ DDD.animate = function() {
     DDD.controls.update(0.1);
 
     //fx
-    FX.render();
+    //FX.render();
 
     DDD.renderer.render( DDD.scene, DDD.camera );
 
@@ -199,7 +201,7 @@ DDD.addLink = function(o){
 DDD.addMessage = function(line, negative, material){
 
     var mesh = new THREE.Mesh( DDD.geom.message, material );
-    // var mesh = new THREE.PointLight( 0xff0000, 1, 200 );
+    var light =  DDD.lightPulses ? new THREE.PointLight( 0xffffff, 5, 500 ) : {};
 
     var _line = DDD.lines[line];
 
@@ -211,5 +213,5 @@ DDD.addMessage = function(line, negative, material){
     mesh.userData.line = line;
     mesh.userData.negative = negative;
 
-    return mesh;
+    return [mesh, light];
 }
