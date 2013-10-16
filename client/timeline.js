@@ -99,14 +99,13 @@ timeline.make3D = function(){
 	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type) );
 	        			obj.elements.push(el);
 	        			DDD.scene.add(el[0]);
-	        			DDD.scene.add(el[1]);
 	        		});
 	        	}
 	        	else {
 	        		//delete items
 	        		$.each(obj.elements, function(){
 	        			DDD.scene.remove(this[0]);
-	        			DDD.scene.remove(this[1]);
+	        			this[1].intensity = 0;
 	        		});
 	        		obj.elements = null;
 	        	}
@@ -136,11 +135,11 @@ timeline.make3D = function(){
 	        		val[0].position = point;
 	        		val[1].position = point;
 
-	        		var maxLight = 2;
+	        		var maxLight = 1;
 	        		var bottleNeck = 0.4;
 
-	        		val[1].intensity = completed > bottleNeck ? (completed * (1/bottleNeck)) * maxLight : maxLight - (completed * maxLight);
-	        		//val[1].intensity = 3 - (completed * maxLight);
+	        		val[1].intensity = completed < bottleNeck ? (completed * (1/bottleNeck)) * maxLight : maxLight - (completed * maxLight);
+	        		// val[1].intensity = 3 - (completed * maxLight);
 
 	        		delete path, point;
 	        	});

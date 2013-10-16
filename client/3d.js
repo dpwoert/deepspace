@@ -15,7 +15,7 @@ window.DDD = {
 	material: {},
 	geom: {},
 
-    lightPulses: false,
+    lightPulses: true,
     startAlpha: 0.05
 
 };
@@ -102,17 +102,18 @@ DDD.setMaterial = function(){
 
     //add
     for(var i = 0 ; i < max ; i++){
-        DDD.material.node.push(new THREE.MeshLambertMaterial( { color: color.nodes[i], shading: THREE.FlatShading } ) );
+        var nodeColor = color.nodes[i];
+        DDD.material.node.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading } ) );
     }
 
     //LINES
-    DDD.material.line = new THREE.LineBasicMaterial( { color: 0xa4b2c1, fog: false, linewidth: 0.005, opacity: 0.2, transparent: true } );
+    DDD.material.line = new THREE.LineBasicMaterial( { 'color': 0xa4b2c1, 'fog': false, 'linewidth': 0.005, 'opacity': 0.2, 'transparent': true } );
     // DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
 
     //MESSAGES
     DDD.material.message = {};
     $.each(color.posts, function(key, val){
-        DDD.material.message[key] = new THREE.MeshLambertMaterial( { color: val, shading: THREE.FlatShading } );
+        DDD.material.message[key] = new THREE.MeshLambertMaterial( { 'color': val, 'shading': THREE.FlatShading } );
     });
 
 }
@@ -136,8 +137,8 @@ DDD.animate = function() {
 
         //updatable
         DDD.lines[key].geometry.verticesNeedUpdate = true;
-        DDD.lines[key].geometry.dynamic = true;
-        DDD.lines[key].geometry.normalsNeedUpdate = true;
+        // DDD.lines[key].geometry.dynamic = true;
+        // DDD.lines[key].geometry.normalsNeedUpdate = true;
 
     	DDD.lines[key].geometry.vertices[0].x = link.source.x * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[0].y = link.source.y * DDD.multiplyer;
@@ -206,17 +207,23 @@ DDD.addLink = function(o){
 DDD.addMessage = function(line, negative, material){
 
     var mesh = new THREE.Mesh( DDD.geom.message, material );
-    var light =  DDD.lightPulses ? new THREE.PointLight( 0xffffff, 5, 500 ) : {};
+   // var light =  DDD.lightPulses ? new THREE.PointLight( 0xffffff, 2, 1000 ) : {};
+    //var pulse = new THREE.PointLight( 0xffffff, 2, 500 );
+    var pulse = light.get();
 
     var _line = DDD.lines[line];
 
-    mesh.position.x = _line.geometry.vertices.x;
-    mesh.position.y = _line.geometry.vertices.y;
-    mesh.position.z = _line.geometry.vertices.z;
+    mesh.position.x = _line.geometry.vertices[0].x;
+    mesh.position.y = _line.geometry.vertices[0].y;
+    mesh.position.z = _line.geometry.vertices[0].z;
+
+    pulse.position = mesh.position;
+
+    pulse.intensity = 0;
 
 
     mesh.userData.line = line;
     mesh.userData.negative = negative;
 
-    return [mesh, light];
+    return [mesh, pulse];
 }
