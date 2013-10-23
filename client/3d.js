@@ -201,26 +201,25 @@ DDD.addLink = function(o){
     var line = new THREE.Line( geometry, DDD.material.line );
 
 	DDD.lines.push(line);
-	DDD.scene.add( line );
+	DDD.scene.add(line);
 };
 
-DDD.addMessage = function(line, negative, material){
+DDD.addMessage = function(line, negative, material, noLight){
 
     var mesh = new THREE.Mesh( DDD.geom.message, material );
-   // var light =  DDD.lightPulses ? new THREE.PointLight( 0xffffff, 2, 1000 ) : {};
-    //var pulse = new THREE.PointLight( 0xffffff, 2, 500 );
-    var pulse = light.get();
+    var pulse = noLight ? {} : light.get();
 
     var _line = DDD.lines[line];
 
+    //pos
     mesh.position.x = _line.geometry.vertices[0].x;
     mesh.position.y = _line.geometry.vertices[0].y;
     mesh.position.z = _line.geometry.vertices[0].z;
-
     pulse.position = mesh.position;
 
+    //light
     pulse.intensity = 0;
-
+    //light.color =  mesh.material.color;
 
     mesh.userData.line = line;
     mesh.userData.negative = negative;

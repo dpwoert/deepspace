@@ -5,7 +5,8 @@ timeline.play = true;
 
 //start month ago
 timeline.current = new Date();
-timeline.current = timeline.current.setMonth(timeline.current.getMonth() - 1);
+timeline.now = new Date();
+timeline.current = timeline.current.setDate(timeline.now.getDate() - 7 * 2);
 
 timeline.add = function(properties){
 
@@ -31,7 +32,11 @@ timeline.tick = function(){
 		timeline.current+=timeline.delta;
 	}
 
-	//[loop/restart]
+	//restart when today has been reached
+	if(timeline.current > timeline.now){
+		console.log('restart');
+		timeline.current = timeline.now;
+	}
 
 	//show data
 	timeline.show();
@@ -95,8 +100,16 @@ timeline.make3D = function(){
 	        	if(visible){
 	        		//create items
 	        		obj.elements = []
+	        		var i = 0;
 	        		$.each(graph.getConnections(id), function(cID, connection){
-	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type) );
+
+	        			//determine light needed
+	        			i++;
+	        			var noLight = true;
+	        			if(i % 5 == 0) noLight = false;
+
+	        			//add object
+	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type), noLight);
 	        			obj.elements.push(el);
 	        			DDD.scene.add(el[0]);
 	        		});
