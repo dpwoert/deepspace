@@ -9,10 +9,9 @@ if(__meteor_runtime_config__.ROOT_URL == 'http://deepspace.herokuapp.com/'){
 
 facebook.busy = 0;
 
-//dates
+//dates - 20 days ago till now
 facebook.from = new Date();
-facebook.from = Math.round(facebook.from.setMonth(facebook.from.getMonth() - 1)/1000);
-//facebook.from = Math.round(facebook.from.getTime() / 1000);
+facebook.from = Math.round(facebook.from.setDate(facebook.from.getDate() - 20)/1000);
 facebook.until = Math.round(new Date().getTime()/1000);
 
 facebook.connect = function(){

@@ -13,10 +13,19 @@ body, html{
 body{
 	background: white;
 
-	.transition(background 5s ease);
+	.transform(scale(1));
+	-webkit-transition: background 5s ease, -webkit-transform 0.7s;
+	-moz-transition: background 5s ease, -moz-transform 0.7s;
+	transition: background 5s ease, transform 0.7s;
 
 	&.main{
 		background: black;
+	}
+
+	&.modal{
+		.transform(scale(0.9));
+
+		.overlay.info{ opacity: 0.5; }
 	}
 }
 
@@ -99,6 +108,58 @@ body{
 	}
 }
 
+//info
+#info{
+	position: fixed;
+	left: 25%;
+	top: 25%;
+	z-index: 10;
+
+	width: 50%;
+	height: 50%;
+	padding: 20px;
+
+	background: black;
+	color: white;
+
+	font-family: 'helvetica neue', 'helvetica', sans-serif;
+	font-size: 1em;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    overflow: auto;
+    display: none;
+
+    opacity: 0;
+
+    .transform(scale(0.1));
+    .transition(all 0.7s ease);
+
+	p{ margin: 1em }
+	a{ 
+		color: white;
+		text-decoration: none; 
+	}
+
+	&.show{
+		opacity: 1;
+		.transform(scale(1.1));
+	}
+}
+
+.overlay.info{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: white;
+	opacity: 0;
+	display: block;
+
+	.transition(all 0.7s);
+}
+
 //main visualisation
 #who, #date{
 	position: absolute;
@@ -136,4 +197,10 @@ body{
     -moz-transition: @args;
     -o-transition: @args;
     transition: @args;
+}
+.transform(@args) {
+    -webkit-transform: @args;
+    -moz-transform: @args;
+    -o-transform: @args;
+    transform: @args;
 }

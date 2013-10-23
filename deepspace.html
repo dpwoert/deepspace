@@ -5,6 +5,7 @@
 
 <body>
 	{{> intro}}
+	{{> info}}
 	{{> graph}}
 	<div id="made"><a href="http://www.woert.nl/davey/">Davey van der Woert</a></div>
 </body>
@@ -17,6 +18,7 @@
 			<ul>
 				<li class="login">Log in</li>
 				<li class="example">Example data</li>
+				<li class="more-info">More info</li>
 			</ul>
 		</div>
 	</div>
@@ -26,4 +28,34 @@
 	<div id="graph"></div>
 	<div id="who"></div>
 	<div id="date"></div>
+</template>
+
+<template name="info">
+	<div class="overlay info"></div>
+	<div id="info">
+		<p>
+		Dive deep into the Matrix with your Facebook network. This visualisation lets you see the connections, likes and activity in your network. The data is gathered by the Facebook Graph API and you need to give it permission to access your data. None of this data will be stored by me or a third party so you can maintain the illusion of having privacy.
+		</p>
+
+		<p>
+		Short explanation of the elements:<br>
+		Big nodes - friends, color determined by making communities. Hold your mouse on a node to see his/her name.<br>
+		Small nodes - messages such as status updates, video’s and images (all have a different color).<br>
+		Lines - friendship, shorter lines mean people have shared interests.<br>
+		</p>
+
+		<p>
+		Controls:<br>
+		Mouse - look around<br>
+		Left click: Move forward<br>
+		Right click: Move backward<br>
+		WASD: Move around
+		</p>
+
+		<p>
+		<a href="https://github.com/dpwoert/facebook-visualisation" target="_blank">Github</a> | 
+		<a href="https://github.com/dpwoert/facebook-visualisation" target="_blank">Blog</a> | 
+		<a href="https://github.com/dpwoert/facebook-visualisation" target="_blank">Portfolio</a>
+		</p>
+	</div>
 </template>
