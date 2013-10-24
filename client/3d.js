@@ -71,6 +71,9 @@ DDD.init = function(){
     timeline.make3D();
 
     DDD.enabled = true;
+
+    //analytics
+    analytics.addDetail('3d', '3d');
 };
 
 DDD.setCameraControls = function(){

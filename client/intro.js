@@ -11,6 +11,9 @@ intro.settings = {
 intro.init = function(){
 	intro.init3D();
 	intro.initDOM();
+
+	//analytics
+	analytics.addDetail('home', 'home');
 }
 
 intro.initDOM = function(){
@@ -20,6 +23,9 @@ intro.initDOM = function(){
 	//log in
 	intro.$.find('li.login').click(function(){
 		intro.loading();
+
+		//analytics
+		analytics.addDetail('load-facebook', 'load-facebook');
 	});
 
 	//example
@@ -35,6 +41,9 @@ intro.initDOM = function(){
 			$('#info').addClass('show');
 			$('body').addClass('modal');
 		},0);
+
+		//analytics
+		analytics.addDetail('info', 'info');
 	});
 
 	//hide info on overlay click
@@ -46,6 +55,9 @@ intro.initDOM = function(){
 			window.setTimeout(function(){
 				$('#info, .info.overlay').hide();
 			},500);
+
+			//analytics
+			analytics.addDetail('home', 'home');
 		}
 	});
 }
