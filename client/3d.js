@@ -73,7 +73,7 @@ DDD.init = function(){
     DDD.enabled = true;
 
     //analytics
-    analytics.addDetail('3d', '3d');
+    analytics.addPage('/3d', '3d');
 };
 
 DDD.setCameraControls = function(){

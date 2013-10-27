@@ -11,9 +11,6 @@ intro.settings = {
 intro.init = function(){
 	intro.init3D();
 	intro.initDOM();
-
-	//analytics
-	analytics.addDetail('home', 'home');
 }
 
 intro.initDOM = function(){
@@ -26,7 +23,7 @@ intro.initDOM = function(){
 		$('.overlay').remove();
 
 		//analytics
-		analytics.addDetail('load-facebook', 'load-facebook');
+		analytics.addPage('/load-facebook', 'Loading facebook');
 	});
 
 	//example
@@ -44,7 +41,7 @@ intro.initDOM = function(){
 		},0);
 
 		//analytics
-		analytics.addDetail('info', 'info');
+		analytics.addPage('/info', 'Info');
 	});
 
 	//hide info on overlay click
@@ -58,7 +55,7 @@ intro.initDOM = function(){
 			},500);
 
 			//analytics
-			analytics.addDetail('home', 'home');
+			analytics.addPage('/', 'home');
 		}
 	});
 }
