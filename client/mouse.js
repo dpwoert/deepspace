@@ -4,7 +4,7 @@ mouse.init = function(){
 
     //events
 	$('canvas').mousemove(mouse.move);
-    //$('canvas').dblclick(mouse.click);
+    $('canvas').dblclick(mouse.click);
 
     //init
 	mouse.$who = $('#who');
@@ -56,9 +56,12 @@ mouse.click = function(){
         $.each(DDD.lines, function(){
             this.visible = false;
         });
+        $.each(DDD.linesLight, function(){
+            this.visible = true;
+        });
 
         //apply on nodes
-        $.each(DDD.nodes, function(){
+        $.each(DDD.nodes, function(key,val){
 
             //reset
             var connected = false;
@@ -68,16 +71,21 @@ mouse.click = function(){
             $.each(connections, function(){
                 if(this.value.target.id == _this.userData.id){
                     connected = true;
-                    DDD.lines[this.id].visible = true;
+                    DDD.linesHeavy[this.id].visible = true;
+                    DDD.linesLight[this.id].visible = false;
                 }
             });
 
             //update
             if(connected || this.userData.id == mouse.active){
                 this.visible = true;
+                DDD.nodesLight[key].visible = false;
+                console.log(DDD.nodesLight[key]);
                 //this.material = DDD.material.node[this.userData.community];
             } else {
                 this.visible = false;
+                DDD.nodesLight[key].visible = true;
+                console.log(DDD.nodesLight[key]);
                 //this.material = DDD.material.nodeLight[this.userData.community];
                 // console.log(this);
             }
@@ -86,6 +94,8 @@ mouse.click = function(){
 
         });
 
+    } else {
+        mouse.border(false);
     }
 };
 
@@ -100,6 +110,9 @@ mouse.border = function(show){
 
         //show elements again
         $.each(DDD.nodes, function(){ this.visible = true; });
+        $.each(DDD.nodesLight, function(){ this.visible = false; });
         $.each(DDD.lines, function(){ this.visible = true; });
+        $.each(DDD.linesLight, function(){ this.visible = false; });
+        $.each(DDD.linesHeavy, function(){ this.visible = false; });
     }
 }

@@ -163,6 +163,25 @@ body{
 	.transition(all 0.7s);
 }
 
+//error
+.error{
+	display: none;
+	position: absolute;
+	top: 50%;
+	font-size: 14px;
+	margin-top: -7px;
+	text-align: center;
+	width: 100%;
+	z-index: 99999; //screw this be on top...
+
+	span{
+		background: black;
+		color: white;
+		font-family: 'helvetica neue', 'helvetica', sans-serif;
+		padding: 10px;
+	}
+}
+
 //main visualisation
 #who, #date{
 	position: absolute;

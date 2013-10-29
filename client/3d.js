@@ -9,7 +9,12 @@ window.DDD = {
 	renderer : null,
 
 	nodes: [],
+    nodesLight: [],
+
 	lines: [],
+    linesHeavy: [],
+    linesLight: [],
+
     messages: [],
 
 	material: {},
@@ -108,12 +113,13 @@ DDD.setMaterial = function(){
     for(var i = 0 ; i < max ; i++){
         var nodeColor = color.nodes[i];
         DDD.material.node.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading } ) );
-        DDD.material.nodeLight.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading, 'opacity': 0.2, 'transparent': true } ) );
+        DDD.material.nodeLight.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading, 'opacity': 0.3, 'transparent': true } ) );
     }
 
     //LINES
     DDD.material.line = new THREE.LineBasicMaterial( { 'color': 0xa4b2c1, 'fog': false, 'linewidth': 0.005, 'opacity': 0.2, 'transparent': true } );
-    // DDD.material.line = new THREE.MeshLambertMaterial( { color: 0x999999, shading: THREE.FlatShading, transparent: true, opacity: 0.2 } );
+    DDD.material.lineLight = new THREE.LineBasicMaterial( { 'color': 0xa4b2c1, 'fog': false, 'linewidth': 0.005, 'opacity': 0.1, 'transparent': true } );
+    DDD.material.lineHeavy = new THREE.LineBasicMaterial( { 'color': 0xa4b2c1, 'fog': false, 'linewidth': 0.005, 'opacity': 1, 'transparent': true } );
 
     //MESSAGES
     DDD.material.message = {};
@@ -134,7 +140,10 @@ DDD.animate = function() {
     //animate nodes
     $.each(graph.force.nodes(), function(key, node){
     	DDD.nodes[key].position.x = node.x * DDD.multiplyer;
-    	DDD.nodes[key].position.y = node.y * DDD.multiplyer;
+        DDD.nodes[key].position.y = node.y * DDD.multiplyer;
+        if(DDD.nodesLight[key].visible){
+    	   DDD.nodesLight[key].position = DDD.nodes[key].position;
+        }
     });
 
     //animate links
@@ -152,6 +161,19 @@ DDD.animate = function() {
     	DDD.lines[key].geometry.vertices[1].x = link.target.x * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[1].y = link.target.y * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[1].z = link.target.z;
+
+
+        //detail lines
+        if(DDD.linesHeavy[key].visible){
+            DDD.linesHeavy[key].geometry.vertices[0] = DDD.lines[key].geometry.vertices[0];
+            DDD.linesHeavy[key].geometry.vertices[1] = DDD.lines[key].geometry.vertices[1];
+        } 
+
+        if(DDD.linesLight[key].visible){
+            DDD.linesLight[key].geometry.vertices[0] = DDD.lines[key].geometry.vertices[0];
+            DDD.linesLight[key].geometry.vertices[1] = DDD.lines[key].geometry.vertices[1];
+        }
+
     });
 
     //timeline when force is cooled down
@@ -172,7 +194,9 @@ DDD.addNode = function(node){
 
     var community = graph.community[node.index];
     var material = DDD.material.node[community];
+    var materialLight = DDD.material.nodeLight[community];
     var mesh = new THREE.Mesh( DDD.geom.node, material );
+    var meshLight = new THREE.Mesh( DDD.geom.node, materialLight );
 
 	mesh.position.x = node.x;
 	mesh.position.y = node.y;
@@ -184,8 +208,13 @@ DDD.addNode = function(node){
     mesh.userData.id = node.id;
     mesh.userData.community = community;
 
+    meshLight.visible = false;
+
     DDD.nodes.push(mesh);
+    DDD.nodesLight.push(meshLight);
+
     DDD.scene.add(mesh);
+    DDD.scene.add(meshLight);
 }
 
 DDD.addLink = function(o){
@@ -207,9 +236,20 @@ DDD.addLink = function(o){
     geometry.vertices.push( source , target );
 
     var line = new THREE.Line( geometry, DDD.material.line );
+    var lineLight = new THREE.Line( geometry, DDD.material.lineLight );
+    var lineHeavy = new THREE.Line( geometry, DDD.material.lineHeavy );
 
-	DDD.lines.push(line);
-	DDD.scene.add(line);
+    //hide detail lines
+    lineLight.visible = false;
+    lineHeavy.visible = false;
+
+    DDD.lines.push(line);
+    DDD.linesHeavy.push(lineHeavy);
+	DDD.linesLight.push(lineLight);
+
+    DDD.scene.add(line);
+    DDD.scene.add(lineHeavy);
+	DDD.scene.add(lineLight);
 };
 
 DDD.addMessage = function(line, negative, material, noLight){

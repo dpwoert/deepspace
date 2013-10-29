@@ -25,7 +25,7 @@ Meteor.startup(function(){
 	start = DDD.init;
 
 	//check if cached to prevent facebook call
-	//fnFacebook = cache.check(fnFacebook);
+	fnFacebook = cache.check(fnFacebook);
 
 	//intro button
 	intro.handle = function(){

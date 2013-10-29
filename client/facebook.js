@@ -28,6 +28,7 @@ facebook.login = function(){
 	FB.login(function(response) {
         if (!response.authResponse) {
             console.error('Geen toestemming om in te loggen op Facebook');
+            facebook.error('Geen toestemming om in te loggen op Facebook');
         } else{
         	console.log('ingelogd op facebook');
         	facebook.loginSucces(true);
@@ -64,9 +65,6 @@ facebook.getFriends = function(){
             acc[x.id] = x.name;
             return acc;
         }, {});
-
-        console.log('got my friendlist from FB');
-        console.log(facebook.friends);
 
         //delete task
         facebook.busy--;
@@ -119,6 +117,7 @@ facebook.getLikes = function(){
 				//error?
 				if(response.error){
 					console.warn(response.error);
+					facebook.error(response.message,response.error.code);
 					return false;
 				}
 
@@ -171,9 +170,6 @@ facebook.getPosts = function(){
 
 			FB.api(url, function(response) {
 
-				console.log(url);
-				console.log(response);
-
 				facebook.busy --;
 
 				//error?
@@ -206,4 +202,22 @@ facebook.getPosts = function(){
 
 	});
 
-}
+};
+
+facebook.error = function(error, code){
+	$e = $('.error');
+
+	//translate
+	switch(code){
+		case 4:
+		case 17:
+			error = 'Oops I made too many request from Facebook. Try again on a later time...';
+		case 1:
+		case 2:
+			error = 'It seems to be Facebook is down'
+		case (code>200):
+			error = 'Ough! I did not get enough permissions';
+	}
+
+	$e.html('<span>' + error + '</span>').fadeIn();
+};
