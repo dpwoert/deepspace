@@ -42,6 +42,9 @@ Meteor.startup(function(){
 
 	}
 
+	//add FB api
+	facebook.connect();
+
 	//start with intro
 	intro.init();
 

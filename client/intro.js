@@ -19,6 +19,7 @@ intro.initDOM = function(){
 
 	//log in
 	intro.$.find('li.login').click(function(){
+		facebook.login();
 		intro.loading();
 		$('.overlay').remove();
 

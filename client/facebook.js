@@ -15,13 +15,16 @@ facebook.from = Math.round(facebook.from.setDate(facebook.from.getDate() - 20)/1
 facebook.until = Math.round(new Date().getTime()/1000);
 
 facebook.connect = function(){
+
 	FB.init({
         appId:  facebook.appId,
         status: true,
         cookie: true,
         xfbml:  true
     });
+};
 
+facebook.login = function(){
 	FB.login(function(response) {
         if (!response.authResponse) {
             console.error('Geen toestemming om in te loggen op Facebook');
@@ -30,11 +33,9 @@ facebook.connect = function(){
         	facebook.loginSucces(true);
         }
     }, {scope: 'friends_likes,user_likes,read_friendlists,email,read_stream'});
-};
+}
 
 facebook.load = function(list, after){
-
-	facebook.connect();
 
 	facebook.loginSucces = function(first){
 		//get data from facebook and callback when ready
@@ -57,8 +58,6 @@ facebook.getFriends = function(){
 	facebook.busy++;
 
 	FB.api('/me/friends', function(response) {
-
-		console.log(response);
 
 		//make id's array keys
 		data.friends = response.data.reduce(function(acc, x) {
@@ -114,9 +113,6 @@ facebook.getLikes = function(){
 			facebook.busy ++;
 
 			FB.api(url, function(response) {
-
-				console.log(url);
-				console.log(response);
 
 				facebook.busy --;
 
