@@ -274,4 +274,4 @@ DDD.addMessage = function(line, negative, material, noLight){
     mesh.userData.negative = negative;
 
     return [mesh, pulse];
-}
+};

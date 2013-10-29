@@ -63,6 +63,11 @@ intro.initDOM = function(){
 			analytics.addPage('/', 'home');
 		}
 	});
+
+	//resize
+	$(window).resize(function(){
+		$('canvas').width(window.innerWidth).height(window.innerHeight);
+	});
 }
 
 intro.init3D = function(){
