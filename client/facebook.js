@@ -206,6 +206,7 @@ facebook.getPosts = function(){
 
 facebook.error = function(error, code){
 	$e = $('.error');
+	$('#intro .content').hide();
 
 	//translate
 	switch(code){

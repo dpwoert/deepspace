@@ -8,6 +8,7 @@ body, html{
 	height: 100%;
 	width: 100%;
 	font-size: 12px; //1em
+	overflow: hidden;
 }
 
 body{
@@ -80,6 +81,15 @@ body{
 	//text
 	p span{
 		background-color: white;
+	}
+
+	.noWebGL{
+		display: none;
+		font-weight: bold;
+
+		&.show{
+			display: block;
+		}
 	}
 
 	//buttons

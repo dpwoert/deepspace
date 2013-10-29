@@ -9,7 +9,7 @@ intro.settings = {
 };
 
 intro.init = function(){
-	intro.init3D();
+	if(Detector.canvas) intro.init3D();
 	intro.initDOM();
 }
 
@@ -26,6 +26,14 @@ intro.initDOM = function(){
 		//analytics
 		analytics.addPage('/load-facebook', 'Loading facebook');
 	});
+
+	if(!Detector.webgl){
+		//no webgl support...
+		intro.$.find('li.login').text('Log in not possible').unbind();
+		intro.$.find('.noWebGL').addClass('show');
+
+		delete Detector;
+	}
 
 	//example
 	intro.$.find('li.example').click(function(){
