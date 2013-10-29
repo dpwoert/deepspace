@@ -111,7 +111,8 @@ DDD.setMaterial = function(){
 
     //add
     for(var i = 0 ; i < max ; i++){
-        var nodeColor = color.nodes[i];
+        var nodeColor;
+        if(i >= color.nodes.length){ nodeColor = 0xcccccc; } else { nodeColor = color.nodes[i]; }
         DDD.material.node.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading } ) );
         DDD.material.nodeLight.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading, 'opacity': 0.3, 'transparent': true } ) );
     }
