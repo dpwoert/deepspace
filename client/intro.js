@@ -32,6 +32,8 @@ intro.initDOM = function(){
 		intro.$.find('li.login').text('Log in not possible').unbind();
 		intro.$.find('.noWebGL').addClass('show');
 
+		analytics.addPage('/no-webgl', 'No WebGL webbrowser');		
+
 		delete Detector;
 	}
 
