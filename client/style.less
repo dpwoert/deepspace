@@ -181,6 +181,58 @@ body{
 	font-size: 15px;
 }
 
+//mouse border
+@border: 7px;
+.mouseBorder{
+	position: absolute;
+	background: white;
+	display: none;
+
+	//left/right
+	&.left, &.right{
+		top: 0;
+		height: 100%;
+		width: @border;
+	}
+
+	&.left{
+		left: 0;
+	}
+
+	&.right{
+		right: 0;
+	}
+
+	//bottom/top
+	&.top, &.bottom{
+		left: 0;
+		width: 100%;
+		height: @border;
+	}
+
+	&.top{
+		top: 0;
+	}
+	&.bottom{
+		bottom: 0;
+	}
+
+	&.close{
+		@box: 35px;
+		width: @box;
+		height: @box;
+		right: 0;
+		top: 0;
+		color: black;
+		line-height: @box;
+		text-align: center;
+		font-family: 'helvetica', 'arial', sans-serif;
+		font-weight: bold;
+		font-size: 16px;
+		cursor: pointer;
+	}
+}
+
 //export
 #export{
 	position: fixed;

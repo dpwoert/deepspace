@@ -38,7 +38,7 @@ Meteor.startup(function(){
 	intro.hide = function(){
 
 		//launch app
-		launch(prepare, start)
+		launch(prepare, start);
 
 	}
 

@@ -1,10 +1,22 @@
 window.mouse = {};
 
 mouse.init = function(){
+
+    //events
 	$('canvas').mousemove(mouse.move);
+    //$('canvas').dblclick(mouse.click);
+
+    //init
 	mouse.$who = $('#who');
+    mouse.$border = $('.mouseBorder');
     mouse.lastName = '';
+    mouse.active = false;
 	DDD.projector = new THREE.Projector();
+
+    //dom events
+    $('.mouseBorder.close').click(function(){
+        mouse.border(false);
+    });
 };
 
 mouse.move = function(event){
@@ -24,19 +36,70 @@ mouse.move = function(event){
     if ( intersects.length > 0 ) {
         mouse.$who.text(intersects[0].object.name).show();
         //mouse.lightUp(intersects[0].object);
+        mouse.active = intersects[0].object.userData.id;
     } else {
         mouse.$who.stop().fadeOut();
+        mouse.active = false;
     }
 };
 
-mouse.lightUp = function(el){
-    console.log(el.id);
+mouse.click = function(){
+    //check for mouseover
+    if(mouse.active){
 
-    $.each(graph.getConnections(el.id, true), function(key, val){
-        console.log(val);
-        //DDD.lines[val.id].material.color = new THREE.Color( 0xff0000 );
-        DDD.lines[val.id].material = new THREE.MeshLambertMaterial( { color: 0xFF0000, shading: THREE.FlatShading, transparent: true, opacity: 0.8 } );
-        DDD.lines[val.id].material.needsUpdate = true;
-    });
+        mouse.border(true);
+
+        //get connections
+        var connections = graph.getConnections(mouse.active);
+
+        //hide lines, make them visible later
+        $.each(DDD.lines, function(){
+            this.visible = false;
+        });
+
+        //apply on nodes
+        $.each(DDD.nodes, function(){
+
+            //reset
+            var connected = false;
+            var _this = this;
+
+            //check if connected
+            $.each(connections, function(){
+                if(this.value.target.id == _this.userData.id){
+                    connected = true;
+                    DDD.lines[this.id].visible = true;
+                }
+            });
+
+            //update
+            if(connected || this.userData.id == mouse.active){
+                this.visible = true;
+                //this.material = DDD.material.node[this.userData.community];
+            } else {
+                this.visible = false;
+                //this.material = DDD.material.nodeLight[this.userData.community];
+                // console.log(this);
+            }
+
+            //this.material.needsUpdate = true;
+
+        });
+
+    }
+};
+
+mouse.border = function(show){
+    if(show){
+        mouse.detail = true;
+        mouse.$border.fadeIn(500);
+    } else {
+        //hide border
+        mouse.detail = false;
+        mouse.$border.fadeOut(500);
+
+        //show elements again
+        $.each(DDD.nodes, function(){ this.visible = true; });
+        $.each(DDD.lines, function(){ this.visible = true; });
+    }
 }
-

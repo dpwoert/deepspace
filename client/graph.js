@@ -134,7 +134,7 @@ graph.getConnections = function(id, index){
     $.each(graph.force.links(), function(key, val){
 
         if(val.source.id == id){
-            nodes.push({id:key, negative:false});
+            nodes.push({id:key, negative:false, value:val});
         }
 
         if(index && val.source.index == id){

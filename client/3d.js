@@ -102,11 +102,13 @@ DDD.setMaterial = function(){
 
     //prepare
     DDD.material.node = [];
+    DDD.material.nodeLight = [];
 
     //add
     for(var i = 0 ; i < max ; i++){
         var nodeColor = color.nodes[i];
         DDD.material.node.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading } ) );
+        DDD.material.nodeLight.push(new THREE.MeshLambertMaterial( { 'color': nodeColor, 'shading': THREE.FlatShading, 'opacity': 0.2, 'transparent': true } ) );
     }
 
     //LINES
@@ -126,7 +128,7 @@ DDD.animate = function() {
     //pause
     if(DDD.pause) return false
 
-    // note: three.js includes requestAnimationFrame shim
+    //shedule next frame
     requestAnimationFrame( DDD.animate );
 
     //animate nodes
@@ -140,19 +142,19 @@ DDD.animate = function() {
 
         //updatable
         DDD.lines[key].geometry.verticesNeedUpdate = true;
-        // DDD.lines[key].geometry.dynamic = true;
-        // DDD.lines[key].geometry.normalsNeedUpdate = true;
 
+        //from
     	DDD.lines[key].geometry.vertices[0].x = link.source.x * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[0].y = link.source.y * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[0].z = link.source.z;
 
+        //to
     	DDD.lines[key].geometry.vertices[1].x = link.target.x * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[1].y = link.target.y * DDD.multiplyer;
     	DDD.lines[key].geometry.vertices[1].z = link.target.z;
     });
 
-    //timeline
+    //timeline when force is cooled down
     if(graph.force.alpha() < DDD.startAlpha){
         timeline.tick();
     }
@@ -160,7 +162,7 @@ DDD.animate = function() {
     DDD.controls.update(0.1);
 
     //fx
-    //FX.render();
+    // FX.render();
 
     DDD.renderer.render( DDD.scene, DDD.camera );
 
@@ -168,7 +170,8 @@ DDD.animate = function() {
 
 DDD.addNode = function(node){
 
-    var material = DDD.material.node[graph.community[node.index]];
+    var community = graph.community[node.index];
+    var material = DDD.material.node[community];
     var mesh = new THREE.Mesh( DDD.geom.node, material );
 
 	mesh.position.x = node.x;
@@ -178,6 +181,8 @@ DDD.addNode = function(node){
 
     mesh.name = node.name;
     mesh.userData.index = node.index;
+    mesh.userData.id = node.id;
+    mesh.userData.community = community;
 
     DDD.nodes.push(mesh);
     DDD.scene.add(mesh);
