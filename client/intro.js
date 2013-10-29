@@ -35,12 +35,6 @@ intro.initDOM = function(){
 		delete Detector;
 	}
 
-	//example
-	intro.$.find('li.example').click(function(){
-		if($.isPlainObject(EXAMPLE)) intro.loadExample = true;
-		intro.$.find('li.login').click();
-	});
-
 	//more info
 	intro.$.find('li.more-info').click(function(){
 		$('#info, .info.overlay').show()
