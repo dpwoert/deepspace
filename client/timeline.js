@@ -103,7 +103,7 @@ timeline.make3D = function(){
 	        		var i = 0;
 	        		$.each(graph.getConnections(id), function(cID, connection){
 
-	        			//determine light needed
+	        			//determine light needed - optimalization for resources available
 	        			i++;
 	        			var noLight = true;
 	        			if(i % 5 == 0) noLight = false;
