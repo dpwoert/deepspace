@@ -80,17 +80,10 @@ mouse.click = function(){
             if(connected || this.userData.id == mouse.active){
                 this.visible = true;
                 DDD.nodesLight[key].visible = false;
-                console.log(DDD.nodesLight[key]);
-                //this.material = DDD.material.node[this.userData.community];
             } else {
                 this.visible = false;
                 DDD.nodesLight[key].visible = true;
-                console.log(DDD.nodesLight[key]);
-                //this.material = DDD.material.nodeLight[this.userData.community];
-                // console.log(this);
             }
-
-            //this.material.needsUpdate = true;
 
         });
 
