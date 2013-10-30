@@ -8,6 +8,11 @@ timeline.current = new Date();
 timeline.now = new Date();
 timeline.current = timeline.current.setDate(timeline.now.getDate() - 7 * 2);
 
+if(intro.loadExample){
+	timeline.now = data.endDate;
+	timeline.current = data.startDate;
+}
+
 timeline.add = function(properties){
 
 	var o = {
