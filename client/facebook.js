@@ -60,6 +60,13 @@ facebook.getFriends = function(){
 
 	FB.api('/me/friends', function(response) {
 
+		//error?
+		if(response.error){
+			console.warn(response.error);
+			facebook.error(response.message, response.code);
+			return false;
+		}
+
 		//make id's array keys
 		data.friends = response.data.reduce(function(acc, x) {
             acc[x.id] = x.name;
@@ -81,6 +88,13 @@ facebook.getFriendRelations = function(){
 		'WHERE ' +
 		'uid1 IN (SELECT uid2 FROM friend WHERE uid1=me()) AND ' + 
 		'uid2 IN (SELECT uid2 FROM friend WHERE uid1=me())'), function(response) {
+
+    	//error?
+		if(response.error){
+			console.warn(response.error);
+			facebook.error(response.message, response.code);
+			return false;
+		}
 
     	data.friendRelations = response.data;
 
@@ -162,7 +176,7 @@ facebook.getPosts = function(){
 		
 		//start process
 		data.posts[key] = [];
-		var url = '/'+key+'?fields=posts.fields(id,name,caption,description,type,created_time).since('+facebook.from+').until('+facebook.until+')';
+		var url = '/'+key+'?fields=posts.fields(id,name,caption,description,type,created_time).since('+facebook.from+').until('+facebook.until+').limit(100)';
 
 		function retrieve(url, first){
 
@@ -175,6 +189,7 @@ facebook.getPosts = function(){
 				//error?
 				if(response.error){
 					console.warn(response.error);
+					facebook.error(response.message, response.code);
 					return false;
 				}
 
@@ -198,7 +213,9 @@ facebook.getPosts = function(){
 			});
 		}
 
-		retrieve(url, true);
+		window.setTimeout(function(){
+			retrieve(url, true);
+		}, 50);
 
 	});
 
@@ -212,6 +229,7 @@ facebook.error = function(error, code){
 	switch(code){
 		case 4:
 		case 17:
+		case 613:
 			error = 'Oops I made too many request from Facebook. Try again on a later time...';
 		case 1:
 		case 2:

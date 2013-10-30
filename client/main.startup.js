@@ -18,14 +18,14 @@ Meteor.startup(function(){
 		graph.makeForce,
 		graph.makeCommunities,
 		timeline.make3D,
-		cache.saveCache,
+		//cache.saveCache,
 	];
 
 	//start visualisation
 	start = DDD.init;
 
 	//check if cached to prevent facebook call
-	fnFacebook = cache.check(fnFacebook);
+	//fnFacebook = cache.check(fnFacebook);
 
 	//intro button
 	intro.handle = function(){
