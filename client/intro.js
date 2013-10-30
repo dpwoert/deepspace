@@ -19,12 +19,16 @@ intro.initDOM = function(){
 
 	//log in
 	intro.$.find('li.login').click(function(){
-		if(!intro.loadExample) facebook.login();
+		if(!intro.loadExample) {
+			facebook.login();
+			analytics.addPage('/load-facebook', 'Loading facebook');
+		} else {
+			analytics.addPage('/load-example', 'Loading example');
+		}
 		intro.loading();
 		$('.overlay').remove();
 
 		//analytics
-		analytics.addPage('/load-facebook', 'Loading facebook');
 	});
 
 	intro.$.find('li.example').click(function(){
