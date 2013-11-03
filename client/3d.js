@@ -21,7 +21,9 @@ window.DDD = {
 	geom: {},
 
     lightPulses: true,
-    startAlpha: 0.05
+    startAlpha: 0.05,
+
+    directX: (navigator.appVersion.indexOf("Win")!=-1)
 
 };
 
@@ -40,7 +42,9 @@ DDD.init = function(){
     DDD.geom.message = new THREE.IcosahedronGeometry(5, 1);
 
     //start
-    DDD.renderer = new THREE.WebGLRenderer();
+    DDD.renderer = new THREE.WebGLRenderer({
+        maxLights: 110
+    });
     DDD.renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( DDD.renderer.domElement );

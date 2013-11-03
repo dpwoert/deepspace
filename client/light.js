@@ -8,8 +8,8 @@ light.init = function(){
 
  	light.fadeIn();
 
- 	//create message lights
- 	light.nr = 100;
+ 	//create message lights - windows sucks
+ 	light.nr = DDD.directX ? 75 : 100;
  	light.base = new THREE.PointLight( 0xffffff, 0, 700 );
  	DDD.scene.add(light.base);
 
