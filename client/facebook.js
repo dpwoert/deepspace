@@ -148,7 +148,7 @@ facebook.getLikes = function(){
 				if(first && response.likes && response.likes.paging && response.likes.paging.next){
 					retrieve(response.likes.paging.next, false);
 				}
-				else if(!first && response.paging.next){
+				else if(!first && response.paging && response.paging.next){
 					retrieve(response.paging.next, false);
 				}
 
