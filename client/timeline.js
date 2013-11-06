@@ -3,14 +3,22 @@ timeline.items = [];
 timeline.delta = 1000*60;
 timeline.play = true;
 
-//start month ago
-timeline.current = new Date();
-timeline.now = new Date();
-timeline.current = timeline.current.setDate(timeline.now.getDate() - 7 * 2);
 
-if(intro.loadExample){
-	timeline.now = data.endDate;
-	timeline.current = data.startDate;
+timeline.init = function(){
+	
+	//start a week ago
+	if(!intro.loadExample){
+		timeline.current = new Date();
+		timeline.now = new Date();
+		timeline.current = timeline.current.setDate(timeline.now.getDate() - 7 * 2);
+	}
+	else if(intro.loadExample){
+		console.log('timeline from example');
+		timeline.now = data.endDate;
+		timeline.current = data.startDate;
+		console.log(timeline.now);
+	}
+
 }
 
 timeline.add = function(properties){
