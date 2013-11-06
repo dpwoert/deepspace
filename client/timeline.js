@@ -120,6 +120,9 @@ timeline.make3D = function(){
 	        			var noLight = true;
 	        			if(i % 5 == 0) noLight = false;
 
+	        			//lights on?
+	        			if(!DDD.lightPulses) noLight = true;
+
 	        			//add object
 	        			var el = DDD.addMessage(connection.id, connection.negative, timeline.getMaterial(obj.type), noLight);
 	        			obj.elements.push(el);

@@ -23,6 +23,7 @@ window.DDD = {
     lightPulses: true,
     startAlpha: 0.05,
 
+    quality: 2,
     directX: (navigator.appVersion.indexOf("Win")!=-1)
 
 };

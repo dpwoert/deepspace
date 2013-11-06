@@ -19,6 +19,7 @@ intro.initDOM = function(){
 
 	//log in
 	intro.$.find('li.login').click(function(){
+		//check for source
 		if(!intro.loadExample) {
 			facebook.login();
 			analytics.addPage('/load-facebook', 'Loading facebook');
@@ -27,24 +28,13 @@ intro.initDOM = function(){
 		}
 		intro.loading();
 		$('.overlay').remove();
-
-		//analytics
 	});
 
 	intro.$.find('li.example').click(function(){
+		//load example
 		if($.isPlainObject(EXAMPLE)) intro.loadExample = true;
 		intro.$.find('li.login').click();
 	});
-
-	if(!Detector.webgl){
-		//no webgl support...
-		intro.$.find('li.login').text('Log in not possible').unbind();
-		intro.$.find('.noWebGL').addClass('show');
-
-		analytics.addPage('/no-webgl', 'No WebGL webbrowser');		
-
-		delete Detector;
-	}
 
 	//more info
 	intro.$.find('li.more-info').click(function(){
@@ -57,6 +47,34 @@ intro.initDOM = function(){
 		//analytics
 		analytics.addPage('/info', 'Info');
 	});
+
+	//quality
+	intro.$.find('.quality-selection').click(function(){
+		$this = $(this);
+
+		//make selection bold
+		intro.$.find('.quality-selection').removeClass('on');
+		$this.addClass('on');
+
+		//bold
+		if($this.text() == "high"){
+			DDD.quality = 2;
+		} else {
+			DDD.quality = 1;
+		}
+
+	});
+
+	//check for support
+	if(!Detector.webgl){
+		//no webgl support...
+		intro.$.find('li.login').text('Log in not possible').unbind();
+		intro.$.find('.noWebGL').addClass('show');
+
+		analytics.addPage('/no-webgl', 'No WebGL webbrowser');		
+
+		delete Detector;
+	}
 
 	//hide info on overlay click
 	$('.overlay.info').click(function(){

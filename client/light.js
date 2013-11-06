@@ -2,6 +2,12 @@ window.light = {};
 
 light.init = function(){
 
+	//switch off when quality is medium
+	if(DDD.quality){
+		DDD.lightPulses = false;
+	}
+
+	//add main light
  	light.intensity = DDD.lightPulses ? 0.7 : 1;
  	light.hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, light.intensity);
  	DDD.scene.add(light.hemisphere);
@@ -13,7 +19,7 @@ light.init = function(){
  	light.base = new THREE.PointLight( 0xffffff, 0, 700 );
  	DDD.scene.add(light.base);
 
- 	light.create();
+	if(DDD.lightPulses)	light.create();
 };
 
 light.fadeIn = function(){
