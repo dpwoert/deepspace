@@ -48,5 +48,6 @@ cache.export = function(scramble){
 	data.endDate = end;
 
 	//export to text
-	$('body').append('<div id="export">window.EXAMPLE = '+JSON.stringify(data)+'</div>');
+	console.save(data);
+	//$('body').append('<div id="export">window.EXAMPLE = '+JSON.stringify(data)+'</div>');
 }
