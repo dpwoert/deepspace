@@ -5,7 +5,7 @@ timeline.play = true;
 
 
 timeline.init = function(){
-	
+
 	//start a week ago
 	if(!intro.loadExample){
 		timeline.current = new Date();
@@ -13,7 +13,6 @@ timeline.init = function(){
 		timeline.current = timeline.current.setDate(timeline.now.getDate() - 7 * 2);
 	}
 	else if(intro.loadExample){
-		console.log('timeline from example');
 		timeline.now = data.endDate;
 		timeline.current = data.startDate;
 		console.log(timeline.now);
