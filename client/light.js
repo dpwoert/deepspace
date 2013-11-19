@@ -3,7 +3,7 @@ window.light = {};
 light.init = function(){
 
 	//switch off when quality is medium
-	if(DDD.quality){
+	if(DDD.quality < 2){
 		DDD.lightPulses = false;
 	}
 
