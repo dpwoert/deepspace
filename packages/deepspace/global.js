@@ -1,0 +1,6 @@
+DS = {
+
+    classes: {},
+    algorithm: {}
+
+};

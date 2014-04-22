@@ -44,7 +44,7 @@ Meteor.startup(function(){
 	}
 
 	//add FB api
-	facebook.connect();
+	//facebook.connect();
 
 	//start with intro
 	intro.init();
@@ -53,7 +53,7 @@ Meteor.startup(function(){
 });
 
 window.launch = function(prepare, start){
-	
+
 	//start preparation [array]
 	$.each(prepare, function(k, handler){
 		if( $.isFunction(handler) ) handler();

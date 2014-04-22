@@ -6,7 +6,9 @@
 standard-app-packages
 autopublish
 insecure
-preserve-inputs
 jquery
 d3
 less
+deepspace
+deepspace-scraper-facebook
+deepspace-scrapers
