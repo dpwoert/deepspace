@@ -75,19 +75,30 @@ scrapers.Facebook = function(){
             var row = data[i];
             if(data[i][key]){
 
-                //key already exists
-                if(saveTo[row.id][key]){
-
-                    var d = data[i][key].data;
-                    for( var j = 0 ; j < data[i][key].data.length ; j++){
-                        saveTo[row.id][key].push(d[j]);
+                //find person
+                var person = false;
+                for( var j = 0 ; j < data.length ; j++ ){
+                    if(data[j].id == row.id){
+                        person = j;
                     }
+                }
+
+
+                //key already exists
+                if(saveTo[person][key]){
+
+                    // var d = data[i][key].data;
+                    // for( var j = 0 ; j < data[i][key].data.length ; j++){
+                    //     saveTo[person][key].push(d[j]);
+                    // }
+
+                    saveTo[person][key] = saveTo[person][key].concat(data[i][key].data)
 
                 }
 
                 //new key for person
                 else {
-                    saveTo[row.id][key] = data[i][key].data;
+                    saveTo[person][key] = data[i][key].data;
                 }
             }
         }
@@ -147,41 +158,3 @@ scrapers.Facebook = function(){
     }
 
 };
-
-var test = new scrapers.Facebook();
-
-//test API stuff
-test
-    .init('friends_likes,user_likes,read_friendlists,email,read_stream')
-    .then(function(){
-
-        //sign in when connected [for now]
-        return test.login();
-
-    })
-    .then(function(){
-
-        //date - 20 days
-        var date = {}
-        date.until = new Date();
-        date.from = new Date();
-        date.from = date.from.setDate( date.from.getDate() - 5 );
-
-        //get data
-        test.chain()
-            .action('getFriends')
-            .action('getFriendRelations')
-            .action('getLikes')
-            .action('getPosts', date)
-            .end(function(data){
-                console.log('end', data);
-
-                var network = new DS.classes.Network();
-                network.addPersons(data);
-                network.relate();
-
-            });
-
-    }).catch(function(e){
-        console.warn(e.stack);
-    });

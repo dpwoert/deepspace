@@ -8,54 +8,100 @@ DS.classes.Network = function(){
         //save person
         population.push(information);
 
+        //chainable
+        return this;
+
     };
 
     this.addPersons = function(list){
 
-        _.each(list, function(item){
-            this.addPerson(item);
-        }.bind(this));
+        for(var i = 0 ; i < list.length ; i++){
+            this.addPerson(list[i]);
+        }
+
+        //chainable
+        return this;
 
     };
 
-    this.relate = function(){
+    this.connectivity = function(person1, person2, data){
+        debugger
+        return 10;
+    };
 
-        //loop through all persons
-        _.each(population, function(person){
+    this.identify = function(fn){
 
-            for( var j = 0 ; j < person.relations.length ; j++ ){
+        for( var i = 0 ; i < population.length ; i ++){
+            population[i] = fn(population[i], relations);
+        }
 
-                var relation = person.relations[j];
-                var k = 0;
-                var found = false;
-                while( k < relations.length && !found ){
+        //chainable
+        return this;
+    };
 
-                    if(
-                        relations[k].source == relation.target ||
-                        relations[k].target == relation.source
-                    ){
-                        found = true;
+    this.identifyGroup = function(fn){
+
+        population = fn(population, relations);
+
+        //chainable
+        return this;
+    };
+
+    var relate = function(){
+
+        //add all relations
+        for( var i = 0 ; i < population.length ; i++ ){
+
+            var rel = population[i].relations;
+            if(rel == undefined) rel = [];
+
+            for( var j = 0 ; j < rel.length ; j++ ){
+
+                //find person
+                var target;
+                for ( var k = 0 ; k < population.length ; k++ ){
+                    if(population[k].id == rel[j]){
+                        target = k;
                     }
-
-                    //iterate
-                    k++;
                 }
 
-                if(!found){
-                    relations.push(relation);
-                }
+                //todo check if double?
+
+                var connection = this.connectivity(population[i], population[target], population);
+
+                relations.push({
+                    'source': i,
+                    'target': target,
+                    'connection': connection
+                });
 
             }
 
-        });
+        }
 
     };
 
-    this.communities = function(name){
-        if(!name) name = 'louvain';
-    };
+    this.makeGraph = function(){
 
-    this.compareInterest = function(key){
+        //create network
+        relate.call(this);
+
+        console.log('related');
+
+        // Create a force layout to display nodes.
+        this.force = d3.layout.force()
+            .charge(-300)
+            .linkDistance(100)
+            //.size(10,10)
+            .nodes(population)
+            .links(relations)
+
+        this.force.start();
+
+        console.log('force made');
+
+        //chainable
+        return this;
 
     };
 

@@ -11,11 +11,11 @@ DS._FB_ACTIONS = {
                 return false;
             }
 
-            //make id's array keys
-            data = response.data.reduce(function(acc, x) {
-                acc[x.id] = {name: x.name, relations:[] };
-                return acc;
-            }, {});
+            //make array
+            data = response.data.map(function(friend){
+                friend.id = +friend.id;
+                return friend;
+            });
 
             //done
             promise.resolve(data);
@@ -39,17 +39,23 @@ DS._FB_ACTIONS = {
                 return false;
             }
 
-            //data.friendRelations = response.data;
             var relations = response.data;
+            //sort all relations
             for( var i = 0 ; i < relations.length ; i++ ){
                 var rel = relations[i];
 
-                //save
-                if(!data[rel.uid1].relations) data[rel.uid1].relations = [];
-                data[rel.uid1].relations.push({
-                    source: rel.uid1,
-                    target: rel.uid2
-                });
+                //find source
+                for(var j = 0 ; j < data.length ; j++){
+                    var person = data[j];
+
+                    //found
+                    if(person.id == rel.uid1){
+                        if(!person.relations) person.relations = [];
+                        person.relations.push(+rel.uid2);
+                    }
+
+                }
+
             }
 
             //done
@@ -89,7 +95,6 @@ DS._FB_ACTIONS = {
         //js date to FB date
         options.from = Math.round(+options.from/1000);
         options.until = Math.round(+options.until/1000);
-        console.log(options);
 
         //todo split into parts of 5 days
         var calls = [];
