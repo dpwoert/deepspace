@@ -69,8 +69,6 @@ DS._FB_ACTIONS = {
 
         var url = '/me/friends/';
         url += '?fields=likes.limit(100)';
-        //url += ',posts.fields(id,name,caption,description,type,created_time)';
-        //url += '.since('+options.from+').until('+options.until+')';
 
         FB.api(url, function(response) {
 
@@ -93,8 +91,8 @@ DS._FB_ACTIONS = {
     getPosts: function(promise, data, options){
 
         //js date to FB date
-        options.from = Math.round(+options.from/1000);
-        options.until = Math.round(+options.until/1000);
+        // options.from = Math.round(+options.from/1000);
+        // options.until = Math.round(+options.until/1000);
 
         //todo split into parts of 5 days
         var calls = [];
@@ -110,7 +108,7 @@ DS._FB_ACTIONS = {
             calls.push(def)
 
             //get part
-            var since = last.setDate( last.getDate() - 5 );
+            var since = until.setDate( until.getDate() - 5 );
             getPart(since, until, def)
 
             //save for next run
