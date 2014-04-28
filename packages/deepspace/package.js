@@ -14,6 +14,12 @@ Package.on_use(function (api) {
 
 		'global.js',
 
+		'3d/geometry.js',
+		'3d/materials.js',
+		'3d/init.js',
+		'3d/lights.js',
+		'3d/FX.js',
+
 		'algorithm/louvain.js',
 
 		'classes/Network.js',

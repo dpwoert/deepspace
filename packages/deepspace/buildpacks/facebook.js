@@ -46,6 +46,10 @@ DS.buildpacks.Facebook = function(){
 
                     console.log('made network');
 
+                    var engine = new DS.classes.Engine(network);
+
+                    console.log(engine);
+
                 });
 
         }).catch(function(e){
