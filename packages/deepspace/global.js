@@ -9,6 +9,9 @@ DS = {
     maxGroups: 7,
     maxLights: 100, //directX?
 
+    startZ: 1000,
+    maxZ: 2000,
+
     //colors
     colors: {
 

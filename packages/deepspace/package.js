@@ -14,11 +14,15 @@ Package.on_use(function (api) {
 
 		'global.js',
 
+		'3d/lib/FlyControls.js',
 		'3d/geometry.js',
 		'3d/materials.js',
 		'3d/init.js',
 		'3d/lights.js',
 		'3d/FX.js',
+		'3d/controls.js',
+		'3d/build.js',
+		'3d/renderManager.js',
 
 		'algorithm/louvain.js',
 

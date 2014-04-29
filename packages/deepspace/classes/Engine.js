@@ -1,31 +1,29 @@
 DS.classes.Engine = function(network){
 
+    //render
+    DS.THREE.renderManager.call(this);
+
     //get geometries
-    var geometries = new DS.THREE.geometry();
+    this.geometries = new DS.THREE.geometry();
 
     //get materials
-    var materials = new DS.THREE.material();
+    this.materials = new DS.THREE.material();
 
     //add threejs elements
     DS.THREE.init.call(this);
 
     //add lights
-    var lights = DS.THREE.lights.call(this);
+    this.lights = new DS.THREE.lights(this);
 
     //add FX
-    var FX = DS.THREE.FX.call(this);
+    DS.THREE.FX.call(this);
 
     //add controls
+    DS.THREE.controls.call(this);
 
     //build
+    DS.THREE.build.call(this);
 
-
-    this.addProcess = function(fn){
-
-    };
-
-    var render = function(){
-
-    }
-
+    //start
+    this.start();
 }
