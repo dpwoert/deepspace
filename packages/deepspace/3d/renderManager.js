@@ -3,6 +3,8 @@ DS.THREE.renderManager = function(){
     var list = [];
     var end = false;
 
+    var clock = new THREE.Clock(true);
+
     this.addProcess = function(id, fn){
         list.push({ 'id': id, 'fn': fn});
     };
@@ -29,6 +31,9 @@ DS.THREE.renderManager = function(){
 
         //shedule next frame
         requestAnimationFrame( render );
+
+        //delta
+        var delta = clock.getDelta();
 
         for( var i = 0 ; i < list.length ; i++ ){
 
