@@ -1,42 +1,13 @@
 <head>
 	<title>Deep Space - Facebook visualization</title>
-	<!--<script src="https://connect.facebook.net/en_US/all.js"></script>-->
 </head>
 
 <body>
 	{{> intro}}
 	{{> info}}
 	{{> graph}}
-	{{> mouseBorder}}
 	<div id="made"><a href="http://www.dpwoert.com">Davey van der Woert</a></div>
 </body>
-
-<template name="intro">
-	<div id="intro">
-		<div class="content">
-			<div class="logo"></div>
-			<p>
-				<span>Dive deep into your facebook account by visualising it in 3D. Use your mouse to look around and click to fly trough the data.</span>
-				<span class="quality">quality: <span class="quality-selection">medium</span> | <span class="quality-selection on">high</span></span>
-				<span class="noWebGL">
-					No support for 3d graphics on this browser, try the latest Chrome or Firefox.
-				</span>
-			</p>
-			<ul>
-				<li class="login">Log in</li>
-				<li class="example">Example data</li>
-				<li class="more-info">More info</li>
-			</ul>
-		</div>
-	</div>
-	<div class="error"></div>
-</template>
-
-<template name="graph">
-	<div id="graph"></div>
-	<div id="who"></div>
-	<div id="date"></div>
-</template>
 
 <template name="info">
 	<div class="overlay info"></div>

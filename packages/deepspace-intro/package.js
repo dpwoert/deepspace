@@ -7,14 +7,15 @@ Package.on_use(function (api) {
     var both = ['client','server'];
 
     // use dependencies
-    api.use(['deepspace','three','Q'], 'client');
+    api.use(['deepspace','three','templating'], 'client');
 
     // load front-end
     api.add_files([
 
+        'lib/mousewheel.js',
         'template.html',
-        //'actions.js',
-        //'scraper.js'
+        'template.js',
+        'intro.js'
 
     ], 'client');
 

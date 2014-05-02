@@ -20,6 +20,7 @@ DS.classes.Engine = function(network){
 
     //add controls
     DS.THREE.controls.call(this);
+    DS.THREE.mouse.call(this);
 
     //build
     DS.THREE.build.call(this);

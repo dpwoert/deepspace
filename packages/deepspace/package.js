@@ -7,7 +7,7 @@ Package.on_use(function (api) {
 	var both = ['client','server'];
 
 	// use dependencies
-	api.use(['underscore','three','Q','d3','jLouvain'], 'client');
+	api.use(['underscore','three','Q','d3','jLouvain','templating'], 'client');
 
 	// load front-end
 	api.add_files([
@@ -15,6 +15,8 @@ Package.on_use(function (api) {
 		'global.js',
 
 		'3d/lib/FlyControls.js',
+		'3d/lib/Detector.js',
+
 		'3d/geometry.js',
 		'3d/materials.js',
 		'3d/init.js',
@@ -23,12 +25,16 @@ Package.on_use(function (api) {
 		'3d/controls.js',
 		'3d/build.js',
 		'3d/renderManager.js',
+		'3d/mouse.js',
 
 		'algorithm/louvain.js',
 
 		'classes/Network.js',
 		'classes/Engine.js',
 		'classes/Timeline.js',
+
+		'template.html',
+		'template.js',
 
 		'buildpacks/facebook.js'
 

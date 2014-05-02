@@ -21,6 +21,10 @@ DS.THREE.renderManager = function(){
 
     };
 
+    this.clear = function(){
+        list = [];
+    }
+
     var render = function(){
 
         //stop when needed
