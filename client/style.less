@@ -73,6 +73,10 @@ body{
 		background-image: url('../logo-white.svg');
 		z-index: 2;
 	}
+
+	&.black{
+		background-color: white;
+	}
 }
 
 //intro
@@ -85,11 +89,25 @@ body{
 
 	.transform( translateZ(0%) );
 
+}
+
+#sign-in{
+
+	width: 100%;
+	height: 100%;
+	background: black;
+	color: white;
+
+	z-index: 2;
+
+	.transform( translateY(0%) );
+
 	.content {
 		position: absolute;
-		top: 30%;
+		top: 25%;
+		margin-top: 15px;
 		width: 35%;
-		height: 30%;
+		// height: 30%;
 		left: 32%;
 
 		z-index: 9;
@@ -100,7 +118,7 @@ body{
 
 	//text
 	p span{
-		background-color: white;
+		//background-color: white;
 	}
 
 	.noWebGL{
@@ -136,8 +154,7 @@ body{
 
 	li {
 		float: left;
-		border: 2px solid rgba(0, 0, 0, 0.7);
-		background: white;
+		border: 2px solid rgba(255, 255, 255, 1);
 		padding: 5px;
 		margin-right: 4px;
 		text-transform: lowercase;
@@ -146,8 +163,8 @@ body{
 		.transition(all 0.5s ease);
 
 		&:hover{
-			background: black;
-			color: white;
+			background: white;
+			color: black;
 		}
 	}
 }
@@ -313,18 +330,6 @@ body{
 	background: black;
 	color: white;
 	overflow: scroll;
-}
-
-//sign in
-#sign-in{
-	width: 100%;
-	height: 100%;
-	background: black;
-	color: white;
-
-	z-index: 2;
-
-	.transform( translateY(0%) );
 }
 
 //LESS mixin

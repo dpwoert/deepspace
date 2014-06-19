@@ -9,7 +9,7 @@ DS.Intro = function(){
         delta: 100,
         qx: 100,
         qy: 50,
-        lines: 75
+        lines: 50
     };
 
     //render loop
@@ -35,7 +35,8 @@ DS.Intro = function(){
     material = new THREE.SpriteCanvasMaterial( {
 
         color: 0x000000,
-        program: function ( context ) {
+        overdraw: 1,
+        program: function ( context, color ) {
 
             context.beginPath();
             context.arc( 0, 0, 1, 0, PI2, true );
@@ -56,6 +57,7 @@ DS.Intro = function(){
             particle = particles[ i ++ ] = new THREE.Sprite( material );
             particle.position.x = ix * settings.delta - ( ( settings.qx * settings.delta ) / 2 );
             particle.position.z = iy * settings.delta - ( ( settings.qy * settings.delta ) / 2 );
+
             scene.add( particle );
 
         }
@@ -63,8 +65,8 @@ DS.Intro = function(){
     }
 
     //get neighbour
-    var getNeighbour = function(){
-
+    var getNeighbour = function(nr){
+        return particles[nr+settings.qy+1];
     }
 
     //add lines
@@ -73,7 +75,7 @@ DS.Intro = function(){
     for ( var i = 0 ; i < settings.lines ; i++){
 
         var geometry = new THREE.Geometry();
-        var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0x000000, opacity: 1, linewidth: 1 } ) );
+        var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0x000000, opacity: 1, linewidth: 1.5 } ) );
 		scene.add( line );
         lines.push( line )
 
@@ -90,7 +92,8 @@ DS.Intro = function(){
     renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0xFFFFFF);
-    $('#intro .background').append( renderer.domElement );
+    $introBG = $('#intro .background');
+    $introBG.append( renderer.domElement );
 
     //animation loop
     this.addProcess('intro', function(delta){
@@ -118,13 +121,13 @@ DS.Intro = function(){
         }
 
         //lines
-        var nr = Math.floor(Math.random()*particles.length);
-        lines[cursor].source = particles[nr];
-        lines[cursor].target = particles[nr-1];
+        //var nr = Math.floor(Math.random()*particles.length-settings.qy);
+        //lines[cursor].source = particles[nr];
+        //lines[cursor].target = particles[nr+settings.qy+1];
 
         //move pointer
-        cursor++;
-        if(cursor >= settings.lines) cursor = 0;
+        //cursor++;
+        //if(cursor >= settings.lines) cursor = 0;
 
         //animate lines
         for ( var l = 0 ; l < lines.length ; l++ ){
@@ -132,6 +135,7 @@ DS.Intro = function(){
 
             lines[l].geometry.vertices[0] = lines[l].source.position;
             lines[l].geometry.vertices[1] = lines[l].target.position;
+            lines[l].material.linewidth = lines[l].target.scale.x * 0.2;
 
         }
 
@@ -158,6 +162,7 @@ DS.Intro = function(){
         scrollScale2 = d3.scale.linear()
             .domain([0.66,scrollMax])
             .range([logoHeight,0])
+            .clamp(true);
 
     });
 
@@ -182,7 +187,7 @@ DS.Intro = function(){
 
         //paralax
         console.log(scrollScale(delta));
-        $introBG.css('transform', 'translateY(' + (delta*100) + '%)');
+        $introBG.css('transform', 'translateY(' + (delta*50) + '%)');
         $introLogo.css('transform', 'translateY(' + (scrollScale(delta)) + 'px)');
 
         //B/W transition
