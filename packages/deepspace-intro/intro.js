@@ -1,6 +1,7 @@
 DS.Intro = function(){
 
-    var camera, scene, particles, lines, material, renderer, x, y, count, status, cursor;
+    var camera, scene, particles, lines, material, renderer;
+    var x, y, count, status, cursor, $introBG, $introLogo, scrollScale, scrollScale2;
     var PI2 = Math.PI * 2;
 
     //settings
@@ -63,7 +64,7 @@ DS.Intro = function(){
 
     //get neighbour
     var getNeighbour = function(){
-        
+
     }
 
     //add lines
@@ -119,7 +120,7 @@ DS.Intro = function(){
         //lines
         var nr = Math.floor(Math.random()*particles.length);
         lines[cursor].source = particles[nr];
-        lines[cursor].target = particles[nr+1];
+        lines[cursor].target = particles[nr-1];
 
         //move pointer
         cursor++;
@@ -140,24 +141,58 @@ DS.Intro = function(){
 
     });
 
-    //scroll
-    /*
-    var bg = 1;
-    $(window).mousewheel(function(event, delta) {
+    //update paralax variables on resize
+    $(window).resize(function(){
 
-        $body = $('#intro');
+        var h = $(window).height();
+        var logoHeight = 41;
 
-        //move deeper in the sea
-		status += delta * -0.01;
-        if(status < 0) status = 0;
+        //scrollscale for paralax effect
+        scrollScale = d3.scale.linear()
+            .domain([0,1])
+            .range([0, h * 0.75 ]);
 
-        //animate bg
-        bg += delta/200;
-        if(bg < 0) bg = 0;
-        var color = new THREE.Color(bg,bg,bg);
-        //renderer.setClearColor(color.getHex());
+        //scrollscale for black/white transition
+        var scrollMax = h*0.66 + logoHeight;
+        scrollMax = scrollMax/h;
+        scrollScale2 = d3.scale.linear()
+            .domain([0.66,scrollMax])
+            .range([logoHeight,0])
 
-	}); */
+    });
+
+    //trigger setting scrollScale
+    $(window).trigger('resize');
+
+    //paralax effects
+    $(window).scroll(function() {
+
+        //select element
+        if(!$introBG) $introBG = $('#intro .background');
+        if(!$introLogo) $introLogo = $('.logo');
+
+        //get pixels scrolled
+        var scrolled = $(window).scrollTop();
+        var h = $(window).height();
+        var parallax = scrolled * 0.9;
+
+        //dive deeper in the sea
+        var delta = scrolled/h;
+        status = delta * 2.5;
+
+        //paralax
+        console.log(scrollScale(delta));
+        $introBG.css('transform', 'translateY(' + (delta*100) + '%)');
+        $introLogo.css('transform', 'translateY(' + (scrollScale(delta)) + 'px)');
+
+        //B/W transition
+        $('.black')
+            .css('height', scrollScale2(delta) + 'px')
+
+        //fix rendering
+        renderer.setClearColor(0xffffff);
+
+	});
 
     //check if mobile
     if(Session.get('mobile')){
