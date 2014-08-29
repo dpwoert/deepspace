@@ -7,7 +7,7 @@ Package.on_use(function (api) {
 	var both = ['client','server'];
 
 	// use dependencies
-	api.use(['underscore','three','Q','d3','jLouvain','templating'], 'client');
+	api.use(['underscore','three','q','d3','jlouvain','templating'], 'client');
 
 	// load front-end
 	api.add_files([
@@ -28,6 +28,7 @@ Package.on_use(function (api) {
 		'3d/mouse.js',
 
 		'algorithm/louvain.js',
+		'algorithm/voronoi.js',
 
 		'classes/Network.js',
 		'classes/Engine.js',
