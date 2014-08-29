@@ -1,5 +1,5 @@
 Package.describe({
-    summary: "Deepspace - Scrape Facebook data"
+    summary: "Deepspace - Intro visualisation v2"
 });
 
 Package.on_use(function (api) {
@@ -7,13 +7,14 @@ Package.on_use(function (api) {
     var both = ['client','server'];
 
     // use dependencies
-    api.use(['deepspace','deepspace-scrapers','q'], 'client');
+    api.use(['deepspace','three','templating','d3'], 'client');
 
     // load front-end
     api.add_files([
 
-        'actions.js',
-        'scraper.js'
+        'template.html',
+        'template.js',
+        'intro.js'
 
     ], 'client');
 

@@ -5,3 +5,11 @@ Template.intro.webGL = function(){
 Template.intro.quality = function(){
     return Session.get('quality');
 }
+
+Template.intro.events({
+
+    'click .login': function(){
+        var viz = new DS.buildpacks.Facebook();
+    }
+
+});
