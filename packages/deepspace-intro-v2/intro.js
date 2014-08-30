@@ -25,7 +25,7 @@ DS.Intro = function(element){
 
     //material
     material = new THREE.MeshPhongMaterial({
-    	color: 0x444444,
+    	color: 0x282c34,
     	shading: THREE.FlatShading,
     });
 
@@ -81,7 +81,7 @@ DS.Intro = function(element){
 
         //tilt shift
         var blur = targetBlur - ((currentBlur-targetBlur)*0.01);
-        if(blur <0.5) blur = 0.5;
+        if(blur <0.2) blur = 0.2;
         if(blur >0.8) blur = 0.8;
         FX.setBlur(5, blur);
 
