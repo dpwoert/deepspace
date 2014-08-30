@@ -17,6 +17,22 @@ Package.on_use(function (api) {
 		'3d/lib/FlyControls.js',
 		'3d/lib/Detector.js',
 
+		'3d/FX/lib/CopyShader.js',
+		'3d/FX/lib/EffectComposer.js',
+		'3d/FX/lib/FilmPass.js',
+		'3d/FX/lib/FilmShader.js',
+		'3d/FX/lib/FXAAShader.js',
+		'3d/FX/lib/HorizontalTiltShiftShader.js',
+		'3d/FX/lib/VerticalTiltShiftShader.js',
+		'3d/FX/lib/RenderPass.js',
+		'3d/FX/lib/ShaderPass.js',
+
+		'3d/FX/global.js',
+		'3d/FX/copyShader.js',
+		'3d/FX/filmGrain.js',
+		'3d/FX/FXAA.js',
+		'3d/FX/tiltShift.js',
+
 		'3d/geometry.js',
 		'3d/materials.js',
 		'3d/init.js',
