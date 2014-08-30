@@ -6,7 +6,7 @@ scrapers.Facebook = function(){
 
     //get actions
     var actions = DS._FB_ACTIONS;
-    delete DS._FB_ACTIONS;
+    DS._FB_ACTIONS = null;
 
     //start proces
     this.init = function(scopeChange){

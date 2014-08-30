@@ -16,7 +16,7 @@ DS.classes.Engine = function(network){
     this.lights = new DS.THREE.lights(this);
 
     //add FX
-    DS.THREE.FX.call(this);
+    this.FX = new DS.THREE.FX();
 
     //add controls
     DS.THREE.controls.call(this);

@@ -2,6 +2,7 @@ DS = {
 
     classes: {},
     buildpacks: {},
+    scrapers: {},
     algorithm: {},
     THREE: {},
 
@@ -35,7 +36,7 @@ DS = {
         },
 
         line: 0xa4b2c1
-        
+
     }
 
 };

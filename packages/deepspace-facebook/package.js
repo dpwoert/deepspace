@@ -13,7 +13,8 @@ Package.on_use(function (api) {
     api.add_files([
 
         'actions.js',
-        'scraper.js'
+        'scraper.js',
+        'build.js'
 
     ], 'client');
 

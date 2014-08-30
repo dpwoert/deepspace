@@ -105,4 +105,8 @@ DS.classes.Network = function(){
 
     };
 
+    this.recalculate = function(){
+        //todo?
+    }
+
 };

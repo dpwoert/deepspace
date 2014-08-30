@@ -10,8 +10,9 @@ jquery
 d3
 less
 deepspace
-deepspace-scraper-facebook
+deepspace-facebook
 deepspace-scrapers
 jlouvain
 q
 deepspace-intro-v2
+iron:router
