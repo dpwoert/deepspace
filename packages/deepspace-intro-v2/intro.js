@@ -15,15 +15,16 @@ DS.Intro = function(element){
     scene = new THREE.Scene();
 
     //create renderer
-    renderer = new THREE.CanvasRenderer();
+    renderer = new THREE.WebGLRenderer();
+    // renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0xFFFFFF);
     element.appendChild(renderer.domElement);
 
     //material
 	// material = new THREE.MeshBasicMaterial( { color: 0x222, overdraw: 0.5 } );
-    material = new THREE.MeshLambertMaterial({
-    	color: 0xFF00,
+    material = new THREE.MeshPhongMaterial({
+    	color: 0x444444,
     	shading: THREE.FlatShading,
     	// wireframe: true
     });
@@ -34,8 +35,11 @@ DS.Intro = function(element){
     mesh.rotateX(-Math.PI/2.5);
     // mesh.rotateX(-Math.PI/2);
 
+    //build wave
+    DS.algorithm.sinusPlane(plane, accuracy, accuracy, 0);
+
     //light
-    var light = new THREE.HemisphereLight(0xFFFFFF, 0x00000, 1);
+    var light = new THREE.HemisphereLight(0xAAAAAA, 0x00000, 1);
 
     //add to scene
     scene.add(mesh);

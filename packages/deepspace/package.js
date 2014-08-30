@@ -29,6 +29,7 @@ Package.on_use(function (api) {
 
 		'algorithm/louvain.js',
 		'algorithm/voronoi.js',
+		'algorithm/sinusPlane.js',
 
 		'classes/Network.js',
 		'classes/Engine.js',
