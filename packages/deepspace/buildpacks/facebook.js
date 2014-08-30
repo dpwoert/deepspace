@@ -53,7 +53,7 @@ DS.buildpacks.Facebook = function(){
                 });
 
         }).catch(function(e){
-            console.warn(e.stack);
+            console.warn(e);
         });
 
 };
