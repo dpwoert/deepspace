@@ -21,7 +21,7 @@ DS.algorithm.Voronoi = function(nr, width, height){
         });
 
         //create d3 voronoi
-        this.voronoi = d3.geom.voronoi(vertices);
+        this.points = d3.geom.voronoi(vertices);
 
     }.call(this);
 
