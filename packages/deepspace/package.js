@@ -52,9 +52,7 @@ Package.on_use(function (api) {
 		'classes/Timeline.js',
 
 		'template.html',
-		'template.js',
-
-		'buildpacks/facebook.js'
+		'template.js'
 
 	], 'client');
 

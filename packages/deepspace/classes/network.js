@@ -24,6 +24,10 @@ DS.classes.Network = function(){
 
     };
 
+    this.removePerson = function(){
+
+    };
+
     this.connectivity = function(person1, person2, data){
         debugger
         return 10;
