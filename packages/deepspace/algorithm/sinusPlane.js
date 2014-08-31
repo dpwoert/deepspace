@@ -13,9 +13,9 @@ DS.algorithm.sinusPlane = function(plane, x, y, fase){
 
         plane.randomHeights = [];
         for ( var i = 0 ; i < x*y ; i++ ){
-            plane.randomHeights.push(Math.random()*15);
+            plane.randomHeights.push(Math.random()*40)-20;
         }
-        
+
     }
 
     //generate heights

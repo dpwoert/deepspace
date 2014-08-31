@@ -19,14 +19,14 @@ DS.Intro = function(element){
 
     //create renderer
     renderer = new THREE.WebGLRenderer();
-    // renderer = new THREE.CanvasRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0x000000);
     element.appendChild(renderer.domElement);
 
     //material
     material = new THREE.MeshPhongMaterial({
-    	color: 0x282c34,
+    	// color: 0x282c34,
+    	color: 0x26272b,
     	shading: THREE.FlatShading,
     });
 
@@ -39,7 +39,7 @@ DS.Intro = function(element){
     })
 
     //startof with standard geometry
-    plane = new THREE.PlaneGeometry(700,700,accuracy,accuracy);
+    plane = new THREE.PlaneGeometry(1000,1000,accuracy,accuracy);
     mesh = new THREE.Mesh( plane, material );
     mesh.rotateX(-Math.PI/2);
 
@@ -52,7 +52,7 @@ DS.Intro = function(element){
     DS.algorithm.sinusPlane(plane, accuracy, accuracy, fase);
 
     //light
-    light = new THREE.HemisphereLight(0xAAAAAA, 0x00000, 0.2);
+    light = new THREE.HemisphereLight(0xAAAAAA, 0x00000, 0.5);
 
     //add to scene
     scene.add(mesh);
