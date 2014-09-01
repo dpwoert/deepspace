@@ -1,7 +1,8 @@
 DS = {
 
     classes: {},
-    buildpacks: {},
+    tools: {},
+    providers: {},
     scrapers: {},
     algorithm: {},
     THREE: {},

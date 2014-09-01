@@ -3,7 +3,13 @@ DS.classes.Network = function(){
     var population = [];
     var relations = [];
 
+    //add helper for queries
+    DS.classes.NetworkQuery.call(this, population, relations);
+
     this.addPerson = function(information){
+
+        //add UID
+        //todo
 
         //save person
         population.push(information);
@@ -15,8 +21,18 @@ DS.classes.Network = function(){
 
     this.addPersons = function(list){
 
-        for(var i = 0 ; i < list.length ; i++){
-            this.addPerson(list[i]);
+        //meteor collection
+        if(list instanceof Meteor.Collection){
+
+        }
+
+        //just an array
+        else {
+
+            for(var i = 0 ; i < list.length ; i++){
+                this.addPerson(list[i]);
+            }
+
         }
 
         //chainable
@@ -25,11 +41,35 @@ DS.classes.Network = function(){
     };
 
     this.removePerson = function(){
-
+        //query statement?
     };
 
+    this.addRelation = function(person1, person2){
+        //todo
+    }
+
+    this.addRelations = function(list, find){
+
+        for( var i = 0 ; i < list.length ; i++){
+            var person1 = this.findPerson(find, list[i][0]);
+            var person2 = this.findPerson(find, list[i][1]);
+            this.addRelation(person1,person2);
+        }
+
+        return this;
+
+    }
+
+    this.deleteRelation = function(){
+        //todo
+    }
+
+    this.addMessage = function(){
+        //todo
+    }
+
     this.connectivity = function(person1, person2, data){
-        debugger
+        //standard - must be extended by provider
         return 10;
     };
 
@@ -88,7 +128,7 @@ DS.classes.Network = function(){
     this.makeGraph = function(){
 
         //create network
-        relate.call(this);
+        //relate.call(this);
 
         console.log('related');
 

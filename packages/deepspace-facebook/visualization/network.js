@@ -1,4 +1,7 @@
-DS.buildpacks.Facebook = function(){
+DS.providers.facebook = function(){
+
+    //main promise
+    var deferred = Q.defer();
 
     //init network
     var network = new DS.classes.Network();
@@ -6,9 +9,11 @@ DS.buildpacks.Facebook = function(){
     //compare likes
     network.connectivity = function(person1, person2, data){
 
+        //todo
+
         //compare
         return 10;
-        
+
     };
 
     //get the data
@@ -37,24 +42,29 @@ DS.buildpacks.Facebook = function(){
                 .action('getPosts', posts)
                 .end(function(data){
 
-                    console.log('end', data);
+                    console.log('got FB data');
 
                     //got facebook data
                     network
-                        .addPersons(data)
-                        .makeGraph()
+                        .addPersons(data.friends)
+                        .addRelations(data.relations, 'id')
                         .identifyGroup(DS.algorithm.louvain)
+                        .makeGraph()
 
-                    console.log('made network');
+                    //finished
+                    deferred.resolve(network);
 
-                    var engine = new DS.classes.Engine(network);
+                    console.log('network',network);
 
-                    console.log(engine);
+                    //var engine = new DS.classes.Engine(network);
+                    //console.log(engine);
 
                 });
 
         }).catch(function(e){
             console.warn(e);
         });
+
+    return deferred.promise;
 
 };

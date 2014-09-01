@@ -12,9 +12,10 @@ Package.on_use(function (api) {
     // load front-end
     api.add_files([
 
-        'actions.js',
-        'scraper.js',
-        'build.js'
+        'api/actions.js',
+        'api/scraper.js',
+        'visualization/network.js',
+        // 'visualization/3d.js'
 
     ], 'client');
 
