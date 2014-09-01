@@ -14,6 +14,10 @@ Package.on_use(function (api) {
 
 		'global.js',
 
+		'tools/NetworkQuery.js',
+		'tools/UID.js',
+
+
 		'3d/lib/FlyControls.js',
 		'3d/lib/Detector.js',
 
@@ -41,11 +45,14 @@ Package.on_use(function (api) {
 		'3d/controls.js',
 		'3d/build.js',
 		'3d/renderManager.js',
+		'3d/animate.js',
 		'3d/mouse.js',
 
+		'algorithm/easings.js',
 		'algorithm/louvain.js',
 		'algorithm/voronoi.js',
 		'algorithm/sinusPlane.js',
+
 
 		'classes/Network.js',
 		'classes/Engine.js',

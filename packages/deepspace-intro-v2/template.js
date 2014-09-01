@@ -18,8 +18,10 @@ Template.intro.destroyed = function(){
 Template.intro.events({
 
     'click .logo': function(){
-        intro.end();
-        DS.buildpacks.Facebook();
+
+        intro.outro();
+        // var network = DS.providers.facebook();
+
     }
 
 })

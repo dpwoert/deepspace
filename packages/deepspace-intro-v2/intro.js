@@ -9,6 +9,7 @@ DS.Intro = function(element){
 
     //render loop
     DS.THREE.renderManager.call(this);
+    DS.THREE.animationHelper.call(this);
 
     //create camera & scene
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -99,6 +100,19 @@ DS.Intro = function(element){
         FX.render( delta );
 
     });
+
+    //outro animation
+    this.outro = function(){
+
+        this
+            .animate(camera.position,'y')
+            .time(2500)
+            .to(-50)
+            .start();
+
+        //todo show options menu
+
+    }
 
     element.addEventListener('mousemove',function(evt){
         mouse.x = evt.screenX;

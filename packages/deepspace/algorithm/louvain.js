@@ -1,5 +1,7 @@
 DS.algorithm.louvain = function(group, relations){
 
+    console.log(group);
+
     var convertGroup = group.map(function(d){
         return d.id;
     });
