@@ -12,6 +12,7 @@ Template.intro.rendered = function(evt, template){
 };
 
 Template.intro.destroyed = function(){
+    intro.end();
     intro = null;
 }
 
@@ -19,14 +20,8 @@ Template.intro.events({
 
     'click .logo': function(){
 
-        intro.outro();
-        DS.providers.facebook.network().then(function(r){
-
-            //stop intro
-            intro.end();
-
-            console.log('network',r);
-        })
+        // intro.outro();
+        Router.go('visualisation', { network: 'facebook' });
 
     }
 

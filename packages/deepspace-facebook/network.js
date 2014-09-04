@@ -1,4 +1,10 @@
+//create provider
 DS.providers.facebook = {};
+
+//visualisation types supported
+DS.providers.facebook.visualisations = ['aqua3d'];
+
+//getting network
 DS.providers.facebook.network = function(){
 
     //main promise
@@ -48,7 +54,6 @@ DS.providers.facebook.network = function(){
                         .addPersons(data.friends)
                         .addRelations(data.relations, 'id')
                         .identifyGroup(DS.algorithm.louvain)
-                        .makeForce()
 
                     //finished
                     deferred.resolve(network);

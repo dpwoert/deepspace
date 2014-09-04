@@ -1,21 +1,40 @@
-Meteor.startup(function(){
+var network;
 
-    //detect support
-    //Session.set('webGL', Detector.webgl && Detector.workers);
-    //Session.set('canvas', Detector.canvas);
+Template.visualisation.rendered = function(){
 
-    //quality
-    var quality = (navigator.appVersion.indexOf("Win")!=-1) ? 'medium' : 'high';
-    Session.set('quality', quality);
+    //awaiting network
+    Session.set('loading', true);
+    this.data.network.then(function(net){
 
-    //mobile?
-    Session.set('mobile', (
+        //stopped loading
+        Session.set('loading', false);
 
-        //Detect iPhone
-        (navigator.platform.indexOf("iPhone") != -1) ||
-        //Detect iPod
-        (navigator.platform.indexOf("iPod") != -1)
+        console.log('network is done loading');
 
-    ));
+        //save network
+        network = net;
 
-});
+    });
+
+};
+
+Template.visualisation.loading = function(){
+    return Session.get('loading');
+}
+
+Template.canvas.rendered = function(){
+
+    var visualisation;
+
+    //get
+    if(!Session.get('visualisation')){
+        visualisation = this.data.visualisations[0];
+    } else {
+        visualisation = Session.get('visualisation');
+    }
+
+    //create
+    var element = this.find('.visualisation');
+    DS.visualisations[visualisation](element, network);
+
+}

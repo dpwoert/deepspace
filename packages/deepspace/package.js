@@ -8,6 +8,7 @@ Package.on_use(function (api) {
 
 	// use dependencies
 	api.use(['underscore','three','q','d3','jlouvain','templating'], 'client');
+	api.use(['templating','iron:router'], both);
 
 	// load front-end
 	api.add_files([
@@ -40,7 +41,7 @@ Package.on_use(function (api) {
 		'3d/geometry.js',
 		'3d/materials.js',
 		'3d/init.js',
-		'3d/lights.js',
+		'3d/lightsBuffer.js',
 		'3d/FX.js',
 		'3d/controls.js',
 		'3d/build.js',
@@ -53,13 +54,15 @@ Package.on_use(function (api) {
 		'algorithm/voronoi.js',
 		'algorithm/sinusPlane.js',
 
-
 		'classes/Network.js',
 		'classes/Engine.js',
 		'classes/Timeline.js',
 
+		'visualisations/aqua3d.js',
+
 		'template.html',
-		'template.js'
+		'template.js',
+		'routes.js'
 
 	], 'client');
 

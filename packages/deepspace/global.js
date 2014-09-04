@@ -6,6 +6,7 @@ DS = {
     scrapers: {},
     algorithm: {},
     THREE: {},
+    visualisations: {},
 
     //settings
     maxGroups: 7,

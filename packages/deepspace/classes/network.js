@@ -65,7 +65,6 @@ DS.classes.Network = function(){
         for( var i = 0 ; i < list.length ; i++){
             var person1 = this.findPerson(find, list[i].uid1);
             var person2 = this.findPerson(find, list[i].uid2);
-            console.log(person1);
             this.addRelation(person1,person2);
         }
 
@@ -178,22 +177,30 @@ DS.classes.Network = function(){
         console.log('related');
 
         // Create a force layout to display nodes.
-        this.force = d3.layout.force()
-            .charge(-300)
-            .linkDistance(100)
-            //.size(10,10)
-            .nodes(population)
-            .links(relations)
+        // this.force = d3.layout.force()
+        //     .charge(-300)
+        //     .linkDistance(100)
+        //     //.size(10,10)
+        //     .nodes(population)
+        //     .links(relations)
 
         // this.force.start();
 
         //chainable
-        return this;
+        // return this;
 
     };
+
+    this.geo = function(){
+        //todo
+    }
 
     this.recalculate = function(){
         //todo?
     }
+
+    //publish
+    this.population = population;
+    this.relations = relations;
 
 };

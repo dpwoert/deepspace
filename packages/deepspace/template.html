@@ -1,3 +1,28 @@
-<template name="graph">
-    <div id="graph"></div>
+<head>
+    <title>Deep Space - Facebook visualization</title>
+</head>
+
+<body>
+    {{> yield}}
+    <div id="made"><a href="http://www.dpwoert.com">Davey van der Woert</a></div>
+</body>
+
+<template name="visualisation">
+
+    <!-- TODO add menu bar and components -->
+    {{>canvas}}
+
+    {{#if loading}}
+        loading...
+    {{else}}
+        {{>canvas}}
+    {{/if}}
+
+
+</template>
+
+<template name="canvas">
+
+    <div class="webgl visualisation"></div>
+
 </template>

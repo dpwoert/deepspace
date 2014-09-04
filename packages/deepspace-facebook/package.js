@@ -14,7 +14,7 @@ Package.on_use(function (api) {
 
         'api/actions.js',
         'api/scraper.js',
-        'visualization/network.js',
+        'network.js'
         // 'visualization/3d.js'
 
     ], 'client');
