@@ -3,7 +3,7 @@ DS.tools.NetworkQuery = function(population, relations){
     this.findPerson = function(where,is){
 
         //loop through whole population and check
-        for( var i = 0 ; i < population ; i++ ){
+        for( var i = 0 ; i < population.length ; i++ ){
 
             if( population[i][where] == is ){
                 return population[i];
@@ -13,7 +13,7 @@ DS.tools.NetworkQuery = function(population, relations){
 
     };
 
-    this.findConnection = function(where,is){
+    this.findConnection = function(biDirect){
 
     };
 

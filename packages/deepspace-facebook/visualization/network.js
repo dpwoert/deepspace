@@ -1,4 +1,5 @@
-DS.providers.facebook = function(){
+DS.providers.facebook = {};
+DS.providers.facebook.network = function(){
 
     //main promise
     var deferred = Q.defer();
@@ -9,9 +10,7 @@ DS.providers.facebook = function(){
     //compare likes
     network.connectivity = function(person1, person2, data){
 
-        //todo
-
-        //compare
+        //not extended so return standard variable
         return 10;
 
     };
@@ -49,15 +48,10 @@ DS.providers.facebook = function(){
                         .addPersons(data.friends)
                         .addRelations(data.relations, 'id')
                         .identifyGroup(DS.algorithm.louvain)
-                        .makeGraph()
+                        .makeForce()
 
                     //finished
                     deferred.resolve(network);
-
-                    console.log('network',network);
-
-                    //var engine = new DS.classes.Engine(network);
-                    //console.log(engine);
 
                 });
 

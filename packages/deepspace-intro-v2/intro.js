@@ -15,7 +15,6 @@ DS.Intro = function(element){
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 100;
     camera.position.y = 200;
-    // camera.position.x = 500;
     scene = new THREE.Scene();
 
     //create renderer
@@ -71,13 +70,8 @@ DS.Intro = function(element){
         .add('filmGrain')
         .add('copyShader');
 
-    //bg
+    //set BG again for new (FX) renderer
     FX.setBackground(0x000000);
-
-    //camera range
-    var range = d3.scale.linear()
-        .domain([0,1])
-        .range([200,-50])
 
     //animation loop
     this.addProcess('intro', function(delta){

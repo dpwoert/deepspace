@@ -4,12 +4,12 @@ DS.classes.Network = function(){
     var relations = [];
 
     //add helper for queries
-    DS.classes.NetworkQuery.call(this, population, relations);
+    DS.tools.NetworkQuery.call(this, population, relations);
 
     this.addPerson = function(information){
 
         //add UID
-        //todo
+        information._UID = DS.tools.UID();
 
         //save person
         population.push(information);
@@ -23,7 +23,7 @@ DS.classes.Network = function(){
 
         //meteor collection
         if(list instanceof Meteor.Collection){
-
+            //todo?
         }
 
         //just an array
@@ -40,19 +40,32 @@ DS.classes.Network = function(){
 
     };
 
-    this.removePerson = function(){
-        //query statement?
+    this.removePerson = function(where, is){
+        var person = this.findPerson(where, is);
+        //todo
     };
 
     this.addRelation = function(person1, person2){
-        //todo
+
+        //get inner connectivity
+        var connection = this.connectivity(person1, person2, population);
+
+        //add to relations list
+        relations.push({
+            'source': person1,
+            'target': person2,
+            'connection': connection
+        });
+
     }
 
     this.addRelations = function(list, find){
 
+        //add al from list
         for( var i = 0 ; i < list.length ; i++){
-            var person1 = this.findPerson(find, list[i][0]);
-            var person2 = this.findPerson(find, list[i][1]);
+            var person1 = this.findPerson(find, list[i].uid1);
+            var person2 = this.findPerson(find, list[i].uid2);
+            console.log(person1);
             this.addRelation(person1,person2);
         }
 
@@ -60,12 +73,43 @@ DS.classes.Network = function(){
 
     }
 
-    this.deleteRelation = function(){
-        //todo
+    this.deleteRelation = function(person1, person2){
+
+        for( var i = 0 ; i < relations.length ; i++ ){
+
+            //search bi-directional
+            var rel = relations[i];
+            if(
+                (rel.source == person1 && rel.target == person2) ||
+                (rel.source == person2 && rel.target == person1)
+            ){
+                relations.splice(i,1);
+                return true; //stop search
+            }
+
+        }
+
+        return false;
+
     }
 
-    this.addMessage = function(){
-        //todo
+    this.addMessage = function(relation, time, data){
+
+        //check
+        if(time instanceof DS.classes.Time === false){
+            console.error('not an instance of time');
+        }
+
+        //create when needed
+        relation.messages = relation.messages || [];
+        data = data || {};
+
+        //add
+        relation.messages.push({
+            'time': time,
+            'data': data
+        });
+
     }
 
     this.connectivity = function(person1, person2, data){
@@ -91,6 +135,7 @@ DS.classes.Network = function(){
         return this;
     };
 
+    //todo remove
     var relate = function(){
 
         //add all relations
@@ -125,7 +170,7 @@ DS.classes.Network = function(){
 
     };
 
-    this.makeGraph = function(){
+    this.makeForce = function(){
 
         //create network
         //relate.call(this);
@@ -140,9 +185,7 @@ DS.classes.Network = function(){
             .nodes(population)
             .links(relations)
 
-        this.force.start();
-
-        console.log('force made');
+        // this.force.start();
 
         //chainable
         return this;

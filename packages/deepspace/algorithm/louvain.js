@@ -1,7 +1,5 @@
 DS.algorithm.louvain = function(group, relations){
 
-    console.log(group);
-
     var convertGroup = group.map(function(d){
         return d.id;
     });
@@ -13,8 +11,6 @@ DS.algorithm.louvain = function(group, relations){
             weight: d.connection
         }
     });
-
-    console.log(convertRelations);
 
     var community = jLouvain()
         .nodes(convertGroup)

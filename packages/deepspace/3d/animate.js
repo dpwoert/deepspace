@@ -84,15 +84,12 @@ DS.THREE.animationHelper = function(){
 
             //end?
             if(now * 1000 > self.data.duration){
-                console.log('end of animation', self);
                 self.stop();
             }
 
             //animate
             var r = self.data.ease( now * 1000, self.data.from, self.data.delta, self.data.duration );
             self.property[self.find] = r;
-
-            console.log(r);
 
             //tick
             now += delta;

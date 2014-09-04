@@ -14,7 +14,7 @@ Package.on_use(function (api) {
 
 		'global.js',
 
-		'tools/NetworkQuery.js',
+		'tools/networkQuery.js',
 		'tools/UID.js',
 
 

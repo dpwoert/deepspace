@@ -20,7 +20,13 @@ Template.intro.events({
     'click .logo': function(){
 
         intro.outro();
-        // var network = DS.providers.facebook();
+        DS.providers.facebook.network().then(function(r){
+
+            //stop intro
+            intro.end();
+
+            console.log('network',r);
+        })
 
     }
 
