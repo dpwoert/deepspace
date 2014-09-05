@@ -1,7 +1,7 @@
-scrapers.Facebook = function(){
+Scraper.Facebook = function(){
 
     var APIurl = 'https://connect.facebook.net/en_US/all.js';
-    var appId = scrapers.isLocal ? 289032171239738 : 1424128567810216;
+    var appId = Scraper.isLocal ? 289032171239738 : 1424128567810216;
     var scope = 'read_friendlist';
 
     //get actions

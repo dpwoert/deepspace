@@ -25,6 +25,6 @@ Package.on_use(function (api) {
     ], 'client');
 
     //make globals
-    api.export('scrapers', both);
+    api.export('Scraper', both);
 
 });

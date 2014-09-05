@@ -58,8 +58,6 @@ Package.on_use(function (api) {
 		'classes/Engine.js',
 		'classes/Timeline.js',
 
-		'visualisations/aqua3d.js',
-
 		'template.html',
 		'template.js',
 		'routes.js'
@@ -67,6 +65,6 @@ Package.on_use(function (api) {
 	], 'client');
 
 	//make globals
-	api.export('DS', both);
+	api.export(['DS','Visual','Provider'], both);
 
 });

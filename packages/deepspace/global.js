@@ -6,9 +6,8 @@ DS = {
     scrapers: {},
     algorithm: {},
     THREE: {},
-    visualisations: {},
 
-    //settings
+    //settings -- TODO move this
     maxGroups: 7,
     maxLights: 100, //directX?
 
@@ -42,3 +41,6 @@ DS = {
     }
 
 };
+
+Provider = {};
+Visual = {};

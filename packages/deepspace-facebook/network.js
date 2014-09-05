@@ -1,11 +1,12 @@
 //create provider
-DS.providers.facebook = {};
-
-//visualisation types supported
-DS.providers.facebook.visualisations = ['aqua3d'];
+Provider.facebook = {
+    name: 'Facebook',
+    signIn: true,
+    visualisations: ['graph3d']
+};
 
 //getting network
-DS.providers.facebook.network = function(){
+Provider.facebook.network = function(){
 
     //main promise
     var deferred = Q.defer();
@@ -22,7 +23,7 @@ DS.providers.facebook.network = function(){
     };
 
     //get the data
-    var API = new scrapers.Facebook();
+    var API = new Scraper.Facebook();
 
     API
         .init('friends_likes,user_likes,read_friendlists,email,read_stream')

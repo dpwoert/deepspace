@@ -9,7 +9,7 @@ Template.intro.quality = function(){
 Template.intro.events({
 
     'click .login': function(){
-        var viz = new DS.buildpacks.Facebook();
+        // var viz = new Provider.Facebook();
     }
 
 });

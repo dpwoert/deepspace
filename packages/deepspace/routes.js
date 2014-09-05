@@ -11,7 +11,7 @@ Router.map(function(){
         data: function(){
 
             //check if exist
-            var provider = DS.providers[this.params.network];
+            var provider = Provider[this.params.network];
             if(!provider){
                 console.warn('not found!');
                 return false;

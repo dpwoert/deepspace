@@ -1,4 +1,5 @@
-DS.visualisations.aqua3d = function(element, network){
+//create
+Visual.graph3d = function(element, network){
 
     //render
     DS.THREE.renderManager.call(this);

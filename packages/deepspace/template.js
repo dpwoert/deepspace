@@ -35,6 +35,7 @@ Template.canvas.rendered = function(){
 
     //create
     var element = this.find('.visualisation');
-    DS.visualisations[visualisation](element, network);
+    console.log('load visual');
+    Visual[visualisation](element, network);
 
 }

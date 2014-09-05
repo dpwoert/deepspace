@@ -1,1 +1,1 @@
-scrapers = {};
+Scraper = {};
