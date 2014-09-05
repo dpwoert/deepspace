@@ -13,8 +13,11 @@ Package.on_use(function (api) {
     api.add_files([
 
         //tools
-        'helpers.tools.js',
-        'helpers.geometries.js',
+        'helpers/global.js',
+        'helpers/geometries.js',
+        'helpers/material.js',
+        'helpers/forceGraph.js',
+        'helpers/init.js',
 
         'build.js'
 

@@ -1,4 +1,4 @@
-DS.THREE.lightsBuffer = function(scene){
+DS.THREE.LightsBuffer = function(scene){
 
     //todo automate this
     var lightPulses = true;
