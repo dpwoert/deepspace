@@ -1,5 +1,8 @@
 Settings = {
 
+    startDepth: 0,
+    maxDepth: 250,
+
     colors: {
 
         nodes: [

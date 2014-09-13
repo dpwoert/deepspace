@@ -12,8 +12,11 @@ Package.on_use(function (api) {
     // load front-end
     api.add_files([
 
+        'settings.js',
+
         //tools
         'helpers/global.js',
+        'helpers/controls.js',
         'helpers/geometries.js',
         'helpers/material.js',
         'helpers/forceGraph.js',

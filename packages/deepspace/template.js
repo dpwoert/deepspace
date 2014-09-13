@@ -8,7 +8,6 @@ Template.visualisation.rendered = function(){
 
         //stopped loading
         Session.set('loading', false);
-
         console.log('network is done loading');
 
         //save network
@@ -31,6 +30,11 @@ Template.canvas.rendered = function(){
         visualisation = this.data.visualisations[0];
     } else {
         visualisation = Session.get('visualisation');
+    }
+
+    //check
+    if(!network){
+        return false;
     }
 
     //create

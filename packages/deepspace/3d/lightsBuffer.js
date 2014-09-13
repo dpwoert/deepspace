@@ -8,6 +8,7 @@ DS.THREE.LightsBuffer = function(scene){
 
     //base light, all pulses are clones of this one
     var base = new THREE.PointLight( 0xffffff, 0, 700 );
+    base.visisible = false;
     scene.add(base);
 
     //todo determine maxlights

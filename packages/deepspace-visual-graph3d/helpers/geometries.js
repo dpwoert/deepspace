@@ -1,7 +1,7 @@
 helpers.geometries = function(){
 
-    var node = new THREE.IcosahedronGeometry(25, 1);
-    var message = new THREE.IcosahedronGeometry(5, 1);
+    var node = new THREE.IcosahedronGeometry(2.5, 1);
+    var message = new THREE.IcosahedronGeometry(0.5, 1);
 
     this.getNode = function(){
         return node;
@@ -11,7 +11,7 @@ helpers.geometries = function(){
         return message;
     }
 
-    this.getRelation = function(person1, person2){
+    this.getLink = function(person1, person2){
 
         var geometry = new THREE.Geometry();
 
