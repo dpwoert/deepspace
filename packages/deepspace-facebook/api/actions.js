@@ -95,62 +95,48 @@ DS._FB_ACTIONS = {
         //js date to FB date
         // options.from = Math.round(+options.from/1000);
         // options.until = Math.round(+options.until/1000);
+        var until = new moment();
+        var from = new moment().subtract(3, 'days');
 
         //todo split into parts of 5 days
         var calls = [];
-        var dayLength = 5;
-        var parts = Math.ceil(this.days/dayLength);
-
-        //split dates
-        var until = Date.now();
-        for ( var i = 0 ; i < parts ; i++){
-
-            //promise part
-            var def = Q.defer();
-            calls.push(def)
-
-            //get part
-            var since = until.setDate( until.getDate() - 5 );
-            getPart(since, until, def)
-
-            //save for next run
-            until = minus;
-        }
 
         //get url
-        var url = '/me/friends/';
-        url += '?fields=posts.fields(id,name,caption,description,type,created_time)';
+        var url = '/v2.1/me/home';
+        // url += '?fields=posts.fields(id,name,caption,description,type,created_time)';
+        // url += '?fields=posts';
+        // url += '.since('+(since/1000)+').until('+(until/1000)+')';
 
         //get part of posts
-        var getPart = function(since,until,promisePart){
+        var callApi = function(url){
 
-            var url2 = url + '.since('+since+').until('+until+').limit(15)';
-            // url += '.limit(50)';
+            console.log('get posts start', url);
 
-            FB.api(url2, function(response) {
+            FB.api(url, function(response) {
 
                 //error?
                 if(response.error){
-                    console.warn(response.error);
+                    console.error('error when retrieving posts', response);
                     return false;
                 }
 
-                console.log('getposts',response.data);
+                console.log('got posts',response);
 
                 //add data to correct person
-                data = options.FBsort(response.data, data.friends, 'posts');
+                //data = options.FBsort(response.data, data.friends, 'posts');
 
                 //done when last call
-                promisePart.resolve();
+                //callApi(url)
+
+                //all done?
+                promise.resolve(data);
 
             });
 
         };
 
-        //all done?
-        Q.all(calls).then(function(){
-            promise.resolve(data);
-        });
+        //do call
+        callApi(url);
 
     }
 

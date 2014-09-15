@@ -1,10 +1,7 @@
 var network;
+var loadNetwork = function(toLoad){
 
-Template.visualisation.rendered = function(){
-
-    //awaiting network
-    Session.set('loading', true);
-    this.data.network.then(function(net){
+    toLoad().then(function(net){
 
         //stopped loading
         Session.set('loading', false);
@@ -17,9 +14,37 @@ Template.visualisation.rendered = function(){
 
 };
 
+Template.visualisation.rendered = function(){
+
+    //needs login?
+    Session.set('needsLogin', this.data.needsLogin);
+
+    //awaiting network
+    Session.set('loading', true);
+
+    if(!this.data.needsLogin){
+        loadNetwork(this.data.network);
+    }
+
+};
+
+Template.visualisation.needsLogin = function(){
+    return Session.get('needsLogin');
+};
+
 Template.visualisation.loading = function(){
     return Session.get('loading');
-}
+};
+
+Template.visualisation.events({
+
+    'click #login': function(){
+
+        loadNetwork(this.network);
+        Session.set('needsLogin', false);
+    }
+
+});
 
 Template.canvas.rendered = function(){
 
@@ -42,4 +67,4 @@ Template.canvas.rendered = function(){
     console.log('load visual');
     Visual[visualisation](element, network);
 
-}
+};

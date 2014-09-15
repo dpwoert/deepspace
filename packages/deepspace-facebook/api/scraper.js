@@ -1,7 +1,7 @@
 Scraper.Facebook = function(){
 
     var APIurl = 'https://connect.facebook.net/en_US/all.js';
-    var appId = Scraper.isLocal ? 289032171239738 : 1424128567810216;
+    var appId = Scraper.isLocal ? 1548780815344990 : 1424128567810216;
     var scope = 'read_friendlist';
 
     //get actions
@@ -28,7 +28,7 @@ Scraper.Facebook = function(){
             FB.init({
                 appId:  appId,
                 status: true,
-                cookie: true,
+                // cookie: true,
                 xfbml:  true
             });
 
@@ -47,6 +47,8 @@ Scraper.Facebook = function(){
         //promise
         var deferred = Q.defer();
 
+        console.log('Start of login');
+
         FB.login(function(response) {
             if (!response.authResponse) {
                 console.error('No acces to FB');
@@ -61,7 +63,10 @@ Scraper.Facebook = function(){
                 //done with promise
                 deferred.resolve();
             }
-        }, {scope: 'friends_likes,user_likes,read_friendlists,email,read_stream'});
+        },{
+            scope: scope,
+            return_scopes: true
+        });
 
         //promise
         return deferred.promise;

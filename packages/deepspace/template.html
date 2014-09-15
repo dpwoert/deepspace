@@ -12,10 +12,16 @@
     <!-- TODO add menu bar and components -->
     {{>canvas}}
 
-    {{#if loading}}
-        loading...
+    {{#if needsLogin}}
+        <button id="login">login</button>
     {{else}}
-        {{>canvas}}
+
+        {{#if loading}}
+            loading...
+        {{else}}
+            {{>canvas}}
+        {{/if}}
+
     {{/if}}
 
 

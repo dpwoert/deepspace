@@ -26,10 +26,11 @@ Provider.facebook.network = function(){
     var API = new Scraper.Facebook();
 
     API
-        .init('friends_likes,user_likes,read_friendlists,email,read_stream')
+        .init('public_profile, basic_info, email, user_friends, read_stream')
+        // .init('friends_likes,read_friendlists,friend_status')
         .then(function(){
 
-            //sign in when connected [for now]
+            //sign in when connected
             return API.login();
 
         })

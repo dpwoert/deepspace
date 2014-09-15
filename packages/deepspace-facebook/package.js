@@ -7,7 +7,7 @@ Package.on_use(function (api) {
     var both = ['client','server'];
 
     // use dependencies
-    api.use(['deepspace','deepspace-scrapers','q'], 'client');
+    api.use(['deepspace','deepspace-scrapers','q','mrt:moment'], 'client');
 
     // load front-end
     api.add_files([

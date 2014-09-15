@@ -18,11 +18,17 @@ Router.map(function(){
             }
 
             //create network
-            var network = provider.network();
+            var network = provider.network;
             var visualisations = provider.visualisations;
+
+            //handler
+            if(provider.load){
+                provider.load();
+            }
 
             return {
                 'network': network,
+                'needsLogin': provider.signIn,
                 'visualisations': visualisations
             }
         }
