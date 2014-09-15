@@ -48,8 +48,6 @@ Provider.facebook.network = function(){
                 .action('getPosts', posts)
                 .end(function(data){
 
-                    console.log('got FB data');
-
                     //got facebook data
                     network
                         .addPersons(data.friends)

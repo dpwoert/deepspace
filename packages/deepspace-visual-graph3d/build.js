@@ -13,18 +13,20 @@ Visual.graph3d = function(element, network){
     this.material = new helpers.material();
 
     //import lightsBuffer to animate light pulses
-    //this.lights = new DS.THREE.LightsBuffer(this.scene);
+    this.lights = new DS.THREE.LightsBuffer(this.scene);
 
     //hemisphere light - lighter when no light pulses
-    //var intensity = this.lights.usingPulses() ? 0.7 : 1;
-    var intensity = 1;
+    var intensity = this.lights.usingPulses() ? 0.7 : 1;
     var hemisphere = new THREE.HemisphereLight(0xffffff, 0x999999, intensity);
     this.scene.add(hemisphere);
 
     //create force
     this.force = new helpers.ForceGraph(network, this);
 
-    console.log(this.scene);
+    //create timeline
+    this.timeline = new DS.classes.Timeline();
+
+    console.log(network);
 
     //render
     this.addProcess('aqua3d', function(delta){

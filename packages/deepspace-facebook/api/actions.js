@@ -135,6 +135,8 @@ DS._FB_ACTIONS = {
                     return false;
                 }
 
+                console.log('getposts',response.data);
+
                 //add data to correct person
                 data = options.FBsort(response.data, data.friends, 'posts');
 
