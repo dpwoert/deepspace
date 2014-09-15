@@ -22,6 +22,7 @@ helpers.ForceGraph = function(network, engine){
         var material = engine.material.getLink();
         var geometry = engine.geometry.getLink(relation.source, relation.target);
         relation.mesh = new THREE.Line(geometry, material);
+        relation.mesh.frustumCulled = false;
         engine.scene.add(relation.mesh);
 
     };
@@ -52,7 +53,7 @@ helpers.ForceGraph = function(network, engine){
     this.render = function(delta){
 
         //animate force
-        //this.force.tick();
+        // this.force.tick();
 
         //animte 3d objects
         var links = this.force.links();
