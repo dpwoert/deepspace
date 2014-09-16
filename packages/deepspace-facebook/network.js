@@ -54,6 +54,7 @@ Provider.facebook.network = function(){
                         .addPersons(data.friends)
                         .addRelations(data.relations, 'id')
                         .identifyGroup(DS.algorithm.louvain)
+                        //.convertMessages(data.posts, API.convertMessages);
 
                     //finished
                     deferred.resolve(network);

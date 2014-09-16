@@ -92,20 +92,10 @@ DS._FB_ACTIONS = {
 
     getPosts: function(promise, data, options){
 
-        //js date to FB date
-        // options.from = Math.round(+options.from/1000);
-        // options.until = Math.round(+options.until/1000);
-        var until = new moment();
-        var from = new moment().subtract(3, 'days');
-
-        //todo split into parts of 5 days
-        var calls = [];
+        var limit = options.limit || 200;
 
         //get url
-        var url = '/v2.1/me/home';
-        // url += '?fields=posts.fields(id,name,caption,description,type,created_time)';
-        // url += '?fields=posts';
-        // url += '.since('+(since/1000)+').until('+(until/1000)+')';
+        var url = 'me/home?fields=created_time,place,to,from&limit=' + limit;
 
         //get part of posts
         var callApi = function(url){
@@ -122,14 +112,34 @@ DS._FB_ACTIONS = {
 
                 console.log('got posts',response);
 
-                //add data to correct person
-                //data = options.FBsort(response.data, data.friends, 'posts');
+                //add data
+                if(_.isArray(response.data)){
 
-                //done when last call
-                //callApi(url)
+                    //merge or create
+                    if(data.messages){
+                        data.messages = data.messages.concat(response.data);
+                    } else {
+                        data.messages = response.data;
+                    }
 
-                //all done?
-                promise.resolve(data);
+
+                } else {
+                    console.error('post data not correct', response);
+                }
+
+                //check if more calls need to be made
+                if(response.paging && response.paging.next && data.messages.length < limit){
+
+                    //next call
+                    callApi(url);
+
+                } else {
+
+                    //done
+                    promise.resolve(data);
+
+                }
+
 
             });
 

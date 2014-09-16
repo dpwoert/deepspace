@@ -111,6 +111,15 @@ DS.classes.Network = function(){
 
     }
 
+    this.convertMessages = function(list, conversion){
+
+        for( var i = 0 ; i < list.length ; i++ ){
+            var converted = conversion.call(this, list[i]);
+            this.addMessage(converted.relation, converted.time, converted.data);
+        }
+
+    }
+
     this.connectivity = function(person1, person2, data){
         //standard - must be extended by provider
         return 10;

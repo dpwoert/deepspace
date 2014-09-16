@@ -110,7 +110,11 @@ Scraper.Facebook = function(){
 
         return saveTo;
 
-    }
+    };
+
+    this.messageSort = function(post){
+        console.log(this,post);
+    };
 
     var chain = {};
     chain.action = function(name, options){
