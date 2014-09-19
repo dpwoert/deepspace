@@ -113,7 +113,15 @@ Scraper.Facebook = function(){
     };
 
     this.messageSort = function(post){
-        console.log(this,post);
+
+        var message;
+
+        console.log(this);
+        debugger
+
+        //return message
+        return message;
+
     };
 
     var chain = {};

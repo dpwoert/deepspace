@@ -54,6 +54,9 @@ Package.on_use(function (api) {
 		'algorithm/voronoi.js',
 		'algorithm/sinusPlane.js',
 
+		'classes/Person.js',
+		'classes/Relation.js',
+		'classes/Message.js',
 		'classes/Network.js',
 		'classes/Engine.js',
 		'classes/Timeline.js',

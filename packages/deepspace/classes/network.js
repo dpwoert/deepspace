@@ -6,13 +6,15 @@ DS.classes.Network = function(){
     //add helper for queries
     DS.tools.NetworkQuery.call(this, population, relations);
 
-    this.addPerson = function(information){
+    this.addPerson = function(person){
 
-        //add UID
-        information._UID = DS.tools.UID();
+        //create class when needed
+        if(person instanceof DS.classes.Person === false){
+            person = new DS.classes.Person(person);
+        }
 
         //save person
-        population.push(information);
+        population.push(person);
 
         //chainable
         return this;
@@ -50,12 +52,15 @@ DS.classes.Network = function(){
         //get inner connectivity
         var connection = this.connectivity(person1, person2, population);
 
-        //add to relations list
-        relations.push({
+        //create class
+        var rel = new DS.classes.Relation({
             'source': person1,
             'target': person2,
             'connection': connection
         });
+
+        //add to relations list
+        relations.push(rel);
 
     }
 
@@ -92,30 +97,27 @@ DS.classes.Network = function(){
 
     }
 
-    this.addMessage = function(relation, time, data){
-
-        //check
-        if(time instanceof DS.classes.Time === false){
-            console.error('not an instance of time');
-        }
+    this.addMessage = function(message){
 
         //create when needed
         relation.messages = relation.messages || [];
         data = data || {};
 
+        //check
+        check(message, DS.classes.Message);
+
         //add
-        relation.messages.push({
-            'time': time,
-            'data': data
-        });
+        relation.messages.push(message);
 
     }
 
     this.convertMessages = function(list, conversion){
 
+        console.log('start messages', list, conversion);
+
         for( var i = 0 ; i < list.length ; i++ ){
             var converted = conversion.call(this, list[i]);
-            this.addMessage(converted.relation, converted.time, converted.data);
+            this.addMessage(converted);
         }
 
     }

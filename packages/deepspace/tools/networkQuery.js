@@ -13,7 +13,22 @@ DS.tools.NetworkQuery = function(population, relations){
 
     };
 
-    this.findConnection = function(biDirect){
+    this.getRelations = function(person){
+
+        //init
+        check(person, DS.classes.Person);
+        var found = [];
+
+        //searching
+        for( var i = 0 ; i < population.length ; i++ ){
+
+            if( population[i].source == person || population[j].target ){
+                found.push(person);
+            }
+
+        }
+
+        return found;
 
     };
 

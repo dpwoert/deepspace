@@ -100,7 +100,7 @@ DS._FB_ACTIONS = {
         //get part of posts
         var callApi = function(url){
 
-            console.log('get posts start', url);
+            console.log('get posts');
 
             FB.api(url, function(response) {
 
@@ -110,16 +110,14 @@ DS._FB_ACTIONS = {
                     return false;
                 }
 
-                console.log('got posts',response);
-
                 //add data
                 if(_.isArray(response.data)){
 
                     //merge or create
-                    if(data.messages){
-                        data.messages = data.messages.concat(response.data);
+                    if(data.posts){
+                        data.posts = data.posts.concat(response.data);
                     } else {
-                        data.messages = response.data;
+                        data.posts = response.data;
                     }
 
 
@@ -128,7 +126,7 @@ DS._FB_ACTIONS = {
                 }
 
                 //check if more calls need to be made
-                if(response.paging && response.paging.next && data.messages.length < limit){
+                if(response.paging && response.paging.next && data.posts.length < limit){
 
                     //next call
                     callApi(url);
