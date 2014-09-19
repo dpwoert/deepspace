@@ -62,7 +62,7 @@ DS.classes.Network = function(){
         //add to relations list
         relations.push(rel);
 
-    }
+    };
 
     this.addRelations = function(list, find){
 
@@ -75,7 +75,7 @@ DS.classes.Network = function(){
 
         return this;
 
-    }
+    };
 
     this.deleteRelation = function(person1, person2){
 

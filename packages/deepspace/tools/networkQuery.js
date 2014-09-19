@@ -13,6 +13,25 @@ DS.tools.NetworkQuery = function(population, relations){
 
     };
 
+    this.findRelation = function(person1, person2){
+
+        //searching
+        for( var i = 0 ; i < relations.length ; i++ ){
+
+            if(
+                (relations[i].source == person1 || relations[i].target == person2) ||
+                (relations[i].source == person2 || relations[i].target == person1)
+            ){
+                return relations[i];
+            }
+
+        }
+
+        //not found
+        return false;
+
+    };
+
     this.getRelations = function(person){
 
         //init
@@ -22,7 +41,7 @@ DS.tools.NetworkQuery = function(population, relations){
         //searching
         for( var i = 0 ; i < population.length ; i++ ){
 
-            if( population[i].source == person || population[j].target ){
+            if( relations[i].source == person || relations[i].target == person ){
                 found.push(person);
             }
 

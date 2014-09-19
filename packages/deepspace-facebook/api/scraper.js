@@ -112,15 +112,54 @@ Scraper.Facebook = function(){
 
     };
 
+    this.getMessageData = function(post){
+        return {
+            type: post.type,
+            comments: post.comments.length,
+            likes: post.likes.length,
+            created: post.created_time
+        }
+    }
+
     this.messageSort = function(post){
 
-        var message;
+        var messages = [];
 
-        console.log(this);
-        debugger
+        //get sender
+        var sender = this.findPerson('id', post.from.id);
+
+        //directed message or not?
+        if(post.to){
+
+            var receiver = this.findPerson('id', post.to.id);
+            var relation = this.findRelation(sender, receiver);
+
+            //reversed?
+            var reversed = relation.checkReversed(sender, receiver);
+
+            //create time
+            var time = new DS.classes.Time();
+            time.setTTL(post.created_time);
+
+            //create
+            var message = new DS.classes.Message({
+                'time': time,
+                'relation': relation,
+                'reverse': reversed,
+                'data': this.getMessageData(post);
+            });
+
+            //add
+            messages.push(message)
+
+        } else {
+
+            //todo
+
+        }
 
         //return message
-        return message;
+        return messages;
 
     };
 
