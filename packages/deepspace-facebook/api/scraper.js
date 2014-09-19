@@ -123,7 +123,7 @@ Scraper.Facebook = function(){
 
     this.messageSort = function(post){
 
-        var messages = [];
+        var message;
 
         //get sender
         var sender = this.findPerson('id', post.from.id);
@@ -142,15 +142,13 @@ Scraper.Facebook = function(){
             time.setTTL(post.created_time);
 
             //create
-            var message = new DS.classes.Message({
+            message = new DS.classes.Message({
                 'time': time,
-                'relation': relation,
-                'reverse': reversed,
                 'data': this.getMessageData(post);
             });
 
-            //add
-            messages.push(message)
+            //add relation
+            message.addRelation(relation, reversed);
 
         } else {
 
@@ -159,7 +157,7 @@ Scraper.Facebook = function(){
         }
 
         //return message
-        return messages;
+        return message;
 
     };
 

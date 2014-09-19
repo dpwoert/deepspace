@@ -40,7 +40,7 @@ DS.Classes.Time = function(){
     }
 
     this.between = function(pointer){
-
+        check(pointer, moment);
     }
 
 }

@@ -2,6 +2,7 @@ DS.classes.Network = function(){
 
     var population = [];
     var relations = [];
+    var messages = [];
 
     //add helper for queries
     DS.tools.NetworkQuery.call(this, population, relations);
@@ -99,21 +100,15 @@ DS.classes.Network = function(){
 
     this.addMessage = function(message){
 
-        //create when needed
-        relation.messages = relation.messages || [];
-        data = data || {};
-
         //check
         check(message, DS.classes.Message);
 
         //add
-        relation.messages.push(message);
+        messages.push(message);
 
     }
 
     this.convertMessages = function(list, conversion){
-
-        console.log('start messages', list, conversion);
 
         for( var i = 0 ; i < list.length ; i++ ){
             var converted = conversion.call(this, list[i]);
@@ -180,28 +175,6 @@ DS.classes.Network = function(){
 
     };
 
-    this.makeForce = function(){
-
-        //create network
-        //relate.call(this);
-
-        console.log('related');
-
-        // Create a force layout to display nodes.
-        // this.force = d3.layout.force()
-        //     .charge(-300)
-        //     .linkDistance(100)
-        //     //.size(10,10)
-        //     .nodes(population)
-        //     .links(relations)
-
-        // this.force.start();
-
-        //chainable
-        // return this;
-
-    };
-
     this.geo = function(){
         //todo
     }
@@ -213,5 +186,6 @@ DS.classes.Network = function(){
     //publish
     this.population = population;
     this.relations = relations;
+    this.messages = messages;
 
 };
