@@ -144,7 +144,7 @@ Scraper.Facebook = function(){
             //create
             message = new DS.classes.Message({
                 'time': time,
-                'data': this.getMessageData(post);
+                'data': this.getMessageData(post)
             });
 
             //add relation
