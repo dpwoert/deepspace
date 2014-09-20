@@ -125,6 +125,16 @@ Scraper.Facebook = function(){
 
         var message;
 
+        //create time
+        var time = new DS.classes.Time();
+        time.setTTL(post.created_time);
+
+        //create
+        message = new DS.classes.Message({
+            'time': time,
+            'data': this.getMessageData(post)
+        });
+
         //get sender
         var sender = this.findPerson('id', post.from.id);
 
@@ -137,22 +147,22 @@ Scraper.Facebook = function(){
             //reversed?
             var reversed = relation.checkReversed(sender, receiver);
 
-            //create time
-            var time = new DS.classes.Time();
-            time.setTTL(post.created_time);
-
-            //create
-            message = new DS.classes.Message({
-                'time': time,
-                'data': this.getMessageData(post)
-            });
-
             //add relation
             message.addRelation(relation, reversed);
 
         } else {
 
-            //todo
+            //get receivers - messages sent publicly - so all friends
+            var receivers = this.getRelations(sender);
+
+            //add
+            for( var i = 0 ; i < receivers.length ; i++ ){
+
+                var relation = receivers[i];
+                var reversed = relation.checkReversed(sender, receiver);
+                message.addRelation(relation, reversed);
+
+            }
 
         }
 
