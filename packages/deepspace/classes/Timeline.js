@@ -85,7 +85,13 @@ DS.classes.Timeline = function(){
     //move time forward
     this.forward = function(delta, deltaType){
 
+        //move
+        if(!delta) delta = 1;
         if(!deltaType) deltaType = 'minutes';
+        currentTime.add(delta, deltaType);
+
+        //render
+        this.render();
 
     };
 

@@ -27,6 +27,11 @@ Visual.graph3d = function(element, network){
     this.timeline = new DS.classes.Timeline();
     this.timeline.addEvents(network.messages);
 
+    //timeline events
+    this.timeline.add = helpers.messages.add;
+    this.timeline.remove = helpers.messages.remove;
+    this.timeline.update = helpers.messages.update;
+
     //render
     this.addProcess('aqua3d', function(delta){
 
@@ -35,6 +40,9 @@ Visual.graph3d = function(element, network){
 
         //render force
         this.force.render();
+
+        //move timeline forward
+        this.timeline.forward();
 
         //render frame
         this.renderer.render( this.scene, this.camera );
