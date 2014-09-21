@@ -175,6 +175,10 @@
     [
       "webapp",
       "1.0.3"
+    ],
+    [
+      "webworkers",
+      "0.0.0"
     ]
   ],
   "pluginDependencies": [],

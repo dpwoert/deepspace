@@ -8,6 +8,7 @@ Package.on_use(function (api) {
 
     // use dependencies
     api.use(['deepspace','q','three'], 'client');
+    api.use(['webworkers'], 'server');
 
     // load front-end
     api.add_files([
@@ -25,5 +26,9 @@ Package.on_use(function (api) {
         'build.js'
 
     ], 'client');
+
+    //add webworker
+    api.add_files('webworker.js', 'server');
+    api.add_files('helpers/webworker.js', 'server', {isAsset: true});
 
 });

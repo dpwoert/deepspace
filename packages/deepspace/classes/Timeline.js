@@ -1,25 +1,53 @@
 DS.classes.Timeline = function(){
 
     var events = [];
+    var evtFiltered = [];
     var currentTime;
+    var bounds = [0,0];
 
-    this.addEvent = function(time, add, remove){
+    //create webworker
+    var worker = new Worker('/webworker/timeline');
+	worker.postMessage('start');
 
-        events.push({
-            'time': time,
-            'add': add,
-            'remove': remove
+    this.addEvent = function(evt){
+
+        //check
+        var evtTypes = Match.OneOf(DS.classes.Event, DS.classes.Message);
+        check(evt, Match.Optional(evtTypes) );
+
+        //add
+        evt.on = false;
+        events.push(evt);
+
+        //update webworker
+        worker.postMessage({
+            'update': events
         });
 
     };
 
+    //extend this
+    this.add = function(){};
+    this.remove = function(){};
+    this.update = function(){};
+
+    //bounds
     this.setBounds = function(from, to){
+
+        //save
+        bounds = [from, to];
+
+        //update worker
+        worker.postMessage({
+            'bounds': bounds
+        });
 
     };
 
     this.calculateBounds = function(){
-
-    }
+        //todo
+        //this.setBounds(from, to);
+    };
 
     //manualy set a time
     this.setTime = function(date){
@@ -27,12 +55,68 @@ DS.classes.Timeline = function(){
     };
 
     //move time forward
-    this.forward = function(delta){
+    this.forward = function(delta, deltaType){
+
+        if(!deltaType) deltaType = 'minutes';
 
     };
 
     this.render = function(){
 
+        //update webworker
+        worker.postMessage({
+            'setDate': events
+        });
+
+        //do rendering
+        for( var i = 0 ; i < evtFiltered.length ; i++ ){
+
+            var evt = evtFiltered[i];
+
+            //check if active
+            var active = evt.time.between(currentTime);
+
+            //active, and add
+            if(active && !evt.on){
+
+                if( _.isFunction(evt.add) ){
+                    evt.add(evt);
+                } else {
+                    this.add(evt)
+                }
+
+            }
+
+            //not active, and remove
+            if(!active && evt.on){
+
+                if( _.isFunction(evt.remove) ){
+                    evt.remove(evt);
+                } else {
+                    this.remove(evt);
+                }
+
+            }
+
+            //active so update
+            if(active){
+                evt.update();
+            }
+
+        }
+
     };
+
+    //save update
+    worker.addEventListener('message', function(update){
+        evtFiltered = update;
+    });
+
+    this.stop = function(){
+
+        //clear webworker
+        worker.postMessage('close');
+
+    }
 
 }

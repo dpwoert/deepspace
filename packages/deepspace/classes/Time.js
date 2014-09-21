@@ -1,8 +1,8 @@
 DS.Classes.Time = function(){
 
     var _TTL = 60; //standard time to live: 1 hour
-    var from = new moment();
-    var to = new moment();
+    var from = moment();
+    var to = moment();
 
     this.set = function(from, to){
         this.setFrom(from);
@@ -40,7 +40,9 @@ DS.Classes.Time = function(){
     }
 
     this.between = function(pointer){
-        check(pointer, moment);
+        check(pointer, Moment);
+
+        return pointer.isAfter(from) && pointer.isBefore(after);
     }
 
 }
