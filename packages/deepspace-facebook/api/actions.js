@@ -95,7 +95,7 @@ DS._FB_ACTIONS = {
         var limit = options.limit || 200;
 
         //get url
-        var url = 'me/home?fields=created_time,place,to,from&limit=' + limit;
+        var url = 'me/home?fields=created_time,place,to,from,likes,comments&limit=' + limit;
 
         //get part of posts
         var callApi = function(url){

@@ -21,8 +21,16 @@ DS.classes.Timeline = function(){
 
         //update webworker
         worker.postMessage({
-            'update': events
+            'add': evt
         });
+
+    };
+
+    this.addEvents = function(list){
+
+        for( var i=0; i < list.length ; i++){
+            this.addEvent(list[i]);
+        }
 
     };
 
@@ -45,8 +53,28 @@ DS.classes.Timeline = function(){
     };
 
     this.calculateBounds = function(){
+
+        var min, max;
+        for( var i=0 ; i < events.length ; i++ ){
+
+            //get
+            var time = events[i].time.get();
+
+            //min
+            if( !min || time.from < min){
+                min = time.from;
+            }
+
+            //max
+            if( !max || time.to > max){
+                max = time.to;
+            }
+
+        }
+
         //todo
-        //this.setBounds(from, to);
+        this.setBounds(min, max);
+
     };
 
     //manualy set a time

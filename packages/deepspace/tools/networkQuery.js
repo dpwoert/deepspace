@@ -42,7 +42,7 @@ DS.tools.NetworkQuery = function(population, relations){
         for( var i = 0 ; i < population.length ; i++ ){
 
             if( relations[i].source == person || relations[i].target == person ){
-                found.push(person);
+                found.push( relations[i] );
             }
 
         }

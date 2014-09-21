@@ -39,11 +39,10 @@ DS.classes.Relation = function(create){
 
     };
 
-    this.checkReversed = function(source, target){
+    this.checkReversed = function(source){
 
         check(source, DS.classes.Person);
-        check(target, DS.classes.Person);
-        return this.source._id == target._id && this.target._id == source._id;
+        return this.source._id == source._id;
 
     }
 

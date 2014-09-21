@@ -63,6 +63,9 @@ DS.classes.Network = function(){
         //add to relations list
         relations.push(rel);
 
+        //chainable
+        return this;
+
     };
 
     this.addRelations = function(list, find){
@@ -74,6 +77,7 @@ DS.classes.Network = function(){
             this.addRelation(person1,person2);
         }
 
+        //chainable
         return this;
 
     };
@@ -89,12 +93,13 @@ DS.classes.Network = function(){
                 (rel.source == person2 && rel.target == person1)
             ){
                 relations.splice(i,1);
-                return true; //stop search
+                return this; //stop search
             }
 
         }
 
-        return false;
+        //chainable
+        return this;
 
     }
 
@@ -106,14 +111,20 @@ DS.classes.Network = function(){
         //add
         messages.push(message);
 
+        return this;
+
     }
 
     this.convertMessages = function(list, conversion){
 
         for( var i = 0 ; i < list.length ; i++ ){
             var converted = conversion.call(this, list[i]);
-            this.addMessage(converted);
+            if(converted) {
+                this.addMessage(converted);
+            }
         }
+
+        return this;
 
     }
 

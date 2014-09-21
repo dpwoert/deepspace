@@ -1,4 +1,4 @@
-DS.Classes.Time = function(){
+DS.classes.Time = function(){
 
     var _TTL = 60; //standard time to live: 1 hour
     var from = moment();
@@ -13,7 +13,7 @@ DS.Classes.Time = function(){
 
         //add TTL
         var _to = from.clone();
-        _to.add('minutes', TTL || _TTL);
+        _to.add(TTL || _TTL, 'minutes');
 
         //save
         this.setFrom(from);

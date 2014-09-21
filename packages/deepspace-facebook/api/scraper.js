@@ -112,13 +112,15 @@ Scraper.Facebook = function(){
 
     };
 
-    this.getMessageData = function(post){
+    var getMessageData = function(post){
+
         return {
             type: post.type,
-            comments: post.comments.length,
-            likes: post.likes.length,
+            // comments: post.comments.length,
+            // likes: post.likes.length,
             created: post.created_time
-        }
+        };
+
     }
 
     this.messageSort = function(post){
@@ -127,16 +129,19 @@ Scraper.Facebook = function(){
 
         //create time
         var time = new DS.classes.Time();
-        time.setTTL(post.created_time);
+        time.setTTL( moment(post.created_time) );
 
         //create
         message = new DS.classes.Message({
             'time': time,
-            'data': this.getMessageData(post)
+            'data': getMessageData(post)
         });
 
         //get sender
         var sender = this.findPerson('id', post.from.id);
+
+        //prevent and remove spam
+        if(!sender) return false;
 
         //directed message or not?
         if(post.to){
@@ -145,7 +150,7 @@ Scraper.Facebook = function(){
             var relation = this.findRelation(sender, receiver);
 
             //reversed?
-            var reversed = relation.checkReversed(sender, receiver);
+            var reversed = relation.checkReversed(sender);
 
             //add relation
             message.addRelation(relation, reversed);
@@ -159,7 +164,8 @@ Scraper.Facebook = function(){
             for( var i = 0 ; i < receivers.length ; i++ ){
 
                 var relation = receivers[i];
-                var reversed = relation.checkReversed(sender, receiver);
+                var reversed = relation.checkReversed(sender);
+
                 message.addRelation(relation, reversed);
 
             }

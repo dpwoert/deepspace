@@ -25,8 +25,7 @@ Visual.graph3d = function(element, network){
 
     //create timeline
     this.timeline = new DS.classes.Timeline();
-
-    console.log(network);
+    this.timeline.addEvents(network.messages);
 
     //render
     this.addProcess('aqua3d', function(delta){

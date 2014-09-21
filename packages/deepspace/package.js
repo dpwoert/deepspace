@@ -57,6 +57,7 @@ Package.on_use(function (api) {
 		'classes/Person.js',
 		'classes/Relation.js',
 		'classes/Message.js',
+		'classes/Time.js',
 		'classes/Event.js',
 		'classes/Network.js',
 		'classes/Engine.js',
