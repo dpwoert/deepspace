@@ -6,8 +6,8 @@ DS.classes.Timeline = function(){
     var bounds = [0,0];
 
     //create webworker
-    var worker = new Worker('/webworker/timeline');
-	worker.postMessage('start');
+    //var worker = new Worker('/webworker/timeline');
+	//worker.postMessage('start');
 
     this.addEvent = function(evt){
 
@@ -20,9 +20,9 @@ DS.classes.Timeline = function(){
         events.push(evt);
 
         //update webworker
-        worker.postMessage({
-            'add': evt
-        });
+        // worker.postMessage({
+        //     'add': evt
+        // });
 
     };
 
@@ -46,9 +46,9 @@ DS.classes.Timeline = function(){
         bounds = [from, to];
 
         //update worker
-        worker.postMessage({
-            'bounds': bounds
-        });
+        // worker.postMessage({
+        //     'bounds': bounds
+        // });
 
     };
 
@@ -61,12 +61,12 @@ DS.classes.Timeline = function(){
             var time = events[i].time.get();
 
             //min
-            if( !min || time.from < min){
+            if( !min || time.from < time.isBefore(min) ){
                 min = time.from;
             }
 
             //max
-            if( !max || time.to > max){
+            if( !max || time.to > time.isAfter(max) ){
                 max = time.to;
             }
 
@@ -92,14 +92,14 @@ DS.classes.Timeline = function(){
     this.render = function(){
 
         //update webworker
-        worker.postMessage({
-            'setDate': events
-        });
+        // worker.postMessage({
+        //     'setDate': events
+        // });
 
         //do rendering
-        for( var i = 0 ; i < evtFiltered.length ; i++ ){
+        for( var i = 0 ; i < events.length ; i++ ){
 
-            var evt = evtFiltered[i];
+            var evt = events[i];
 
             //check if active
             var active = evt.time.between(currentTime);
@@ -136,14 +136,20 @@ DS.classes.Timeline = function(){
     };
 
     //save update
-    worker.addEventListener('message', function(update){
-        evtFiltered = update;
-    });
+    // worker.addEventListener('message', function(update){
+    //     evtFiltered = update;
+    // });
+
+    this.start = function(){
+
+        this.currentTime = bounds[0];
+
+    }
 
     this.stop = function(){
 
         //clear webworker
-        worker.postMessage('close');
+        //worker.postMessage('close');
 
     }
 
