@@ -42,8 +42,6 @@ DS.tools.NetworkQuery = function(population, relations){
         //searching
         for( var i = 0 ; i < relations.length ; i++ ){
 
-            debugger
-
             //bi-directional
             if( biDirectional && (relations[i].source._UID == person._UID || relations[i].target._UID == person._UID) ){
                 found.push( relations[i] );

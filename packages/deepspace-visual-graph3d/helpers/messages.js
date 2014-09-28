@@ -52,12 +52,12 @@ helpers.messages.remove = function(evt){
 
     for( var i = 0 ; i < evt.buffer.length ; i++ ){
 
-        var buffer = evt.buffer[i];
-
         //clear from scene
-        this.scene.remove(buffer);
+        this.scene.remove( evt.buffer[i].mesh );
 
     }
+
+    console.log('removed', evt);
 
     //remove buffer
     evt.buffer = undefined;
