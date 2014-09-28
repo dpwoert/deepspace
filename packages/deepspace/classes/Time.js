@@ -40,9 +40,16 @@ DS.classes.Time = function(){
     }
 
     this.between = function(pointer){
-        check(pointer, Moment);
+        return pointer.isAfter(from) && pointer.isBefore(to);
+    }
 
-        return pointer.isAfter(from) && pointer.isBefore(after);
+    this.progress = function(pointer){
+
+        //assuming between check is already done
+        var normalised = pointer.valueOf() - from.valueOf();
+        var duration = to.valueOf() - from.valueOf();
+        return normalised/duration;
+
     }
 
 }

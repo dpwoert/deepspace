@@ -22,6 +22,10 @@ DS.classes.Message = function(create){
             'reversed': reversed
         });
 
+    };
+
+    this.getRelations = function(){
+        return relations;
     }
 
 };

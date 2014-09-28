@@ -48,6 +48,7 @@ Package.on_use(function (api) {
 		'3d/renderManager.js',
 		'3d/animate.js',
 		'3d/mouse.js',
+		'3d/lerp3d.js',
 
 		'algorithm/easings.js',
 		'algorithm/louvain.js',

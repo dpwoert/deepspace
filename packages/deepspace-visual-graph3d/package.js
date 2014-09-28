@@ -22,6 +22,7 @@ Package.on_use(function (api) {
         'helpers/material.js',
         'helpers/forceGraph.js',
         'helpers/init.js',
+        'helpers/messages.js',
 
         'build.js'
 

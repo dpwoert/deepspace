@@ -32,16 +32,25 @@ DS.tools.NetworkQuery = function(population, relations){
 
     };
 
-    this.getRelations = function(person){
+    this.getRelations = function(person, biDirectional){
 
         //init
         check(person, DS.classes.Person);
         var found = [];
+        biDirectional = biDirectional || false;
 
         //searching
-        for( var i = 0 ; i < population.length ; i++ ){
+        for( var i = 0 ; i < relations.length ; i++ ){
 
-            if( relations[i].source == person || relations[i].target == person ){
+            debugger
+
+            //bi-directional
+            if( biDirectional && (relations[i].source._UID == person._UID || relations[i].target._UID == person._UID) ){
+                found.push( relations[i] );
+            }
+
+            //single
+            if( !biDirectional && relations[i].source._UID == person._UID ){
                 found.push( relations[i] );
             }
 

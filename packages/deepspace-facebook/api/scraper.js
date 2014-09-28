@@ -159,6 +159,7 @@ Scraper.Facebook = function(){
 
             //get receivers - messages sent publicly - so all friends
             var receivers = this.getRelations(sender);
+            if(receivers.length < 0) return false;
 
             //add
             for( var i = 0 ; i < receivers.length ; i++ ){

@@ -1,7 +1,7 @@
 helpers.geometries = function(){
 
     var node = new THREE.IcosahedronGeometry(2.5, 1);
-    var message = new THREE.IcosahedronGeometry(0.5, 1);
+    var message = new THREE.IcosahedronGeometry(1, 1);
 
     this.getNode = function(){
         return node;

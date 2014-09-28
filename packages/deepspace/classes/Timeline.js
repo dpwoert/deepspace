@@ -45,6 +45,9 @@ DS.classes.Timeline = function(){
         //save
         bounds = [from, to];
 
+        //set pointer to start
+        currentTime = from.clone();
+
         //update worker
         // worker.postMessage({
         //     'bounds': bounds
@@ -61,12 +64,12 @@ DS.classes.Timeline = function(){
             var time = events[i].time.get();
 
             //min
-            if( !min || time.from < time.isBefore(min) ){
+            if( !min || time.from.isBefore(min) ){
                 min = time.from;
             }
 
             //max
-            if( !max || time.to > time.isAfter(max) ){
+            if( !max || time.to.isAfter(max) ){
                 max = time.to;
             }
 
@@ -113,28 +116,46 @@ DS.classes.Timeline = function(){
             //active, and add
             if(active && !evt.on){
 
+                //handler
                 if( _.isFunction(evt.add) ){
                     evt.add(evt);
                 } else {
                     this.add(evt)
                 }
 
+                //save state
+                evt.on = true;
+
             }
 
             //not active, and remove
             if(!active && evt.on){
 
+                //handler
                 if( _.isFunction(evt.remove) ){
                     evt.remove(evt);
                 } else {
                     this.remove(evt);
                 }
 
+                //save state
+                evt.on = false;
+
             }
 
             //active so update
             if(active){
-                evt.update();
+
+                //get progress
+                var progress = evt.time.progress(currentTime);
+
+                //handler
+                if( _.isFunction(evt.update) ){
+                    evt.update(evt, progress);
+                } else {
+                    this.update(evt, progress);
+                }
+
             }
 
         }

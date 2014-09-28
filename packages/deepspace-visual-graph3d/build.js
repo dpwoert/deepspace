@@ -26,11 +26,12 @@ Visual.graph3d = function(element, network){
     //create timeline
     this.timeline = new DS.classes.Timeline();
     this.timeline.addEvents(network.messages);
+    this.timeline.calculateBounds();
 
     //timeline events
-    this.timeline.add = helpers.messages.add;
-    this.timeline.remove = helpers.messages.remove;
-    this.timeline.update = helpers.messages.update;
+    this.timeline.add = helpers.messages.add.bind(this);
+    this.timeline.remove = helpers.messages.remove.bind(this);
+    this.timeline.update = helpers.messages.update.bind(this);
 
     //render
     this.addProcess('aqua3d', function(delta){

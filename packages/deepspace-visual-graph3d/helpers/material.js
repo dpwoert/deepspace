@@ -7,6 +7,9 @@ helpers.material = function(){
     var base = new THREE.MeshLambertMaterial( { 'color': 0xcccccc, 'shading': THREE.FlatShading } );
     var baseLight = new THREE.MeshLambertMaterial( { 'color': 0xccccc, 'shading': THREE.FlatShading, 'opacity': 0.3, 'transparent': true } );
 
+    //message
+    var message = base.clone();
+
     //create all coloured materials
     for ( var i = 0 ; i < Settings.colors.nodes.length ; i++ ){
 
@@ -51,5 +54,12 @@ helpers.material = function(){
         }
 
     };
+
+    this.getMessage = function(type){
+
+        //type selection [todo]
+        return message;
+
+    }
 
 }
