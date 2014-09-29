@@ -12,7 +12,6 @@ helpers.messages.add = function(evt){
 
     //all relations
     var rels = evt.getRelations();
-    console.log('sendto', rels.length);
 
     //create instances for all
     for( var i = 0 ; i < rels.length ;  i++){
@@ -30,7 +29,8 @@ helpers.messages.add = function(evt){
 
         //request light
         var light = this.lights.get();
-        //light.visible = true;
+        light.visible = true;
+        light._blocked = true;
 
         //create mesh
         var mesh = base.clone();
@@ -38,8 +38,7 @@ helpers.messages.add = function(evt){
 
         evt.buffer.push({
             'mesh': mesh,
-            'light': undefined,
-            // 'light': light,
+            'light': light,
             'from': from,
             'to': to
         });
@@ -52,8 +51,16 @@ helpers.messages.remove = function(evt){
 
     for( var i = 0 ; i < evt.buffer.length ; i++ ){
 
+        var buffer = evt.buffer[i];
+
         //clear from scene
-        this.scene.remove( evt.buffer[i].mesh );
+        this.scene.remove( buffer.mesh );
+
+        //when still active, dim light
+        if(buffer.light && buffer.light.visible){
+            buffer.light.visible = false;
+            light._blocked = false;
+        }
 
     }
 
@@ -83,7 +90,11 @@ helpers.messages.update = function(evt, progress){
             buffer.light.position = newPos;
 
             //light intensity
-            buffer.light.intensity = Math.easeInOutCubic(0,1,progress);
+            if(progress < 0.5){
+                buffer.light.intensity = Math.easeInExpo(progress,0,1,0.5);
+            } else {
+                buffer.light.intensity = Math.easeOutExpo( (progress-0.5) ,1,-1,0.5);
+            }
 
         }
 

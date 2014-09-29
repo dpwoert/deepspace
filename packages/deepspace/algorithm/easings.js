@@ -17,3 +17,12 @@ Math.easeInOutCubic = function (t, b, c, d) {
     t -= 2;
     return c/2*(t*t*t + 2) + b;
 };
+
+
+Math.easeInExpo = function (t, b, c, d) {
+	return c * Math.pow( 2, 10 * (t/d - 1) ) + b;
+};
+
+Math.easeOutExpo = function (t, b, c, d) {
+	return c * ( -Math.pow( 2, -10 * t/d ) + 1 ) + b;
+};
