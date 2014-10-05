@@ -26,7 +26,8 @@ Visual.graph3d = function(element, network){
     //create timeline
     this.timeline = new DS.classes.Timeline();
     this.timeline.addEvents(network.messages);
-    this.timeline.calculateBounds();
+    // this.timeline.calculateBounds();
+    this.timeline.setBounds( moment().subtract(1, 'days'), moment() );
 
     //timeline events
     this.timeline.add = helpers.messages.add.bind(this);

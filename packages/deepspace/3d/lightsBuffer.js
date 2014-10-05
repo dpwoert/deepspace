@@ -9,7 +9,7 @@ DS.THREE.LightsBuffer = function(scene){
     var maxTries = 5;
 
     //base light, all pulses are clones of this one
-    var base = new THREE.PointLight( 0xffffff, 0, 200 );
+    var base = new THREE.PointLight( 0xffffff, 0, 100 );
     base.visible = false;
     base.intensity = 0;
     //scene.add(base);
@@ -21,6 +21,8 @@ DS.THREE.LightsBuffer = function(scene){
 
         // var add = new THREE.PointLight( 0xffffff, 0, 700 );
         var add = base.clone();
+        add._bufferID = i;
+        add._blocked = false;
         add.intensity = 0;
         buffer.push(add);
         scene.add(add);
@@ -32,10 +34,8 @@ DS.THREE.LightsBuffer = function(scene){
 
     var getNext = function(){
 
-        var light = buffer[active];
-        light.active++;
-        if(active >= maxLights) active = 0;
-        return light;
+        active = (active >= maxLights) ? 0 : active + 1;
+        return buffer[active];
 
     }
 
@@ -43,8 +43,10 @@ DS.THREE.LightsBuffer = function(scene){
     this.get = function(){
 
         for ( var i = 0 ; i < maxTries ; i++){
-            var light = getNext();
-            if(!light._blocked) return light;
+            var next = getNext();
+            if(next && next._blocked !== true) {
+                return next;
+            }
         }
 
     };

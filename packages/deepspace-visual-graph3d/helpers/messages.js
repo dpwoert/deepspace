@@ -29,8 +29,10 @@ helpers.messages.add = function(evt){
 
         //request light
         var light = this.lights.get();
-        light.visible = true;
-        light._blocked = true;
+        if(light){
+            light.visible = true;
+            light._blocked = true;
+        }
 
         //create mesh
         var mesh = base.clone();
@@ -57,9 +59,9 @@ helpers.messages.remove = function(evt){
         this.scene.remove( buffer.mesh );
 
         //when still active, dim light
-        if(buffer.light && buffer.light.visible){
+        if(buffer.light){
             buffer.light.visible = false;
-            light._blocked = false;
+            buffer.light._blocked = false;
         }
 
     }
@@ -80,14 +82,16 @@ helpers.messages.update = function(evt, progress){
 
         //update mesh
         buffer.mesh.position.x = newPos.x;
-        buffer.mesh.position.z = newPos.z;
         buffer.mesh.position.y = newPos.y;
+        buffer.mesh.position.z = newPos.z;
 
         //update light?
         if(buffer.light){
 
             //position
-            buffer.light.position = newPos;
+            buffer.light.position.x = newPos.x;
+            buffer.light.position.y = newPos.y;
+            buffer.light.position.z = newPos.z;
 
             //light intensity
             if(progress < 0.5){
@@ -95,6 +99,8 @@ helpers.messages.update = function(evt, progress){
             } else {
                 buffer.light.intensity = Math.easeOutExpo( (progress-0.5) ,1,-1,0.5);
             }
+
+            // buffer.light.intensity = 1;
 
         }
 
