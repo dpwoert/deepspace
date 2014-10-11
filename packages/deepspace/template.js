@@ -36,6 +36,16 @@ Template.visualisation.loading = function(){
     return Session.get('loading');
 };
 
+Template.visualisation.parts = function(){
+
+    //dependency subscription
+    Session.get('parts');
+
+    console.log(DS.parts());
+
+    return DS.parts();
+};
+
 Template.visualisation.events({
 
     'click #login': function(){

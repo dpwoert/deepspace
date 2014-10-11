@@ -22,6 +22,10 @@
             {{>canvas}}
         {{/if}}
 
+        {{#each parts}}
+            {{> UI.dynamic template=name data=data }}
+        {{/each}}
+
     {{/if}}
 
 

@@ -180,4 +180,8 @@ DS.classes.Timeline = function(){
 
     }
 
+    this.htmlData = function(){
+        //todo
+    }
+
 }

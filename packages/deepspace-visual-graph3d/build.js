@@ -34,6 +34,11 @@ Visual.graph3d = function(element, network){
     this.timeline.remove = helpers.messages.remove.bind(this);
     this.timeline.update = helpers.messages.update.bind(this);
 
+    //extra layout options
+    DS.parts([
+        {name: 'timeline', data: this.timeline }
+    ]);
+
     //render
     this.addProcess('aqua3d', function(delta){
 

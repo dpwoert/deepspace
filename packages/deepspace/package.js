@@ -17,7 +17,7 @@ Package.on_use(function (api) {
 
 		'tools/networkQuery.js',
 		'tools/UID.js',
-
+		'tools/parts.js',
 
 		'3d/lib/FlyControls.js',
 		'3d/lib/Detector.js',

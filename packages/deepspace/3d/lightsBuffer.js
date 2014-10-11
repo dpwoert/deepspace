@@ -9,7 +9,7 @@ DS.THREE.LightsBuffer = function(scene){
     var maxTries = 5;
 
     //base light, all pulses are clones of this one
-    var base = new THREE.PointLight( 0xffffff, 0, 100 );
+    var base = new THREE.PointLight( 0xffffff, 0, 125 );
     base.visible = false;
     base.intensity = 0;
     //scene.add(base);
