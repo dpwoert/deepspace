@@ -36,7 +36,7 @@ Visual.graph3d = function(element, network){
 
     //extra layout options
     DS.parts([
-        {name: 'timeline', data: this.timeline }
+        {name: 'timeline', data: this.timeline.part() }
     ]);
 
     //render

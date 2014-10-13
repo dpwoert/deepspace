@@ -180,8 +180,44 @@ DS.classes.Timeline = function(){
 
     }
 
-    this.htmlData = function(){
-        //todo
+    this.part = function(stepSize, unit){
+
+        var data = [];
+
+        //check if grouping is given
+        stepSize = stepSize || 30;
+        unit = unit || 'minutes';
+
+        var unitStep =  1;
+        //calculate stepsize of unit
+        switch(unit){
+            case 'days': unitStep *= 24;
+            case 'hours': unitStep *= 60;
+            case 'minutes': unitStep *= 60;
+            // case 'seconds': unitStep *= 1000;
+        }
+
+        //do grouping
+        data = _.groupBy(events, function(evt){
+
+            var normalised = evt.time.get().from.valueOf();
+            // normalised -= bounds[0].valueOf();
+            var step = stepSize * unitStep;
+
+            var group = normalised / step;
+            return group - ( group % step );
+
+        });
+
+        return {
+            controls: {
+                start: this.start,
+                stop: this.stop,
+                setTime: this.setTime
+            },
+            bounds: this.bounds,
+            data: data
+        };
     }
 
 }

@@ -41,8 +41,6 @@ Template.visualisation.parts = function(){
     //dependency subscription
     Session.get('parts');
 
-    console.log(DS.parts());
-
     return DS.parts();
 };
 

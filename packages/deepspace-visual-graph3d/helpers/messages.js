@@ -66,8 +66,6 @@ helpers.messages.remove = function(evt){
 
     }
 
-    console.log('removed', evt);
-
     //remove buffer
     evt.buffer = undefined;
 
