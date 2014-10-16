@@ -1,12 +1,17 @@
 <template name="timeline">
 
     <svg class="part timeline">
+
         <g class="timeline">
 
-            <!-- todo -->
             <path d="{{path}}"></path>
 
+            {{#each circles}}
+                <circle r="5" cx="{{x}}" cy="{{y}}" />
+            {{/each}}
+
         </g>
+
     </svg>
 
 </template>
