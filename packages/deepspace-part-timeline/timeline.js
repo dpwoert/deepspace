@@ -68,6 +68,8 @@ var elements = function(){
 
 Template.timeline.rendered = function(){
 
+    console.log('timeline');
+
     //convert to array, is object because of underscore's grouping by
     data = _.toArray(this.data.data);
 

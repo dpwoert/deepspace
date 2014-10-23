@@ -125,6 +125,8 @@ Scraper.Facebook = function(){
 
     this.messageSort = function(post){
 
+        try{
+
         var message;
 
         //create time
@@ -175,6 +177,14 @@ Scraper.Facebook = function(){
 
         //return message
         return message;
+
+        }
+
+        catch(e){
+            console.error(e);
+            console.log(message);
+            console.log(post);
+        }
 
     };
 

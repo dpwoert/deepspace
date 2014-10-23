@@ -118,9 +118,20 @@ DS.classes.Network = function(){
     this.convertMessages = function(list, conversion){
 
         for( var i = 0 ; i < list.length ; i++ ){
-            var converted = conversion.call(this, list[i]);
-            if(converted) {
-                this.addMessage(converted);
+
+            //try to catch, because API can change...
+            try{
+
+                var converted = conversion.call(this, list[i]);
+                if(converted) {
+                    this.addMessage(converted);
+                }
+
+            }
+
+            //error
+            catch(e){
+                console.error(e);
             }
         }
 
