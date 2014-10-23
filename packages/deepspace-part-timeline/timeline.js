@@ -35,23 +35,34 @@ var render = function(){
 
 };
 
-var circles = function(){
+var elements = function(){
 
     var circles = [];
-    //add circles for each row
+    var labels = [];
+
+    //add the elements for each row
     _.each(data, function(row, key){
 
         if(key % 6 === 0){
 
+            //circles
             circles.push({
                 x: scales.x( key ),
                 y: scales.y( row.length )
+            });
+
+            //labels
+            labels.push({
+                x: scales.x( key ),
+                y: scales.y( row.length ),
+                text: key
             });
 
         }
     });
 
     Session.set('pathCircles', circles);
+    Session.set('pathLabels', labels);
 
 }
 
@@ -64,8 +75,8 @@ Template.timeline.rendered = function(){
     calculateScales();
     render();
 
-    //add circles to timeline
-    circles();
+    //add circles and labels to timeline
+    elements();
 
 };
 
@@ -75,4 +86,8 @@ Template.timeline.path = function(){
 
 Template.timeline.circles = function(){
     return Session.get('pathCircles');
+};
+
+Template.timeline.labels = function(){
+    return Session.get('pathLabels');
 };
