@@ -125,13 +125,17 @@ DS._FB_ACTIONS = {
                     console.error('post data not correct', response);
                 }
 
+                console.log('before paging');
+
                 //check if more calls need to be made
                 if(response.paging && response.paging.next && data.posts.length < limit){
 
                     //next call
-                    callApi(url);
+                    callApi(response.paging.next);
 
                 } else {
+
+                    console.log('done');
 
                     //done
                     promise.resolve(data);

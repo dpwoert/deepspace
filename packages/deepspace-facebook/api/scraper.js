@@ -203,7 +203,9 @@ Scraper.Facebook = function(){
 
             oldPromise.then(function(data){
                 _action(data);
-            }).catch(console.log);
+            }).catch(function(e){
+                console.error(e);
+            });
 
         } else {
             _action({});
