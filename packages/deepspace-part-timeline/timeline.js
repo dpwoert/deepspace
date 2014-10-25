@@ -8,7 +8,7 @@ var calculateScales = function(){
     //dimensions
     left = 0;
     right = window.innerWidth;
-    height = 50;
+    height = 60;
 
     //calculate extremes
     min = d3.min(data, function(d){ return d.length; });
@@ -54,7 +54,7 @@ var elements = function(){
             //labels
             labels.push({
                 x: scales.x( key ),
-                y: scales.y( row.length ),
+                y: 65,
                 text: key
             });
 
@@ -68,10 +68,8 @@ var elements = function(){
 
 Template.timeline.rendered = function(){
 
-    console.log('timeline');
-
     //convert to array, is object because of underscore's grouping by
-    data = _.toArray(this.data.data);
+    data = _.toArray(this.data.timeline);
 
     //d3 calculations
     calculateScales();
@@ -79,6 +77,9 @@ Template.timeline.rendered = function(){
 
     //add circles and labels to timeline
     elements();
+
+    //just checking
+    // console.log('time now', self.data.pointer);
 
 };
 

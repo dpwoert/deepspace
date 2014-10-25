@@ -216,8 +216,9 @@ DS.classes.Timeline = function(){
                 setTime: this.setTime
             },
             bounds: this.bounds,
-            data: data
+            timeline: data,
+            pointer: currentTime
         };
-    }
+    };
 
 }
