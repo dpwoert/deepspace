@@ -1,4 +1,5 @@
 var data;
+var bounds;
 var min, max;
 var left, right, height;
 var scales = {};
@@ -11,8 +12,8 @@ var calculateScales = function(){
     height = 60;
 
     //calculate extremes
-    min = d3.min(data, function(d){ return d.length; });
-    max = d3.max(data, function(d){ return d.length; });
+    min = d3.min(data, function(d){ return d.list.length; });
+    max = d3.max(data, function(d){ return d.list.length; });
     var groups = data.length - 1;
 
     //scales
@@ -26,7 +27,7 @@ var render = function(){
     //get line
     var line = d3.svg.line()
         .x(function(d,i) { return scales.x(i); })
-        .y(function(d,i) { return scales.y( d.length ); })
+        .y(function(d,i) { return scales.y( d.list.length ); })
         .interpolate('basis');
         // .interpolate('bundle');
 
@@ -45,17 +46,20 @@ var elements = function(){
 
         if(key % 6 === 0){
 
+            var date = moment(+row.date);
+            console.log(+row.date);
+
             //circles
             circles.push({
                 x: scales.x( key ),
-                y: scales.y( row.length )
+                y: scales.y( row.list.length )
             });
 
             //labels
             labels.push({
                 x: scales.x( key ),
                 y: 65,
-                text: key
+                text: date.format('HH:mm')
             });
 
         }
@@ -66,10 +70,28 @@ var elements = function(){
 
 }
 
+var toArray = function(data){
+
+    var list = [];
+
+    //add each entry to list
+    _.each(data, function(item, date){
+
+        list.push({
+            date: date,
+            list: item
+        });
+
+    });
+
+    return list;
+
+}
+
 Template.timeline.rendered = function(){
 
     //convert to array, is object because of underscore's grouping by
-    data = _.toArray(this.data.timeline);
+    data = toArray(this.data.timeline);
 
     //d3 calculations
     calculateScales();
@@ -79,7 +101,7 @@ Template.timeline.rendered = function(){
     elements();
 
     //just checking
-    // console.log('time now', self.data.pointer);
+    console.log('date for timeline part', this.data);
 
 };
 

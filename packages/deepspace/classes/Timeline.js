@@ -194,7 +194,7 @@ DS.classes.Timeline = function(){
             case 'days': unitStep *= 24;
             case 'hours': unitStep *= 60;
             case 'minutes': unitStep *= 60;
-            // case 'seconds': unitStep *= 1000;
+            case 'seconds': unitStep *= 1000;
         }
 
         //do grouping
@@ -204,20 +204,20 @@ DS.classes.Timeline = function(){
             // normalised -= bounds[0].valueOf();
             var step = stepSize * unitStep;
 
-            var group = normalised / step;
-            return group - ( group % step );
+            // var group = normalised / step;
+            return normalised - ( normalised % step );
 
         });
 
         return {
-            controls: {
+            'controls': {
                 start: this.start,
                 stop: this.stop,
                 setTime: this.setTime
             },
-            bounds: this.bounds,
-            timeline: data,
-            pointer: currentTime
+            'bounds': bounds,
+            'timeline': data,
+            'pointer': currentTime
         };
     };
 
