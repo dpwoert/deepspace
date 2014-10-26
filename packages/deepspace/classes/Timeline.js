@@ -185,7 +185,7 @@ DS.classes.Timeline = function(){
         var data = [];
 
         //check if grouping is given
-        stepSize = stepSize || 10;
+        stepSize = stepSize || 60;
         unit = unit || 'minutes';
 
         var unitStep =  1;
@@ -217,7 +217,8 @@ DS.classes.Timeline = function(){
             },
             'bounds': bounds,
             'timeline': data,
-            'pointer': currentTime
+            'pointer': currentTime,
+            'stepSize': stepSize * unitStep
         };
     };
 

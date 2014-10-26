@@ -1,6 +1,6 @@
-var data;
-var bounds;
-var min, max;
+var data, rawData;
+var bounds = [];
+var min, max, stepSize;
 var left, right, height;
 var scales = {};
 
@@ -9,30 +9,59 @@ var calculateScales = function(){
     //dimensions
     left = 0;
     right = window.innerWidth;
-    height = 60;
+    height = 50;
 
-    //calculate extremes
+    //calculate extremes - Y
     min = d3.min(data, function(d){ return d.list.length; });
     max = d3.max(data, function(d){ return d.list.length; });
     var groups = data.length - 1;
 
-    //scales
-    scales.x = d3.scale.linear().domain([0, groups]).range([left, right]);
+    //calculcate bound - X
+    // bounds[0] = d3.min(data, function(d){ return +d.date; });
+    // bounds[1] = d3.max(data, function(d){ return +d.date; });
+
+    //scales - todo calculate with date what x scales is
+    scales.x = d3.scale.linear().domain([bounds[0], bounds[1]]).range([left, right]);
     scales.y = d3.scale.linear().domain([max, 0]).range([0, height]);
 
 };
 
 var render = function(){
 
+    var renderData = [];
+
     //get line
     var line = d3.svg.line()
-        .x(function(d,i) { return scales.x(i); })
+        .x(function(d,i) { return scales.x( +d.date ); })
         .y(function(d,i) { return scales.y( d.list.length ); })
         .interpolate('basis');
-        // .interpolate('bundle');
+        // .interpolate('linear');
+
+    //get keys
+    var keys = Object.keys(rawData);
+    var i = parseInt(keys[ 0 ]);
+
+    while( i >= bounds[0] ){
+
+        var date = moment(i);
+
+        //find
+        var items = rawData[i] || [];
+
+        renderData.push({
+
+            'date': i,
+            'list': items
+
+        });
+
+        //loop
+        i-= stepSize;
+
+    }
 
     //save line
-    Session.set('path', line(data));
+    Session.set('path', line(renderData));
 
 };
 
@@ -41,29 +70,34 @@ var elements = function(){
     var circles = [];
     var labels = [];
 
-    //add the elements for each row
-    _.each(data, function(row, key){
+    //get keys
+    var keys = Object.keys(rawData);
+    var i = parseInt(keys[ 0 ]);
 
-        if(key % 6 === 0){
+    while( i >= bounds[0] ){
 
-            var date = moment(+row.date);
-            console.log(+row.date);
+        var date = moment(i);
 
-            //circles
-            circles.push({
-                x: scales.x( key ),
-                y: scales.y( row.list.length )
-            });
+        //find
+        var items = rawData[i] || [];
 
-            //labels
-            labels.push({
-                x: scales.x( key ),
-                y: 65,
-                text: date.format('HH:mm')
-            });
+        //circles
+        circles.push({
+            x: scales.x( i ),
+            y: scales.y( items.length )
+        });
 
-        }
-    });
+        //labels
+        labels.push({
+            x: scales.x( i ),
+            y: 68,
+            text: date.format('HH:mm')
+        });
+
+        //loop
+        i-= stepSize;
+
+    }
 
     Session.set('pathCircles', circles);
     Session.set('pathLabels', labels);
@@ -92,6 +126,9 @@ Template.timeline.rendered = function(){
 
     //convert to array, is object because of underscore's grouping by
     data = toArray(this.data.timeline);
+    rawData = this.data.timeline;
+    stepSize = this.data.stepSize;
+    bounds = this.data.bounds;
 
     //d3 calculations
     calculateScales();
