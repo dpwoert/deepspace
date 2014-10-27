@@ -6,7 +6,7 @@ Visual.graph3d = function(element, network){
 
     //add scene & camera
     helpers.init.call(this, element);
-    helpers.flyControls.call(this);
+    // helpers.flyControls.call(this);
 
     //create geometries
     this.geometry = new helpers.geometries();
@@ -27,7 +27,7 @@ Visual.graph3d = function(element, network){
     this.timeline = new DS.classes.Timeline();
     this.timeline.addEvents(network.messages);
     // this.timeline.calculateBounds();
-    this.timeline.setBounds( moment().subtract(1, 'days'), moment() );
+    this.timeline.setBounds( moment().subtract(2, 'days'), moment() );
 
     //timeline events
     this.timeline.add = helpers.messages.add.bind(this);
@@ -42,8 +42,11 @@ Visual.graph3d = function(element, network){
     //render
     this.addProcess('aqua3d', function(delta){
 
+        //rotate camera
+        this.camera.render();
+
         //do mouse things
-        this.controls.update(delta);
+        // this.controls.update(delta);
 
         //render force
         this.force.render();

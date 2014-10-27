@@ -23,6 +23,7 @@ Package.on_use(function (api) {
         'helpers/forceGraph.js',
         'helpers/init.js',
         'helpers/messages.js',
+        'helpers/rotationCamera.js',
 
         'build.js'
 
