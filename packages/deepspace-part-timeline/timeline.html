@@ -2,12 +2,19 @@
 
     <svg class="part timeline">
 
+        <defs>
+            <linearGradient id="gradient">
+                <stop offset="0%" stop-color="#3498db"/>
+                <stop offset="100%" stop-color="#27ae60" />
+            </linearGradient>
+        </defs>
+
         <g class="timeline">
 
-            <path d="{{path}}"></path>
+            <path d="{{path}}" stroke="url(#gradient)"></path>
 
             {{#each circles}}
-                <circle r="5" cx="{{x}}" cy="{{y}}" />
+                <circle r="5" cx="{{x}}" cy="{{y}}" fill="{{color}}" />
             {{/each}}
 
         </g>

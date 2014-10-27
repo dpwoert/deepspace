@@ -22,6 +22,7 @@ var calculateScales = function(){
 
     //scales - todo calculate with date what x scales is
     scales.x = d3.scale.linear().domain([bounds[0], bounds[1]]).range([left, right]);
+    scales.x2 = d3.scale.linear().domain([bounds[0], bounds[1]]).range([0,1]);
     scales.y = d3.scale.linear().domain([max, 0]).range([0, height]);
 
 };
@@ -70,6 +71,9 @@ var elements = function(){
     var circles = [];
     var labels = [];
 
+    var startColor = [52, 152, 219];
+    var endColor = [39, 174, 96];
+
     //get keys
     var keys = Object.keys(rawData);
     var i = parseInt(keys[ 0 ]);
@@ -82,11 +86,17 @@ var elements = function(){
         var items = rawData[i] || [];
 
         // https://gist.github.com/mbostock/1705868
+        var color = [];
+        percent = scales.x2(i);
+        color[0] = Math.round( startColor[0] + percent * (endColor[0] - startColor[0]) );
+        color[1] = Math.round( startColor[1] + percent * (endColor[1] - startColor[1]) );
+        color[2] = Math.round( startColor[2] + percent * (endColor[2] - startColor[2]) );
 
         //circles
         circles.push({
             x: scales.x( i ),
-            y: scales.y( items.length )
+            y: scales.y( items.length ),
+            color: 'rgb('+color[0]+','+color[1]+','+color[2]+')'
         });
 
         //labels
