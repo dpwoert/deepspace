@@ -81,6 +81,8 @@ var elements = function(){
         //find
         var items = rawData[i] || [];
 
+        // https://gist.github.com/mbostock/1705868
+
         //circles
         circles.push({
             x: scales.x( i ),
