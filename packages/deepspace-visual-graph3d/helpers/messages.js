@@ -27,11 +27,15 @@ helpers.messages.add = function(evt){
         var from = rel.reversed ? _from : _to;
         var to = rel.reversed ? _to : _from;
 
-        //request light
-        var light = this.lights.get();
-        if(light){
-            light.visible = true;
-            light._blocked = true;
+        //request light - skip some of the relations to spare lights
+        if(i % 2 === 0){
+
+            var light = this.lights.get();
+            if(light){
+                light.visible = true;
+                light._blocked = true;
+            }
+
         }
 
         //create mesh
