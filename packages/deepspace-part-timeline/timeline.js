@@ -23,7 +23,7 @@ var calculateScales = function(){
     //scales - todo calculate with date what x scales is
     scales.x = d3.scale.linear().domain([bounds[0], bounds[1]]).range([left, right]);
     scales.x2 = d3.scale.linear().domain([bounds[0], bounds[1]]).range([0,1]);
-    scales.y = d3.scale.linear().domain([max, 0]).range([0, height]);
+    scales.y = d3.scale.linear().domain([max, 0]).range([5, height]);
 
 };
 
@@ -92,10 +92,13 @@ var elements = function(){
         color[1] = Math.round( startColor[1] + percent * (endColor[1] - startColor[1]) );
         color[2] = Math.round( startColor[2] + percent * (endColor[2] - startColor[2]) );
 
+        var path = $('.timeline path')[0];
+        var y = path.getPointAtLength( path.getTotalLength() - scales.x(i) );
+
         //circles
         circles.push({
             x: scales.x( i ),
-            y: scales.y( items.length ),
+            y: y.y,
             color: 'rgb('+color[0]+','+color[1]+','+color[2]+')'
         });
 
@@ -147,7 +150,7 @@ Template.timeline.rendered = function(){
     render();
 
     //add circles and labels to timeline
-    elements();
+    _.defer(elements);
 
     //just checking
     console.log('date for timeline part', this.data);
