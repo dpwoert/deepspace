@@ -3,6 +3,7 @@ var bounds = [];
 var min, max, stepSize;
 var left, right, height;
 var scales = {};
+var stopped;
 
 var calculateScales = function(){
 
@@ -85,13 +86,13 @@ var elements = function(){
         //find
         var items = rawData[i] || [];
 
-        // https://gist.github.com/mbostock/1705868
         var color = [];
         percent = scales.x2(i);
         color[0] = Math.round( startColor[0] + percent * (endColor[0] - startColor[0]) );
         color[1] = Math.round( startColor[1] + percent * (endColor[1] - startColor[1]) );
         color[2] = Math.round( startColor[2] + percent * (endColor[2] - startColor[2]) );
 
+        //get height from path because of interpolation
         var path = $('.timeline path')[0];
         var y = path.getPointAtLength( path.getTotalLength() - scales.x(i) );
 
@@ -137,6 +138,18 @@ var toArray = function(data){
 
 }
 
+var update = function($e, control){
+
+    // $e.attr('cx', )
+    console.log( control.valueOf() );
+
+    //next update
+    window.setTimeout(function(){
+        if(!stopped) update($e, control);
+    }, 100);
+
+};
+
 Template.timeline.rendered = function(){
 
     //convert to array, is object because of underscore's grouping by
@@ -149,13 +162,18 @@ Template.timeline.rendered = function(){
     calculateScales();
     render();
 
-    //add circles and labels to timeline
+    //add circles and labels to timeline - defer to wait path is made in DOM
     _.defer(elements);
 
-    //just checking
-    console.log('date for timeline part', this.data);
+    //start updating
+    var $e = $('.pointer circle');
+    update($e, this.data.pointer );
 
 };
+
+Template.timeline.destroy = function(){
+    stopped = true;
+}
 
 Template.timeline.path = function(){
     return Session.get('path');
