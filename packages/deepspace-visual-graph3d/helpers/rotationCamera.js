@@ -4,7 +4,7 @@ helpers.rotationCamera = function(world){
     camera.position.z = 0;
     camera.rotation.y = 90 * Math.PI / 180;
 
-    camera.radius = 300;
+    camera.radius = 500;
     // camera.radius = 750;
     camera.center = new THREE.Vector3(0,0,0);
 
