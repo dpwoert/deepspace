@@ -141,7 +141,15 @@ var toArray = function(data){
 var update = function($e, control){
 
     // $e.attr('cx', )
-    console.log( control.valueOf() );
+
+    var x = scales.x( control.valueOf() );
+    var path = $('.timeline path')[0];
+    var point = path.getPointAtLength( path.getTotalLength() - x );
+
+    //console.log(x, y);
+
+    $e.attr('cx', point.x );
+    $e.attr('cy', point.y );
 
     //next update
     window.setTimeout(function(){
